@@ -1,9 +1,9 @@
 import React from "react"
 
-const PublicShowFoodTruck = props => {
+const PublicShowFoodTruck = ({ name }) => {
   return (
     <div>
-      <p>1 food truck</p>
+      <p>{name}</p>
     </div>
   )
 }

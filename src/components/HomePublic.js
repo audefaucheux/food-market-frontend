@@ -1,13 +1,33 @@
 import React, { useState } from "react"
 import PublicFoodTrucksContainer from "../containers/PublicFoodTrucksContainer"
 import PublicFoodTruckFilters from "../components/PublicFoodTruckFilters"
+import API from "../adapters/API"
 
-const HomePublic = ({ foodTrucks, markets }) => {
+const HomePublic = ({ formData }) => {
   const [marketFilter, setMarketFilter] = useState([])
   const [dateFilter, setDateFilter] = useState(
     new Date().toISOString().slice(0, 10) // set date to today by default
   )
   const [cuisineFilter, setCuisineFilter] = useState([])
+  const [foodTrucks, setFoodTrucks] = useState([])
+
+  const submitFilters = () => {
+    API.getFoodTrucks().then(setFoodTrucks)
+  }
+
+  const filterFoodTrucksByCuisine = array => {
+    return array.filter(foodTruck =>
+      foodTruck.cuisines.some(cuisine => cuisineFilter.includes(cuisine.id))
+    )
+  }
+
+  const foodTruckArray = () => {
+    if (cuisineFilter.length !== 0) {
+      return filterFoodTrucksByCuisine(foodTrucks)
+    } else {
+      return []
+    }
+  }
 
   return (
     <div>
@@ -19,16 +39,17 @@ const HomePublic = ({ foodTrucks, markets }) => {
       </p>
       <PublicFoodTruckFilters
         {...{
-          markets,
           marketFilter,
           setMarketFilter,
           dateFilter,
           setDateFilter,
           cuisineFilter,
-          setCuisineFilter
+          setCuisineFilter,
+          submitFilters,
+          formData
         }}
       />
-      <PublicFoodTrucksContainer {...{ foodTrucks }} />
+      <PublicFoodTrucksContainer foodTrucks={foodTruckArray()} />
     </div>
   )
 }

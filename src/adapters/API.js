@@ -4,7 +4,7 @@ const VALIDATE_URL = `${API_ENDPOINT}/validate`
 const SIGN_UP_URL = `${API_ENDPOINT}/sign_up`
 const FOOD_TRUCKS_URL = `${API_ENDPOINT}/food_trucks`
 const USERS_URL = `${API_ENDPOINT}/users`
-const MARKETS_URL = `${API_ENDPOINT}/markets`
+const FORM_DATA_URL = `${API_ENDPOINT}/form_data`
 
 // HEADERS HELPERS
 
@@ -61,7 +61,7 @@ const addFoodTruck = foodTruckDetails =>
   )
 const deleteFoodTruck = id => destroy(FOOD_TRUCKS_URL + "/" + id)
 
-const getMarkets = () => get(MARKETS_URL)
+const getFormData = () => get(FORM_DATA_URL)
 
 // AUTH APIs
 
@@ -90,7 +90,7 @@ export default {
   getFoodTrucks,
   addFoodTruck,
   deleteFoodTruck,
-  getMarkets,
+  getFormData,
   login,
   signUp,
   validateUser,

@@ -10,32 +10,27 @@ import AdminFoodTruckContainer from "./containers/AdminFoodTrucksContainer"
 
 const App = ({ history }) => {
   const [user, setUser] = useState(null)
-  const [foodTrucks, setFoodTrucks] = useState([])
-  const [foodTruckUpdate, setFoodTruckUpdate] = useState(null)
-  const [markets, setMarkets] = useState([])
+  const [userUpdate, setUserUpdate] = useState(null)
+  const [formData, setFormData] = useState({ markets: [], cuisines: [] })
 
-  // Get all food trucks for Public Home Page
-  // Get user info when reloading the page if user didn't logout
-  // Reload if one of the food truck is updated
   useEffect(() => {
-    API.getFoodTrucks().then(foodTrucks => {
-      API.getMarkets().then(markets => {
-        API.validateUser()
-          .then(data => {
-            if (data.errors) {
-              history.push("/login")
-              throw Error(data.errors)
-            } else if (data.user) {
-              setUser(data.user)
-              history.push("/my_food_trucks")
-            }
-            setFoodTrucks(foodTrucks)
-            setMarkets(markets)
-          })
-          .catch(alert)
+    API.getFormData().then(formData => {
+      API.validateUser().then(data => {
+        redirectUser(data)
+        setFormData(formData)
       })
     })
-  }, [foodTruckUpdate, history])
+  }, [userUpdate])
+
+  const redirectUser = data => {
+    if (data.errors) {
+      history.push("/login")
+      throw Error(data.errors)
+    } else if (data.user) {
+      setUser(data.user)
+      history.push("/my_food_trucks")
+    }
+  }
 
   const login = user => {
     setUser(user)
@@ -49,19 +44,19 @@ const App = ({ history }) => {
   }
 
   const addFoodTruck = newFoodTruck => {
-    API.addFoodTruck(newFoodTruck).then(setFoodTruckUpdate)
+    API.addFoodTruck(newFoodTruck).then(setUserUpdate)
   }
 
   const deleteFoodTruck = id => {
     API.deleteFoodTruck(id)
-    setFoodTruckUpdate(id)
+    setUserUpdate(id)
   }
 
   return (
     <div className="App">
       <Navbar user={user} logout={logout} />
       <Route key="/" exact path="/">
-        <HomePublic {...{ foodTrucks, markets }} />
+        <HomePublic {...{ formData }} />
       </Route>
       <Route key="/sign_up" exact path="/sign_up">
         <SignUp {...{ login }} />
@@ -77,8 +72,7 @@ const App = ({ history }) => {
               user,
               history,
               addFoodTruck,
-              deleteFoodTruck,
-              markets
+              deleteFoodTruck
             }}
           />
         ) : (

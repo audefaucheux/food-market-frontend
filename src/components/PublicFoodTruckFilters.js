@@ -1,27 +1,43 @@
 import React from "react"
 
 const PublicFoodTruckFilters = ({
-  markets,
   marketFilter,
   setMarketFilter,
   dateFilter,
   setDateFilter,
   cuisineFilter,
-  setCuisineFilter
+  setCuisineFilter,
+  submitFilters,
+  formData
 }) => {
-  const updateMarketFilter = e => {
-    if (!marketFilter.includes(e.target.value)) {
-      setMarketFilter([...marketFilter, e.target.value])
+  const updateArrayFilter = (e, array, setter) => {
+    if (!array.includes(e.target.value)) {
+      setter([...array, parseInt(e.target.value)])
     }
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    submitFilters()
   }
 
   return (
     <div>
       <p>FILTERS</p>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label>
           Market:
-          <input type="search" name="market"></input>
+          {/* <input type="search" name="market"></input> */}
+          <select
+            multiple
+            onChange={e => updateArrayFilter(e, marketFilter, setMarketFilter)}
+          >
+            {formData.markets.map(market => (
+              <option key={market.id} value={market.id}>
+                {market.name}
+              </option>
+            ))}
+          </select>
         </label>
         <label>
           Day:
@@ -34,7 +50,19 @@ const PublicFoodTruckFilters = ({
         </label>
         <label>
           Cuisine:
-          <input type="text" name="cuisine" />
+          {/* <input type="search" name="cuisine" /> */}
+          <select
+            multiple
+            onChange={e =>
+              updateArrayFilter(e, cuisineFilter, setCuisineFilter)
+            }
+          >
+            {formData.cuisines.map(cuisine => (
+              <option key={cuisine.id} value={cuisine.id}>
+                {cuisine.name}
+              </option>
+            ))}
+          </select>
         </label>
         <input type="submit" value="Filter" />
       </form>

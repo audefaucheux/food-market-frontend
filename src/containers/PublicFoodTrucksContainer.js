@@ -5,7 +5,9 @@ const PublicFoodTruckContainer = ({ foodTrucks }) => {
   return (
     <div>
       <p>LIST OF FOOD TRUCKS</p>
-      <PublicShowFoodTruck />
+      {foodTrucks.map(foodTruck => (
+        <PublicShowFoodTruck key={foodTruck.id} {...foodTruck} />
+      ))}
     </div>
   )
 }

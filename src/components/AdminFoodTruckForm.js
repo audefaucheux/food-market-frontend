@@ -1,6 +1,6 @@
 import React from "react"
 
-class FoodTruckForm extends React.Component {
+class AdminFoodTruckForm extends React.Component {
   state = {
     name: ""
   }
@@ -40,4 +40,4 @@ class FoodTruckForm extends React.Component {
   }
 }
 
-export default FoodTruckForm
+export default AdminFoodTruckForm

@@ -1,6 +1,6 @@
 import React from "react"
 
-const ShowFoodTruck = ({ id, name, handleClickDelete }) => {
+const AdminShowFoodTruck = ({ id, name, deleteFoodTruck }) => {
   const handleClickEdit = () => {
     console.log("redirect to edit page")
   }
@@ -11,11 +11,11 @@ const ShowFoodTruck = ({ id, name, handleClickDelete }) => {
       <button className="primary" onClick={handleClickEdit}>
         Edit
       </button>
-      <button className="primary" onClick={() => handleClickDelete(id)}>
+      <button className="primary" onClick={() => deleteFoodTruck(id)}>
         Delete
       </button>
     </div>
   )
 }
 
-export default ShowFoodTruck
+export default AdminShowFoodTruck

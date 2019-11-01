@@ -25,6 +25,11 @@ body {
   margin: 10px;
 }
 
+label {
+  display: block;
+  min-width: 50px;
+}
+
 input {
   margin: 10px;
   border: solid black;

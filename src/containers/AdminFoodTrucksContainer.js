@@ -1,9 +1,13 @@
 import React from "react"
+// import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import AdminFoodTruckForm from "../components/AdminFoodTruckForm"
 import AdminShowFoodTruck from "../components/AdminShowFoodTruck"
 import API from "../adapters/API"
 
-const AdminFoodTruckContainer = ({ history, user, setUserUpdate }) => {
+const AdminFoodTruckContainer = ({ user, setUserUpdate }) => {
+  // const [foodTruckSelected, setFoodTruckSelected] = useState(null)
+  // const [screenSelected, setScreenSelected] = useState(null)
+
   const addFoodTruck = newFoodTruck => {
     API.addFoodTruck(newFoodTruck).then(data => {
       if (data.errors) {
@@ -14,26 +18,18 @@ const AdminFoodTruckContainer = ({ history, user, setUserUpdate }) => {
     })
   }
 
-  const handleClickEdit = () => {
-    console.log("redirect to edit page")
-  }
-
-  const handleClickUpdateSchedule = () => {
-    console.log("redirect to schedule page")
-  }
-
   return (
     <div>
       <p>MY FOOD TRUCKS PAGE</p>
-      <AdminFoodTruckForm {...{ history, addFoodTruck }} />
+      <AdminFoodTruckForm {...{ addFoodTruck }} />
       {user.food_trucks.map(foodTruck => {
         return (
           <AdminShowFoodTruck
             key={foodTruck.id}
             {...{
-              ...foodTruck,
-              handleClickEdit,
-              handleClickUpdateSchedule
+              ...foodTruck
+              // setFoodTruckSelected,
+              // setScreenSelected
             }}
           />
         )

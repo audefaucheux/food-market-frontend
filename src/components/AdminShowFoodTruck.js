@@ -1,33 +1,24 @@
 import React from "react"
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  useParams,
-  Switch
-} from "react-router-dom"
-import FoodTruckForm from "./FoodTruckForm"
+// import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom"
 
 const AdminShowFoodTruck = ({
   id,
-  name,
-  handleClickEdit,
-  handleClickUpdateSchedule
+  name
+  // setFoodTruckSelected,
+  // setScreenSelected
 }) => {
+  // const handleClick = screen => {
+  //   setFoodTruckSelected(id)
+  //   setScreenSelected(screen)
+  // }
+
   return (
-    <Router>
-      <div>
-        <h3>{name}</h3>
-        {/* <button className="primary" onClick={handleClickEdit}>
-            Edit
-          </button> */}
-        <Link
-          key={`/my_food_trucks/${id}/edit`}
-          to={`/my_food_trucks/${id}/edit`}
-        >
+    <div>
+      <h3>{name}</h3>
+      {/* <button className="primary" onClick={() => console.log("edit")}>
           Edit
-        </Link>
-        {/* <button className="primary" onClick={handleClickUpdateSchedule}>
+        </button> */}
+      {/* <button className="primary" onClick={() => console.log("schedule")}>
           Update Schedule
         </button>
         <button
@@ -36,13 +27,12 @@ const AdminShowFoodTruck = ({
         >
           Archive
         </button> */}
-        <Switch>
-          <Route key={id} exact path={`/my_food_trucks/:id/edit`}>
-            <FoodTruckForm />
+      {/* <Switch>
+          <Route key="/test/:id" exact path="/test/:id">
+            Hello test
           </Route>
-        </Switch>
-      </div>
-    </Router>
+        </Switch> */}
+    </div>
   )
 }
 

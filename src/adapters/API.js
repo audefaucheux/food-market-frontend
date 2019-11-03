@@ -40,13 +40,19 @@ const post = (url, data, headers = {}) =>
     body: JSON.stringify(data)
   }).then(resp => resp.json())
 
-const destroy = (url, id, headers = {}) => {
-  fetch(url, {
-    method: "DELETE",
+const update = (url, id, data, headers) =>
+  fetch(`${url}/${id}`, {
+    method: "PATCH",
     headers: headers,
-    body: JSON.stringify(id)
-  })
-}
+    body: JSON.stringify(data)
+  }).then(resp => resp.json())
+
+// const destroy = (url, id, headers = {}) => {
+//   fetch(`${url}/${id}`, {
+//     method: "DELETE",
+//     headers: headers
+//   })
+// }
 
 // DATA APIs
 
@@ -59,7 +65,13 @@ const addFoodTruck = foodTruckDetails =>
     { food_truck: foodTruckDetails },
     jsonHeaders(authHeader())
   )
-const deleteFoodTruck = id => destroy(FOOD_TRUCKS_URL + "/" + id)
+const updateFoodTruck = (id, foodTruckDetails) =>
+  update(
+    FOOD_TRUCKS_URL,
+    id,
+    { food_truck: foodTruckDetails },
+    jsonHeaders(authHeader())
+  )
 
 const getFormData = () => get(FORM_DATA_URL)
 
@@ -89,7 +101,7 @@ export default {
   getUser,
   getFoodTrucks,
   addFoodTruck,
-  deleteFoodTruck,
+  updateFoodTruck,
   getFormData,
   login,
   signUp,

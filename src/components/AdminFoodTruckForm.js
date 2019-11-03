@@ -1,43 +1,34 @@
-import React from "react"
+import React, { useState } from "react"
 
-class AdminFoodTruckForm extends React.Component {
-  state = {
-    name: ""
+const AdminFoodTruckForm = ({ addFoodTruck }) => {
+  const [name, setName] = useState("")
+
+  const handleInputChange = e => {
+    setName(e.target.value)
   }
 
-  handleInputChange = e => {
-    this.setState({ [e.target.name]: e.target.value })
-  }
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault()
     const { name } = e.target
     let newFoodTruck = {
       name: name.value
     }
-    this.props.addFoodTruck(newFoodTruck)
-    this.setState({
-      name: ""
-    })
+    addFoodTruck(newFoodTruck)
+    setName("")
   }
 
-  render() {
-    const { name } = this.state
-    const { handleInputChange } = this
-
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="name"
-          value={name}
-          onChange={handleInputChange}
-        ></input>
-        <input type="submit" value="Create Food Truck" />
-      </form>
-    )
-  }
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="name"
+        placeholder="name"
+        value={name}
+        onChange={handleInputChange}
+      ></input>
+      <input type="submit" value="Create Food Truck" />
+    </form>
+  )
 }
 
 export default AdminFoodTruckForm

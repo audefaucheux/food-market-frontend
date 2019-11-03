@@ -1,37 +1,40 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import AdminFoodTruckForm from "../components/AdminFoodTruckForm"
 import AdminShowFoodTruck from "../components/AdminShowFoodTruck"
 import API from "../adapters/API"
 
-const AdminFoodTruckContainer = ({
-  history,
-  user,
-  addFoodTruck,
-  deleteFoodTruck
-}) => {
-  const [foodTrucks, setFoodTrucks] = useState([])
+const AdminFoodTruckContainer = ({ history, user, setUserUpdate }) => {
+  const addFoodTruck = newFoodTruck => {
+    API.addFoodTruck(newFoodTruck).then(data => {
+      if (data.errors) {
+        alert(data.errors)
+      } else if (data.food_truck) {
+        setUserUpdate(data.food_truck)
+      }
+    })
+  }
 
-  useEffect(() => {
-    if (user) {
-      API.getUser(user.id).then(user => setFoodTrucks(user.food_trucks))
-    }
-  }, [user])
+  const handleClickEdit = () => {
+    console.log("redirect to edit page")
+  }
 
-  // const handleClickDelete = id => {
-  //   API.deleteFoodTruck(id)
-  //   let deleteFoodTruck = foodTrucks.filter(foodTruck => foodTruck.id !== id)
-  //   setFoodTrucks(deleteFoodTruck)
-  // }
+  const handleClickUpdateSchedule = () => {
+    console.log("redirect to schedule page")
+  }
 
   return (
     <div>
       <p>MY FOOD TRUCKS PAGE</p>
       <AdminFoodTruckForm {...{ history, addFoodTruck }} />
-      {foodTrucks.map(foodTruck => {
+      {user.food_trucks.map(foodTruck => {
         return (
           <AdminShowFoodTruck
             key={foodTruck.id}
-            {...{ ...foodTruck, deleteFoodTruck }}
+            {...{
+              ...foodTruck,
+              handleClickEdit,
+              handleClickUpdateSchedule
+            }}
           />
         )
       })}

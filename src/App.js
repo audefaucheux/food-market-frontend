@@ -43,15 +43,6 @@ const App = ({ history }) => {
     history.push("/login")
   }
 
-  const addFoodTruck = newFoodTruck => {
-    API.addFoodTruck(newFoodTruck).then(setUserUpdate)
-  }
-
-  const deleteFoodTruck = id => {
-    API.deleteFoodTruck(id)
-    setUserUpdate(id)
-  }
-
   return (
     <div className="App">
       <Navbar user={user} logout={logout} />
@@ -71,8 +62,7 @@ const App = ({ history }) => {
               login,
               user,
               history,
-              addFoodTruck,
-              deleteFoodTruck
+              setUserUpdate
             }}
           />
         ) : (

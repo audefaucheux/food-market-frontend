@@ -26,7 +26,7 @@ const Navbar = ({ user, logout }) => {
         ))}
         {user ? <button onClick={logout}>Logout</button> : null}
       </div>
-      <p>{user && `Hello ${user.email}`}</p>
+      {/* <p>{user && `Hello ${user.email}`}</p> */}
     </div>
   )
 }

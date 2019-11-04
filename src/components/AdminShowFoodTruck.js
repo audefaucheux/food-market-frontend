@@ -1,23 +1,13 @@
 import React from "react"
+import { Link } from "@reach/router"
+
 // import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom"
 
-const AdminShowFoodTruck = ({
-  id,
-  name
-  // setFoodTruckSelected,
-  // setScreenSelected
-}) => {
-  // const handleClick = screen => {
-  //   setFoodTruckSelected(id)
-  //   setScreenSelected(screen)
-  // }
-
+const AdminShowFoodTruck = ({ id, name }) => {
   return (
     <div>
       <h3>{name}</h3>
-      {/* <button className="primary" onClick={() => console.log("edit")}>
-          Edit
-        </button> */}
+      <Link to="edit">Edit</Link>
       {/* <button className="primary" onClick={() => console.log("schedule")}>
           Update Schedule
         </button>
@@ -37,11 +27,3 @@ const AdminShowFoodTruck = ({
 }
 
 export default AdminShowFoodTruck
-
-/* <Route key="/" exact path="/">
-<HomePublic {...{ formData }} />
-</Route> */
-
-// <Link key={item.title} to={item.path}>
-// {item.title}
-// </Link>

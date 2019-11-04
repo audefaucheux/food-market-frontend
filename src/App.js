@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react"
 import "./stylesheets/App.css"
-import { Router, navigate, redirectTo } from "@reach/router"
+import { Router, navigate } from "@reach/router"
 import API from "./adapters/API"
 import Navbar from "./components/Navbar"
 import Login from "./components/Login"
 import HomePublic from "./components/HomePublic"
 import SignUp from "./components/SignUp"
-import AdminFoodTruckContainer from "./containers/AdminFoodTrucksContainer"
+import HomeAdmin from "./components/HomeAdmin"
 
 const App = props => {
   const [user, setUser] = useState(null)
@@ -21,7 +21,7 @@ const App = props => {
           alert(data.errors)
         } else if (data.user) {
           setUser(data.user)
-          navigate("/my_food_trucks")
+          // navigate("/my_food_trucks")
         }
         setFormData(formData)
       })
@@ -44,11 +44,11 @@ const App = props => {
       <Navbar user={user} logout={logout} />
       <Router>
         <HomePublic path="/" {...{ formData }} />
-        <SignUp path="/sign_up" {...{ login }} />
-        <Login path="/login" {...{ login }} />
+        <SignUp path="sign_up" {...{ login }} />
+        <Login path="login" {...{ login }} />
         {user ? (
-          <AdminFoodTruckContainer
-            path="/my_food_trucks"
+          <HomeAdmin
+            path="my_food_trucks/*"
             {...{
               login,
               user,

@@ -18,7 +18,15 @@ const HomeAdmin = ({ user, setUserUpdate }) => {
   }
 
   const editFoodTruck = (id, updatedFoodTruck) => {
-    API.updateFoodTruck(id, updatedFoodTruck).then(console.log)
+    API.updateFoodTruck(id, updatedFoodTruck).then(data => {
+      if (data.errors) {
+        alert(data.errors)
+      } else if (data.food_truck) {
+        console.log(data)
+        setUserUpdate(data.food_truck)
+        navigate("/my_food_trucks")
+      }
+    })
   }
 
   // find selected truck and replace null values with "" to make the form working
@@ -36,9 +44,12 @@ const HomeAdmin = ({ user, setUserUpdate }) => {
     <div id="home_admin">
       <p>HOME ADMIN PAGE</p>
       <Router>
-        <AdminFoodTruckContainer path="/" {...{ user }} />
+        <AdminFoodTruckContainer path="/" {...{ user, editFoodTruck }} />
         <AdminFoodTruckAdd path="add" {...{ addFoodTruck }} />
-        <AdminFoodTruckEdit path="edit/:id" {...{ selectedTruck, editFoodTruck }} />
+        <AdminFoodTruckEdit
+          path="edit/:id"
+          {...{ selectedTruck, editFoodTruck }}
+        />
       </Router>
     </div>
   )

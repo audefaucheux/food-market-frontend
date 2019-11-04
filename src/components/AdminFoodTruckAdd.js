@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import FoodTruckForm from "./FoodTruckForm"
+import { Link } from "@reach/router"
 
 const AdminFoodTruckAdd = ({ addFoodTruck }) => {
   const [name, setName] = useState("")
@@ -28,6 +29,7 @@ const AdminFoodTruckAdd = ({ addFoodTruck }) => {
 
   return (
     <>
+      <Link to="/my_food_trucks">BACK</Link>
       <FoodTruckForm
         {...{
           name,

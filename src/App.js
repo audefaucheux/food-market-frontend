@@ -14,6 +14,7 @@ const App = props => {
   const [formData, setFormData] = useState({ markets: [], cuisines: [] })
 
   useEffect(() => {
+    console.log("app reloaded")
     API.getFormData().then(formData => {
       API.validateUser().then(data => {
         if (data.errors) {

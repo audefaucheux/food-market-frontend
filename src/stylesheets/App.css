@@ -30,7 +30,8 @@ label {
   min-width: 50px;
 }
 
-input {
+input,
+textarea {
   margin: 10px;
   border: solid black;
 }
@@ -38,4 +39,8 @@ input {
 .primary {
   border: solid black;
   margin-left: 5px;
+}
+
+form {
+  display: block;
 }

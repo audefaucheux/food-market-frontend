@@ -1,6 +1,7 @@
 import React from "react"
-import { Router, Link } from "@reach/router"
-import AdminFoodTruckForm from "./AdminFoodTruckForm"
+import { Router, navigate } from "@reach/router"
+import AdminFoodTruckAdd from "./AdminFoodTruckAdd"
+import AdminFoodTruckEdit from "./AdminFoodTruckEdit"
 import AdminFoodTruckContainer from "../containers/AdminFoodTrucksContainer"
 import API from "../adapters/API"
 
@@ -11,8 +12,13 @@ const HomeAdmin = ({ user, setUserUpdate }) => {
         alert(data.errors)
       } else if (data.food_truck) {
         setUserUpdate(data.food_truck)
+        navigate("/my_food_trucks")
       }
     })
+  }
+
+  const selectedTruck = id => {
+    return user.food_trucks.find(foodTruck => foodTruck.id === parseInt(id))
   }
 
   return (
@@ -20,7 +26,8 @@ const HomeAdmin = ({ user, setUserUpdate }) => {
       <p>HOME ADMIN PAGE</p>
       <Router>
         <AdminFoodTruckContainer path="/" {...{ user }} />
-        <AdminFoodTruckForm path="add" />
+        <AdminFoodTruckAdd path="add" {...{ addFoodTruck }} />
+        <AdminFoodTruckEdit path="edit/:id" {...{ selectedTruck }} />
       </Router>
     </div>
   )

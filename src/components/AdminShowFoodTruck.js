@@ -1,27 +1,21 @@
 import React from "react"
 import { Link } from "@reach/router"
 
-// import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom"
-
-const AdminShowFoodTruck = ({ id, name }) => {
+const AdminShowFoodTruck = ({
+  id,
+  name,
+  description,
+  profile_picture,
+  twitter_account
+}) => {
   return (
     <div>
       <h3>{name}</h3>
-      <Link to="edit">Edit</Link>
-      {/* <button className="primary" onClick={() => console.log("schedule")}>
-          Update Schedule
-        </button>
-        <button
-          className="primary"
-          onClick={() => console.log("archive food truck")}
-        >
-          Archive
-        </button> */}
-      {/* <Switch>
-          <Route key="/test/:id" exact path="/test/:id">
-            Hello test
-          </Route>
-        </Switch> */}
+      <p>{description}</p>
+      <img src={profile_picture} alt={name} width="30%" />
+      <p>{twitter_account}</p>
+      <Link to={`edit/${id}`}>Edit</Link>
+      <Link to="schedule">Schedule</Link> <Link to="archive">Archive</Link>
     </div>
   )
 }

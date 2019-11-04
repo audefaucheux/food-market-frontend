@@ -17,8 +17,19 @@ const HomeAdmin = ({ user, setUserUpdate }) => {
     })
   }
 
+  const editFoodTruck = (id, updatedFoodTruck) => {
+    API.updateFoodTruck(id, updatedFoodTruck).then(console.log)
+  }
+
+  // find selected truck and replace null values with "" to make the form working
   const selectedTruck = id => {
-    return user.food_trucks.find(foodTruck => foodTruck.id === parseInt(id))
+    let truck = user.food_trucks.find(
+      foodTruck => foodTruck.id === parseInt(id)
+    )
+    Object.keys(truck).forEach(key => {
+      if (truck[key] === null) return (truck[key] = "")
+    })
+    return truck
   }
 
   return (
@@ -27,7 +38,7 @@ const HomeAdmin = ({ user, setUserUpdate }) => {
       <Router>
         <AdminFoodTruckContainer path="/" {...{ user }} />
         <AdminFoodTruckAdd path="add" {...{ addFoodTruck }} />
-        <AdminFoodTruckEdit path="edit/:id" {...{ selectedTruck }} />
+        <AdminFoodTruckEdit path="edit/:id" {...{ selectedTruck, editFoodTruck }} />
       </Router>
     </div>
   )

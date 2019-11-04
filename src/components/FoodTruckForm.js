@@ -41,7 +41,7 @@ const FoodTruckForm = ({
         value={twitterAccount}
         onChange={e => handleInputChange(e, setTwitterAccount)}
       />
-      <input type="submit" value="Create Food Truck" />
+      <input type="submit" value="Submit" />
     </form>
   )
 }

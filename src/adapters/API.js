@@ -5,6 +5,8 @@ const SIGN_UP_URL = `${API_ENDPOINT}/sign_up`
 const FOOD_TRUCKS_URL = `${API_ENDPOINT}/food_trucks`
 const USERS_URL = `${API_ENDPOINT}/users`
 const FORM_DATA_URL = `${API_ENDPOINT}/form_data`
+const SCHEDULE_RECURRENCES_URL = `${API_ENDPOINT}/schedule_recurrences`
+const SCHEDULE_DAYS_URL = `${API_ENDPOINT}/schedule_days`
 
 // HEADERS HELPERS
 
@@ -59,6 +61,7 @@ const update = (url, id, data, headers) =>
 const getUser = user_id => get(USERS_URL + "/" + user_id)
 
 const getFoodTrucks = () => get(FOOD_TRUCKS_URL)
+const getFoodTruck = food_truck_id => get(FOOD_TRUCKS_URL + "/" + food_truck_id)
 const addFoodTruck = foodTruckDetails =>
   post(
     FOOD_TRUCKS_URL,
@@ -74,6 +77,22 @@ const updateFoodTruck = (id, foodTruckDetails) =>
   )
 
 const getFormData = () => get(FORM_DATA_URL)
+
+const getScheduleRecurrences = () => get(SCHEDULE_RECURRENCES_URL)
+const addScheduleRecurrence = recurrenceDetails =>
+  post(
+    SCHEDULE_RECURRENCES_URL,
+    { schedule_recurrence: recurrenceDetails },
+    jsonHeaders(authHeader())
+  )
+
+const getScheduleDays = () => get(SCHEDULE_RECURRENCES_URL)
+const addScheduleDays = recurrenceDetails =>
+  post(
+    SCHEDULE_DAYS_URL,
+    { schedule_recurrence: recurrenceDetails },
+    jsonHeaders(authHeader())
+  )
 
 // AUTH APIs
 
@@ -100,9 +119,14 @@ const logout = () => {
 export default {
   getUser,
   getFoodTrucks,
+  getFoodTruck,
   addFoodTruck,
   updateFoodTruck,
   getFormData,
+  getScheduleRecurrences,
+  addScheduleRecurrence,
+  getScheduleDays,
+  addScheduleDays,
   login,
   signUp,
   validateUser,

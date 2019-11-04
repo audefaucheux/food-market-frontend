@@ -2,6 +2,7 @@ import React from "react"
 import { Router, navigate } from "@reach/router"
 import AdminFoodTruckAdd from "./AdminFoodTruckAdd"
 import AdminFoodTruckEdit from "./AdminFoodTruckEdit"
+import AdminFoodTruckSchedule from "./AdminFoodTruckSchedule"
 import AdminFoodTruckContainer from "../containers/AdminFoodTrucksContainer"
 import API from "../adapters/API"
 
@@ -22,7 +23,6 @@ const HomeAdmin = ({ user, setUserUpdate }) => {
       if (data.errors) {
         alert(data.errors)
       } else if (data.food_truck) {
-        console.log(data)
         setUserUpdate(data.food_truck)
         navigate("/my_food_trucks")
       }
@@ -50,6 +50,7 @@ const HomeAdmin = ({ user, setUserUpdate }) => {
           path="edit/:id"
           {...{ selectedTruck, editFoodTruck }}
         />
+        <AdminFoodTruckSchedule path="schedule/:id" />
       </Router>
     </div>
   )

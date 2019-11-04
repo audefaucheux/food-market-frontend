@@ -18,9 +18,15 @@ const AdminShowFoodTruck = ({
       <img src={profile_picture} alt={name} width="30%" />
       <p>{twitter_account}</p>
       <p>Archived: {archived ? "true" : "false"}</p>
-      <Link to={`edit/${id}`}>Edit</Link>
-      <Link to="schedule">Schedule</Link>{" "}
-      <button onClick={updateArchived}>Archive</button>
+      <Link to={`edit/${id}`} className="primary">
+        Edit
+      </Link>
+      <Link to={`schedule/${id}`} className="primary">
+        Schedule
+      </Link>{" "}
+      <button onClick={updateArchived} className="primary">
+        {archived ? "Reactivate" : "Archive"}
+      </button>
     </div>
   )
 }

@@ -8,7 +8,7 @@ const AdminShowFoodTruck = ({
   profile_picture,
   twitter_account,
   archived,
-  updateArchived
+  editFoodTruck
 }) => {
   return (
     <div>
@@ -24,7 +24,10 @@ const AdminShowFoodTruck = ({
       <Link to={`schedule/${id}`} className="primary">
         Schedule
       </Link>{" "}
-      <button onClick={updateArchived} className="primary">
+      <button
+        onClick={() => editFoodTruck(id, { archived: !archived })}
+        className="primary"
+      >
         {archived ? "Reactivate" : "Archive"}
       </button>
     </div>

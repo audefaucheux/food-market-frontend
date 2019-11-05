@@ -3,10 +3,6 @@ import { Link } from "@reach/router"
 import AdminShowFoodTruck from "../components/AdminShowFoodTruck"
 
 const AdminFoodTruckContainer = ({ foodTrucks, editFoodTruck }) => {
-  const handleArchived = (id, archived) => {
-    editFoodTruck(id, { archived: !archived })
-  }
-
   return (
     <>
       <Link to="/my_food_trucks/add">New Food Truck</Link>
@@ -15,11 +11,9 @@ const AdminFoodTruckContainer = ({ foodTrucks, editFoodTruck }) => {
           <AdminShowFoodTruck
             key={foodTruck.id}
             {...{
-              ...foodTruck
+              ...foodTruck,
+              editFoodTruck
             }}
-            updateArchived={() =>
-              handleArchived(foodTruck.id, foodTruck.archived)
-            }
           />
         )
       })}

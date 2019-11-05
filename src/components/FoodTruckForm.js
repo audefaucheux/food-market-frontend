@@ -1,20 +1,31 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import Helpers from "../Helpers"
 
-const FoodTruckForm = ({
-  name,
-  setName,
-  description,
-  setDescription,
-  profilePicture,
-  setProfilePicture,
-  twitterAccount,
-  setTwitterAccount,
-  cuisine,
-  setCuisine,
-  handleSubmit,
-  formData
-}) => {
+const FoodTruckForm = ({ formData, addFoodTruck, initialStates }) => {
+  const [name, setName] = useState("test")
+  const [description, setDescription] = useState("")
+  const [profilePicture, setProfilePicture] = useState("")
+  const [twitterAccount, setTwitterAccount] = useState("")
+  const [cuisine, setCuisine] = useState("")
+
+  useEffect(() => {
+    initialStates(
+      [setName, setDescription, setProfilePicture, setTwitterAccount],
+      [setCuisine]
+    )
+  }, [])
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    let newFoodTruck = {
+      name,
+      description,
+      profile_picture: profilePicture,
+      twitter_account: twitterAccount
+    }
+    addFoodTruck(newFoodTruck)
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <input

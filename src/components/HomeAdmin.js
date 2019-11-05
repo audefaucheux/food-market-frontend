@@ -14,7 +14,18 @@ const HomeAdmin = ({ user, formData }) => {
       if (data.errors) {
         alert(data.errors)
       } else if (data.food_truck) {
+        setFoodTrucks([...foodTrucks, data.food_truck])
         navigate("/my_food_trucks")
+      }
+    })
+  }
+
+  const findAndReplace = (array, data) => {
+    return array.map(element => {
+      if (element.id === data.id) {
+        return data
+      } else {
+        return element
       }
     })
   }
@@ -24,6 +35,7 @@ const HomeAdmin = ({ user, formData }) => {
       if (data.errors) {
         alert(data.errors)
       } else if (data.food_truck) {
+        setFoodTrucks(findAndReplace(foodTrucks, data.food_truck))
         navigate("/my_food_trucks")
       }
     })

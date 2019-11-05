@@ -28,7 +28,7 @@ const AdminFoodTruckEdit = ({ id, selectedTruck, editFoodTruck, formData }) => {
       <p>Edit food truck</p>
       <Link to="/my_food_trucks">BACK</Link>
       <FoodTruckForm
-        {...{ initialStates, formData, id, sendAPIRequestFoodTruck }}
+        {...{ initialStates, formData, sendAPIRequestFoodTruck }}
       />
     </div>
   )

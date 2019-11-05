@@ -10,7 +10,7 @@ const ScheduleForm = ({ dayField, formData, addRecurrence, id }) => {
   const handleSubmit = e => {
     e.preventDefault()
     let newRecurrence = {
-      weekday: day,
+      day_num: parseInt(day, 10),
       from_time: fromTime,
       to_time: toTime,
       market_id: market,
@@ -32,13 +32,13 @@ const ScheduleForm = ({ dayField, formData, addRecurrence, id }) => {
           value={day}
         >
           <option value="">--Please choose an option--</option>
-          <option value="Monday">Monday</option>
-          <option value="Tuesday">Tuesday</option>
-          <option value="Wednesday">Wednesday</option>
-          <option value="Thursday">Thursday</option>
-          <option value="Friday">Friday</option>
-          <option value="Saturday">Saturday</option>
-          <option value="Sunday">Sunday</option>
+          <option value="1">Monday</option>
+          <option value="2">Tuesday</option>
+          <option value="3">Wednesday</option>
+          <option value="4">Thursday</option>
+          <option value="5">Friday</option>
+          <option value="6">Saturday</option>
+          <option value="7">Sunday</option>
         </select>
       </label>
       <label>

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import Helpers from "../Helpers"
 
 const FoodTruckForm = ({
-  id,
   formData,
   initialStates,
   sendAPIRequestFoodTruck

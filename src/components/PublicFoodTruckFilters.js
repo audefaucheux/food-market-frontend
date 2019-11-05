@@ -1,45 +1,75 @@
-import React from "react"
+import React, { useState } from "react"
+import API from "../adapters/API"
 
-const PublicFoodTruckFilters = ({
-  marketFilter,
-  setMarketFilter,
-  dateFilter,
-  setDateFilter,
-  cuisineFilter,
-  setCuisineFilter,
-  submitFilters,
-  formData
-}) => {
-  const updateArrayFilter = (e, array, setter) => {
-    if (!array.includes(e.target.value)) {
-      setter([...array, parseInt(e.target.value)])
+const PublicFoodTruckFilters = ({ formData, setFoodTrucks }) => {
+  const [marketFilter, setMarketFilter] = useState([])
+  const [dateFilter, setDateFilter] = useState(
+    new Date().toISOString().slice(0, 10)
+  ) // set date to today by default
+  const [cuisineFilter, setCuisineFilter] = useState([])
+
+  const filterFoodTrucksByDay = array => {
+    let convertedDate = new Date(dateFilter)
+    let matchingDate = []
+    array.forEach(foodTruck =>
+      foodTruck.schedule_recurrences.forEach(recurrence => {
+        if (recurrence.day_num === convertedDate.getDay()) {
+          matchingDate.push(foodTruck)
+        }
+      })
+    )
+    return matchingDate
+  }
+
+  const filterFoodTrucksByMarket = array => {
+    let matchingMarket = []
+    console.log(array)
+    array.forEach(foodTruck => {
+      console.log(foodTruck.recurrence)
+      // foodTruck.recurrence.forEach(recurrence => {
+      //   if (marketFilter.includes(recurrence.market.id)) {
+      //     matchingMarket.push(foodTruck)
+      //   }
+      // })
+    })
+    return array
+  }
+
+  const filterFoodTrucksByCuisine = array => {
+    return array.filter(foodTruck =>
+      foodTruck.cuisines.some(cuisine => cuisineFilter.includes(cuisine.id))
+    )
+  }
+
+  // const foodTruckArray = data => {
+  //   filterFoodTrucksByMarket(data)
+  // }
+
+  const foodTruckArray = data => {
+    let filteredByDate = filterFoodTrucksByDay(data)
+    if (marketFilter.length !== 0) {
+      // let filteredByMarket = filterFoodTrucksByMarket(filteredByDate)
+      // if (cuisineFilter.length !== 0) {
+      //   return filterFoodTrucksByCuisine(filteredByDate)
+      //   } else {
+      return filterFoodTrucksByMarket(filteredByDate)
+      // }
+    } else {
+      return filteredByDate
     }
   }
 
   const handleSubmit = e => {
     e.preventDefault()
-    submitFilters()
+    API.getFoodTrucks().then(data => {
+      setFoodTrucks(foodTruckArray(data))
+    })
   }
 
   return (
     <div>
       <p>FILTERS</p>
       <form onSubmit={handleSubmit}>
-        <label>
-          Market:
-          {/* <input type="search" name="market"></input> */}
-          <select
-            // multiple
-            onChange={e => updateArrayFilter(e, marketFilter, setMarketFilter)}
-          >
-            <option value="">--Please choose an option--</option>
-            {formData.markets.map(market => (
-              <option key={market.id} value={market.id}>
-                {market.name}
-              </option>
-            ))}
-          </select>
-        </label>
         <label>
           Day:
           <input
@@ -50,12 +80,25 @@ const PublicFoodTruckFilters = ({
           />
         </label>
         <label>
+          Market:
+          {/* <input type="search" name="market"></input> */}
+          <select
+            // multiple
+            onChange={e => setMarketFilter(e.target.value)}
+          >
+            <option value="">--Please choose an option--</option>
+            {formData.markets.map(market => (
+              <option key={market.id} value={market.id}>
+                {market.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
           Cuisine:
           <select
             // multiple
-            onChange={e =>
-              updateArrayFilter(e, cuisineFilter, setCuisineFilter)
-            }
+            onChange={e => setCuisineFilter(e.target.value)}
           >
             <option value="">--Please choose an option--</option>
             {formData.cuisines.map(cuisine => (

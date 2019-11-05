@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from "react"
 import Helpers from "../Helpers"
 
-const FoodTruckForm = ({ formData, addFoodTruck, initialStates }) => {
-  const [name, setName] = useState("test")
+const FoodTruckForm = ({
+  id,
+  formData,
+  initialStates,
+  sendAPIRequestFoodTruck
+}) => {
+  const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [profilePicture, setProfilePicture] = useState("")
   const [twitterAccount, setTwitterAccount] = useState("")
-  const [cuisine, setCuisine] = useState("")
+  const [cuisine, setCuisine] = useState([])
 
   useEffect(() => {
     initialStates(
-      [setName, setDescription, setProfilePicture, setTwitterAccount],
-      [setCuisine]
+      setName,
+      setDescription,
+      setProfilePicture,
+      setTwitterAccount,
+      setCuisine
     )
-  }, [])
+  }, [initialStates])
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -23,7 +31,7 @@ const FoodTruckForm = ({ formData, addFoodTruck, initialStates }) => {
       profile_picture: profilePicture,
       twitter_account: twitterAccount
     }
-    addFoodTruck(newFoodTruck)
+    sendAPIRequestFoodTruck(newFoodTruck)
   }
 
   return (
@@ -58,7 +66,7 @@ const FoodTruckForm = ({ formData, addFoodTruck, initialStates }) => {
       <label>
         Cuisine:
         <select
-          value={cuisine}
+          // value={cuisine.first}
           // multiple
           onChange={e => Helpers.handleInputChange(e, setCuisine)}
         >

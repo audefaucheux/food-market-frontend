@@ -3,20 +3,29 @@ import FoodTruckForm from "./FoodTruckForm"
 import { Link } from "@reach/router"
 
 const AdminFoodTruckAdd = ({ addFoodTruck, formData }) => {
-  const initialStates = (values, arrays) => {
-    values.map(setter => setter(""))
-    arrays.map(setter => setter([]))
+  const initialStates = (
+    setName,
+    setDescription,
+    setProfilePicture,
+    setTwitterAccount,
+    setCuisine
+  ) => {
+    setName("")
+    setDescription("")
+    setProfilePicture("")
+    setTwitterAccount("")
+    setCuisine([])
+  }
+
+  const sendAPIRequestFoodTruck = data => {
+    addFoodTruck(data)
   }
 
   return (
     <>
       <Link to="/my_food_trucks">BACK</Link>
       <FoodTruckForm
-        {...{
-          formData,
-          addFoodTruck,
-          initialStates
-        }}
+        {...{ formData, sendAPIRequestFoodTruck, initialStates }}
       />
     </>
   )

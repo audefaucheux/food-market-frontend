@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Router, navigate } from "@reach/router"
 import AdminFoodTruckAdd from "./AdminFoodTruckAdd"
 import AdminFoodTruckEdit from "./AdminFoodTruckEdit"
@@ -6,13 +6,14 @@ import AdminFoodTruckSchedule from "./AdminFoodTruckSchedule"
 import AdminFoodTruckContainer from "../containers/AdminFoodTrucksContainer"
 import API from "../adapters/API"
 
-const HomeAdmin = ({ user, setUserUpdate }) => {
+const HomeAdmin = ({ user, formData }) => {
+  const [foodTrucks, setFoodTrucks] = useState(user.food_trucks)
+
   const addFoodTruck = newFoodTruck => {
     API.addFoodTruck(newFoodTruck).then(data => {
       if (data.errors) {
         alert(data.errors)
       } else if (data.food_truck) {
-        setUserUpdate(data.food_truck)
         navigate("/my_food_trucks")
       }
     })
@@ -23,7 +24,6 @@ const HomeAdmin = ({ user, setUserUpdate }) => {
       if (data.errors) {
         alert(data.errors)
       } else if (data.food_truck) {
-        setUserUpdate(data.food_truck)
         navigate("/my_food_trucks")
       }
     })
@@ -44,13 +44,16 @@ const HomeAdmin = ({ user, setUserUpdate }) => {
     <div id="home_admin">
       <p>HOME ADMIN PAGE</p>
       <Router>
-        <AdminFoodTruckContainer path="/" {...{ user, editFoodTruck }} />
-        <AdminFoodTruckAdd path="add" {...{ addFoodTruck }} />
+        <AdminFoodTruckContainer path="/" {...{ foodTrucks, editFoodTruck }} />
+        <AdminFoodTruckAdd
+          path="add"
+          {...{ addFoodTruck, formData, setFoodTrucks }}
+        />
         <AdminFoodTruckEdit
           path="edit/:id"
-          {...{ selectedTruck, editFoodTruck }}
+          {...{ selectedTruck, editFoodTruck, formData }}
         />
-        <AdminFoodTruckSchedule path="schedule/:id" />
+        <AdminFoodTruckSchedule path="schedule/:id" {...{ formData }} />
       </Router>
     </div>
   )

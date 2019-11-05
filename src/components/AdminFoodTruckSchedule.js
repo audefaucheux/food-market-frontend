@@ -1,26 +1,42 @@
 import React, { useState, useEffect } from "react"
-// import { Router, navigate } from "@reach/router"
 import API from "../adapters/API"
+import { Link } from "@reach/router"
 import ScheduleRecurrenceContainer from "../containers/ScheduleRecurrenceContainer"
-import ScheduleDayContainer from "../containers/ScheduleDayContainer"
+// import ScheduleDayContainer from "../containers/ScheduleDayContainer"
 
-const AdminFoodTruckSchedule = ({ id }) => {
-  const [foodTruck, setFoodTruck] = useState({
-    schedule_recurrences: [],
-    schedule_days: []
-  })
+const AdminFoodTruckSchedule = ({ id, formData }) => {
+  const [recurrences, setRecurrences] = useState([])
 
   useEffect(() => {
-    API.getFoodTruck(id).then(setFoodTruck)
+    API.getFoodTruck(id).then(data => setRecurrences(data.schedule_recurrences))
   }, [id])
+
+  const addRecurrence = newRecurrence => {
+    API.addScheduleRecurrence(newRecurrence).then(data => {
+      if (data.errors) {
+        alert(data.errors)
+      } else if (data.schedule_recurrence) {
+        setRecurrences([...recurrences, data.schedule_recurrence])
+      }
+    })
+  }
+
+  const deleteRecurrence = id => {
+    API.deleteScheduleRecurrence(id)
+    let updatedRecurrences = recurrences.filter(
+      recurrence => recurrence.id !== id
+    )
+    setRecurrences(updatedRecurrences)
+  }
 
   return (
     <div>
-      {foodTruck.name} schedule:
+      <Link to="/my_food_trucks">BACK</Link>
+      {/* {foodTruck.name} schedule: */}
       <ScheduleRecurrenceContainer
-        recurrences={foodTruck.schedule_recurrences}
+        {...{ formData, addRecurrence, deleteRecurrence, id, recurrences }}
       />
-      <ScheduleDayContainer days={foodTruck.schedule_days} />
+      {/* <ScheduleDayContainer days={foodTruck.schedule_days} {...{ formData }} /> */}
     </div>
   )
 }

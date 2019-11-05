@@ -10,7 +10,6 @@ import HomeAdmin from "./components/HomeAdmin"
 
 const App = props => {
   const [user, setUser] = useState(null)
-  const [userUpdate, setUserUpdate] = useState(null)
   const [formData, setFormData] = useState({ markets: [], cuisines: [] })
 
   useEffect(() => {
@@ -27,7 +26,7 @@ const App = props => {
         setFormData(formData)
       })
     })
-  }, [userUpdate])
+  }, [])
 
   const login = user => {
     setUser(user)
@@ -51,9 +50,8 @@ const App = props => {
           <HomeAdmin
             path="my_food_trucks/*"
             {...{
-              login,
               user,
-              setUserUpdate
+              formData
             }}
           />
         ) : (

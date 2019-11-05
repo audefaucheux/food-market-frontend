@@ -29,9 +29,10 @@ const PublicFoodTruckFilters = ({
           Market:
           {/* <input type="search" name="market"></input> */}
           <select
-            multiple
+            // multiple
             onChange={e => updateArrayFilter(e, marketFilter, setMarketFilter)}
           >
+            <option value="">--Please choose an option--</option>
             {formData.markets.map(market => (
               <option key={market.id} value={market.id}>
                 {market.name}
@@ -50,13 +51,13 @@ const PublicFoodTruckFilters = ({
         </label>
         <label>
           Cuisine:
-          {/* <input type="search" name="cuisine" /> */}
           <select
-            multiple
+            // multiple
             onChange={e =>
               updateArrayFilter(e, cuisineFilter, setCuisineFilter)
             }
           >
+            <option value="">--Please choose an option--</option>
             {formData.cuisines.map(cuisine => (
               <option key={cuisine.id} value={cuisine.id}>
                 {cuisine.name}

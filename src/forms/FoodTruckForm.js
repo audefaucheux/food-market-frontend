@@ -1,5 +1,4 @@
 import React from "react"
-import Helpers from "../Helpers"
 
 const FoodTruckForm = ({
   name,
@@ -10,10 +9,8 @@ const FoodTruckForm = ({
   setProfilePicture,
   twitterAccount,
   setTwitterAccount,
-  cuisine,
-  setCuisine,
   handleSubmit,
-  formData
+  handleInputChange
 }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -22,44 +19,28 @@ const FoodTruckForm = ({
         name="name"
         placeholder="Name"
         value={name}
-        onChange={e => Helpers.handleInputChange(e, setName)}
+        onChange={e => handleInputChange(e, setName)}
       />
       <textarea
         name="description"
         placeholder="Description"
         value={description}
-        onChange={e => Helpers.handleInputChange(e, setDescription)}
+        onChange={e => handleInputChange(e, setDescription)}
       />
       <input
         type="text"
         name="profilePicture"
         placeholder="Profile Picture Url"
         value={profilePicture}
-        onChange={e => Helpers.handleInputChange(e, setProfilePicture)}
+        onChange={e => handleInputChange(e, setProfilePicture)}
       />
       <input
         type="text"
         name="twitterAccount"
         placeholder="Twitter Account"
         value={twitterAccount}
-        onChange={e => Helpers.handleInputChange(e, setTwitterAccount)}
+        onChange={e => handleInputChange(e, setTwitterAccount)}
       />
-      <label>
-        Cuisine:
-        <select
-          value={cuisine}
-          // multiple
-          onChange={e => Helpers.handleInputChange(e, setCuisine)}
-        >
-          <option value="">--Please choose an option--</option>
-          {formData.cuisines.map(cuisine => (
-            <option key={cuisine.id} value={cuisine.id}>
-              {cuisine.name}
-            </option>
-          ))}
-        </select>
-      </label>
-
       <input type="submit" value="Submit" />
     </form>
   )

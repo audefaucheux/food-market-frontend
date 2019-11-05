@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "@reach/router"
 import AdminShowFoodTruck from "../components/AdminShowFoodTruck"
 
-const AdminFoodTruckContainer = ({ user, editFoodTruck }) => {
+const AdminFoodTruckContainer = ({ foodTrucks, editFoodTruck }) => {
   const handleArchived = (id, archived) => {
     editFoodTruck(id, { archived: !archived })
   }
@@ -10,7 +10,7 @@ const AdminFoodTruckContainer = ({ user, editFoodTruck }) => {
   return (
     <>
       <Link to="/my_food_trucks/add">New Food Truck</Link>
-      {user.food_trucks.map(foodTruck => {
+      {foodTrucks.map(foodTruck => {
         return (
           <AdminShowFoodTruck
             key={foodTruck.id}

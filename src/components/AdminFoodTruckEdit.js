@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react"
 import FoodTruckForm from "./FoodTruckForm"
 import { Link } from "@reach/router"
 
-const AdminFoodTruckEdit = ({ id, selectedTruck, editFoodTruck }) => {
+const AdminFoodTruckEdit = ({ id, selectedTruck, editFoodTruck, formData }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [profilePicture, setProfilePicture] = useState("")
   const [twitterAccount, setTwitterAccount] = useState("")
+  const [cuisine, setCuisine] = useState("")
 
   const foodTruckDetails = selectedTruck(id)
 
@@ -16,10 +17,6 @@ const AdminFoodTruckEdit = ({ id, selectedTruck, editFoodTruck }) => {
     setProfilePicture(foodTruckDetails.profile_picture)
     setTwitterAccount(foodTruckDetails.twitter_account)
   }, [foodTruckDetails])
-
-  const handleInputChange = (e, setter) => {
-    setter(e.target.value)
-  }
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -46,8 +43,10 @@ const AdminFoodTruckEdit = ({ id, selectedTruck, editFoodTruck }) => {
           setProfilePicture,
           twitterAccount,
           setTwitterAccount,
+          cuisine,
+          setCuisine,
           handleSubmit,
-          handleInputChange
+          formData
         }}
       />
     </div>

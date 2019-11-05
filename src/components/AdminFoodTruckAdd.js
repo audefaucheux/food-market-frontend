@@ -2,15 +2,12 @@ import React, { useState } from "react"
 import FoodTruckForm from "./FoodTruckForm"
 import { Link } from "@reach/router"
 
-const AdminFoodTruckAdd = ({ addFoodTruck }) => {
+const AdminFoodTruckAdd = ({ addFoodTruck, formData }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [profilePicture, setProfilePicture] = useState("")
   const [twitterAccount, setTwitterAccount] = useState("")
-
-  const handleInputChange = (e, setter) => {
-    setter(e.target.value)
-  }
+  const [cuisine, setCuisine] = useState("")
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -25,6 +22,7 @@ const AdminFoodTruckAdd = ({ addFoodTruck }) => {
     setDescription("")
     setProfilePicture("")
     setTwitterAccount("")
+    setCuisine([])
   }
 
   return (
@@ -40,8 +38,10 @@ const AdminFoodTruckAdd = ({ addFoodTruck }) => {
           setProfilePicture,
           twitterAccount,
           setTwitterAccount,
+          cuisine,
+          setCuisine,
           handleSubmit,
-          handleInputChange
+          formData
         }}
       />
     </>

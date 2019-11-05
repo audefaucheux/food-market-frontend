@@ -6,7 +6,7 @@ const FOOD_TRUCKS_URL = `${API_ENDPOINT}/food_trucks`
 const USERS_URL = `${API_ENDPOINT}/users`
 const FORM_DATA_URL = `${API_ENDPOINT}/form_data`
 const SCHEDULE_RECURRENCES_URL = `${API_ENDPOINT}/schedule_recurrences`
-const SCHEDULE_DAYS_URL = `${API_ENDPOINT}/schedule_days`
+// const SCHEDULE_DAYS_URL = `${API_ENDPOINT}/schedule_days`
 
 // HEADERS HELPERS
 
@@ -49,12 +49,12 @@ const update = (url, id, data, headers) =>
     body: JSON.stringify(data)
   }).then(resp => resp.json())
 
-// const destroy = (url, id, headers = {}) => {
-//   fetch(`${url}/${id}`, {
-//     method: "DELETE",
-//     headers: headers
-//   })
-// }
+const destroy = (url, id, headers = {}) => {
+  fetch(`${url}/${id}`, {
+    method: "DELETE",
+    headers: headers
+  }) //.then(resp => resp.json())
+}
 
 // DATA APIs
 
@@ -85,14 +85,16 @@ const addScheduleRecurrence = recurrenceDetails =>
     { schedule_recurrence: recurrenceDetails },
     jsonHeaders(authHeader())
   )
+const deleteScheduleRecurrence = id =>
+  destroy(SCHEDULE_RECURRENCES_URL, id, jsonHeaders(authHeader()))
 
-const getScheduleDays = () => get(SCHEDULE_RECURRENCES_URL)
-const addScheduleDays = recurrenceDetails =>
-  post(
-    SCHEDULE_DAYS_URL,
-    { schedule_recurrence: recurrenceDetails },
-    jsonHeaders(authHeader())
-  )
+// const getScheduleDays = () => get(SCHEDULE_RECURRENCES_URL)
+// const addScheduleDays = recurrenceDetails =>
+//   post(
+//     SCHEDULE_DAYS_URL,
+//     { schedule_recurrence: recurrenceDetails },
+//     jsonHeaders(authHeader())
+//   )
 
 // AUTH APIs
 
@@ -125,8 +127,9 @@ export default {
   getFormData,
   getScheduleRecurrences,
   addScheduleRecurrence,
-  getScheduleDays,
-  addScheduleDays,
+  deleteScheduleRecurrence,
+  // getScheduleDays,
+  // addScheduleDays,
   login,
   signUp,
   validateUser,

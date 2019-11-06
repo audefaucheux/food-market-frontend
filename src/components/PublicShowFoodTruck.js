@@ -4,15 +4,22 @@ const PublicShowFoodTruck = ({
   name,
   description,
   profile_picture,
-  twitter_account
+  twitter_account,
+  cuisines
 }) => {
   return (
     <div>
       <div>----------------------------------</div>
       <h3>{name}</h3>
-      <p>{description}</p>
+      <div>
+        Cuisine:{" "}
+        {cuisines.length !== 0
+          ? cuisines.map(cuisine => cuisine.name + " | ")
+          : null}
+      </div>
+      <p>Description: {description}</p>
       <img src={profile_picture} alt={name} width="30%" />
-      <p>{twitter_account}</p>
+      <p>Twitter Account: {twitter_account}</p>
     </div>
   )
 }

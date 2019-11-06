@@ -23,7 +23,7 @@ const AdminShowFoodTruck = ({
       </div>
       <p>{description}</p>
       <img src={profile_picture} alt={name} width="30%" />
-      <p>{twitter_account}</p>
+      <p>Twitter account: {twitter_account}</p>
       <p>Archived: {archived ? "true" : "false"}</p>
       <Link to={`edit/${id}`} className="primary">
         Edit

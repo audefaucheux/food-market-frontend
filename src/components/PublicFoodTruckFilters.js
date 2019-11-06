@@ -1,12 +1,13 @@
 import React, { useState } from "react"
 import API from "../adapters/API"
+import Helpers from "../Helpers"
 
 const PublicFoodTruckFilters = ({ formData, setFoodTrucks }) => {
   const [dateFilter, setDateFilter] = useState(
     new Date().toISOString().slice(0, 10)
   ) // set date to today by default
   const [marketFilter, setMarketFilter] = useState([])
-  const [cuisineFilter, setCuisineFilter] = useState([])
+  const [cuisinesFilter, setCuisinesFilter] = useState([])
 
   const filterFoodTrucksByDayandMarket = array => {
     let convertedDate = new Date(dateFilter)
@@ -30,9 +31,11 @@ const PublicFoodTruckFilters = ({ formData, setFoodTrucks }) => {
   }
 
   const filterFoodTrucksByCuisine = array => {
-    if (cuisineFilter.length !== 0) {
+    if (cuisinesFilter.length !== 0) {
       return array.filter(foodTruck =>
-        foodTruck.cuisines.some(cuisine => cuisineFilter.includes(cuisine.id))
+        foodTruck.cuisines.some(cuisine =>
+          cuisinesFilter.includes(JSON.stringify(cuisine.id))
+        )
       )
     } else {
       return array
@@ -40,7 +43,8 @@ const PublicFoodTruckFilters = ({ formData, setFoodTrucks }) => {
   }
 
   const foodTruckArray = data => {
-    let filteredByDate = filterFoodTrucksByDayandMarket(data)
+    let removeArchived = data.filter(foodTruck => foodTruck.archived === false)
+    let filteredByDate = filterFoodTrucksByDayandMarket(removeArchived)
     let filteredByCuisine = filterFoodTrucksByCuisine(filteredByDate)
     return filteredByCuisine
   }
@@ -50,6 +54,10 @@ const PublicFoodTruckFilters = ({ formData, setFoodTrucks }) => {
     API.getFoodTrucks().then(data => {
       setFoodTrucks(foodTruckArray(data))
     })
+  }
+
+  const cuisineCheck = cuisine => {
+    return cuisinesFilter.includes(JSON.stringify(cuisine.id))
   }
 
   return (
@@ -80,11 +88,11 @@ const PublicFoodTruckFilters = ({ formData, setFoodTrucks }) => {
             ))}
           </select>
         </label>
-        <label>
+        {/* <label>
           Cuisine:
           <select
             // multiple
-            onChange={e => setCuisineFilter(e.target.value)}
+            onChange={e => setCuisinesFilter(e.target.value)}
           >
             <option value="">--Please choose an option--</option>
             {formData.cuisines.map(cuisine => (
@@ -93,6 +101,27 @@ const PublicFoodTruckFilters = ({ formData, setFoodTrucks }) => {
               </option>
             ))}
           </select>
+        </label> */}
+        <label>
+          Cuisine:
+          {formData.cuisines.map(cuisine => (
+            <label key={cuisine.id}>
+              <input
+                type="checkbox"
+                id={cuisine.id}
+                checked={cuisineCheck(cuisine)}
+                name={cuisine.name}
+                onChange={e =>
+                  Helpers.handleCheckboxChange(
+                    e,
+                    setCuisinesFilter,
+                    cuisinesFilter
+                  )
+                }
+              />
+              {cuisine.name}
+            </label>
+          ))}
         </label>
         <input type="submit" value="Filter" />
       </form>

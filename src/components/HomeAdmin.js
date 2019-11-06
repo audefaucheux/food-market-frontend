@@ -35,7 +35,6 @@ const HomeAdmin = ({ user, formData }) => {
       if (data.errors) {
         alert(data.errors)
       } else if (data.food_truck) {
-        console.log(data.food_truck)
         setFoodTrucks(findAndReplace(foodTrucks, data.food_truck))
         navigate("/my_food_trucks")
       }

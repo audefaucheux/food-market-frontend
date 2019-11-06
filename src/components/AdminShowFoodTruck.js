@@ -16,7 +16,7 @@ const AdminShowFoodTruck = ({
       <div>----------------------------------</div>
       <h3>{name}</h3>
       <div>
-        Cuisine:{" "}
+        Cuisine(s):{" "}
         {cuisines.length !== 0
           ? cuisines.map(cuisine => cuisine.name + " | ")
           : null}

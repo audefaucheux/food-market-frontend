@@ -11,7 +11,7 @@ const HomeAdmin = ({ user, formData }) => {
 
   useEffect(() => {
     API.getUser(user.id).then(data => setFoodTrucks(data.food_trucks))
-  }, [])
+  }, [user.id])
 
   const addFoodTruck = newFoodTruck => {
     API.addFoodTruck(newFoodTruck).then(data => {

@@ -21,8 +21,11 @@ const handleCheckboxChange = (e, setter, array) => {
   }
 }
 
+const convertStringIntoDate = date => new Date(date)
+
 export default {
   handleInputChange,
   dayName,
-  handleCheckboxChange
+  handleCheckboxChange,
+  convertStringIntoDate
 }

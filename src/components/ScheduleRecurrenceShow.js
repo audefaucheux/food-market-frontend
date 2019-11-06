@@ -12,6 +12,12 @@ const ScheduleRecurrenceShow = ({
   return (
     <li>
       {Helpers.dayName(day_num)} - from:{from_time} to:{to_time} - {market.name}
+      <button
+        className="primary"
+        onClick={() => console.log("need to build edit functionality")}
+      >
+        Edit
+      </button>
       <button className="primary" onClick={() => deleteRecurrence(id)}>
         Delete
       </button>

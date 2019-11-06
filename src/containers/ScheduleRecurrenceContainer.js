@@ -3,11 +3,11 @@ import ScheduleRecurrenceShow from "../components/ScheduleRecurrenceShow"
 import ScheduleForm from "../components/ScheduleForm"
 
 const ScheduleRecurrenceContainer = ({
-  recurrences,
   formData,
   addRecurrence,
   deleteRecurrence,
-  id
+  id,
+  recurrences
 }) => {
   return (
     <div>

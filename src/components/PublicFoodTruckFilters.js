@@ -9,6 +9,10 @@ const PublicFoodTruckFilters = ({ formData, setFoodTrucks }) => {
   const [marketFilter, setMarketFilter] = useState([])
   const [cuisinesFilter, setCuisinesFilter] = useState([])
 
+  const removeArchivedFoodTrucks = array => {
+    return array.filter(foodTruck => foodTruck.archived === false)
+  }
+
   const filterFoodTrucksByDayandMarket = array => {
     let convertedDate = new Date(dateFilter)
     let matchingDate = []
@@ -43,7 +47,7 @@ const PublicFoodTruckFilters = ({ formData, setFoodTrucks }) => {
   }
 
   const foodTruckArray = data => {
-    let removeArchived = data.filter(foodTruck => foodTruck.archived === false)
+    let removeArchived = removeArchivedFoodTrucks(data)
     let filteredByDate = filterFoodTrucksByDayandMarket(removeArchived)
     let filteredByCuisine = filterFoodTrucksByCuisine(filteredByDate)
     return filteredByCuisine

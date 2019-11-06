@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Router, navigate } from "@reach/router"
 import AdminFoodTruckAdd from "./AdminFoodTruckAdd"
 import AdminFoodTruckEdit from "./AdminFoodTruckEdit"
@@ -7,7 +7,11 @@ import AdminFoodTruckContainer from "../containers/AdminFoodTrucksContainer"
 import API from "../adapters/API"
 
 const HomeAdmin = ({ user, formData }) => {
-  const [foodTrucks, setFoodTrucks] = useState(user.food_trucks)
+  const [foodTrucks, setFoodTrucks] = useState([])
+
+  useEffect(() => {
+    API.getUser(user.id).then(data => setFoodTrucks(data.food_trucks))
+  }, [])
 
   const addFoodTruck = newFoodTruck => {
     API.addFoodTruck(newFoodTruck).then(data => {

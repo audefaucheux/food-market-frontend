@@ -1,56 +1,49 @@
-import React from "react"
+import React, { useState } from "react"
 import API from "../adapters/API"
 
-class Login extends React.Component {
-  state = {
-    email: "",
-    password: ""
+const Login = ({ login }) => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const handleInputChange = (e, setter) => {
+    setter(e.target.value)
   }
 
-  handleInputChange = e => {
-    this.setState({ [e.target.name]: e.target.value })
-  }
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault()
-    API.login({ email: this.state.email, password: this.state.password })
+    API.login({ email: email, password: password })
       .then(data => {
         if (data.errors) {
           throw Error(data.errors)
         } else {
-          this.props.login(data.user)
+          login(data.user)
         }
       })
       .catch(alert)
   }
 
-  render() {
-    const { username, password } = this.state
-    const { handleInputChange, handleSubmit } = this
-
-    return (
-      <div>
-        <p>LOGIN PAGE</p>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            placeholder="email"
-            value={username}
-            onChange={handleInputChange}
-          ></input>
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            value={password}
-            onChange={handleInputChange}
-          ></input>
-          <input type="submit" value="Login" />
-        </form>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <p>LOGIN PAGE</p>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          name="email"
+          placeholder="email"
+          value={email}
+          onChange={e => handleInputChange(e, setEmail)}
+        ></input>
+        <input
+          type="password"
+          name="password"
+          placeholder="password"
+          value={password}
+          onChange={e => handleInputChange(e, setPassword)}
+        ></input>
+        <input type="submit" value="Login" />
+      </form>
+    </div>
+  )
 }
 
 export default Login

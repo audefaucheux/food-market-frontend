@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link } from "@reach/router"
 import "../stylesheets/components/Navbar.css"
 
 const Navbar = ({ user, logout }) => {
@@ -26,7 +26,7 @@ const Navbar = ({ user, logout }) => {
         ))}
         {user ? <button onClick={logout}>Logout</button> : null}
       </div>
-      <p>{user && `Hello ${user.email}`}</p>
+      {/* <p>{user && `Hello ${user.email}`}</p> */}
     </div>
   )
 }

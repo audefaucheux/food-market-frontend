@@ -30,7 +30,9 @@ label {
   min-width: 50px;
 }
 
-input {
+input,
+textarea,
+select {
   margin: 10px;
   border: solid black;
 }

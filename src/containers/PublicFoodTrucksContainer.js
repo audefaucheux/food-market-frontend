@@ -1,18 +1,18 @@
 import React from "react"
-import PublicFoodTruckFilters from "../components/PublicFoodTruckFilters"
 import PublicShowFoodTruck from "../components/PublicShowFoodTruck"
 
-const PublicFoodTruckContainer = ({ foodTrucks }) => {
+const PublicFoodTruckContainer = ({ foodTrucks, dateFilter }) => {
   return (
     <div>
-      <p>
-        Find out if your fav food truck will be on the market near you today! If
-        you not sure what you want to eat, checkout which food trucks are
-        planning to come.
-      </p>
-      <PublicFoodTruckFilters />
       <p>LIST OF FOOD TRUCKS</p>
-      <PublicShowFoodTruck />
+      {foodTrucks.lenght !== 0
+        ? foodTrucks.map(foodTruck => (
+            <PublicShowFoodTruck
+              key={foodTruck.id}
+              {...{ ...foodTruck, dateFilter }}
+            />
+          ))
+        : null}
     </div>
   )
 }

@@ -1,41 +1,23 @@
-import React, { useState, useEffect } from "react"
-import AdminFoodTruckForm from "../components/AdminFoodTruckForm"
+import React from "react"
+import { Link } from "@reach/router"
 import AdminShowFoodTruck from "../components/AdminShowFoodTruck"
-import API from "../adapters/API"
 
-const AdminFoodTruckContainer = ({
-  history,
-  user,
-  addFoodTruck,
-  deleteFoodTruck
-}) => {
-  const [foodTrucks, setFoodTrucks] = useState([])
-
-  useEffect(() => {
-    if (user) {
-      API.getUser(user.id).then(user => setFoodTrucks(user.food_trucks))
-    }
-  }, [user])
-
-  // const handleClickDelete = id => {
-  //   API.deleteFoodTruck(id)
-  //   let deleteFoodTruck = foodTrucks.filter(foodTruck => foodTruck.id !== id)
-  //   setFoodTrucks(deleteFoodTruck)
-  // }
-
+const AdminFoodTruckContainer = ({ foodTrucks, editFoodTruck }) => {
   return (
-    <div>
-      <p>MY FOOD TRUCKS PAGE</p>
-      <AdminFoodTruckForm {...{ history, addFoodTruck }} />
+    <>
+      <Link to="/my_food_trucks/add">New Food Truck</Link>
       {foodTrucks.map(foodTruck => {
         return (
           <AdminShowFoodTruck
             key={foodTruck.id}
-            {...{ ...foodTruck, deleteFoodTruck }}
+            {...{
+              ...foodTruck,
+              editFoodTruck
+            }}
           />
         )
       })}
-    </div>
+    </>
   )
 }
 

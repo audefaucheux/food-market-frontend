@@ -1,11 +1,16 @@
 import React from "react"
-import PublicFoodTrucksContainer from "../containers/PublicFoodTrucksContainer"
+import PublicFoodTruckFilters from "../components/PublicFoodTruckFilters"
 
-const HomePublic = ({ foodTrucks }) => {
+const HomePublic = ({ formData }) => {
   return (
     <div>
       <p>HOME PAGE</p>
-      <PublicFoodTrucksContainer {...{ foodTrucks }} />
+      <p>
+        Find out if your fav food truck will be on the market near you today! If
+        you not sure what you want to eat, checkout which food trucks are
+        planning to come.
+      </p>
+      <PublicFoodTruckFilters {...{ formData }} />
     </div>
   )
 }

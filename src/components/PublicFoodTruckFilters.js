@@ -2,18 +2,26 @@ import React, { useState } from "react"
 import API from "../adapters/API"
 
 const PublicFoodTruckFilters = ({ formData, setFoodTrucks }) => {
-  const [marketFilter, setMarketFilter] = useState([])
   const [dateFilter, setDateFilter] = useState(
     new Date().toISOString().slice(0, 10)
   ) // set date to today by default
+  const [marketFilter, setMarketFilter] = useState([])
   const [cuisineFilter, setCuisineFilter] = useState([])
 
-  const filterFoodTrucksByDay = array => {
+  const filterFoodTrucksByDayandMarket = array => {
     let convertedDate = new Date(dateFilter)
     let matchingDate = []
     array.forEach(foodTruck =>
       foodTruck.schedule_recurrences.forEach(recurrence => {
-        if (recurrence.day_num === convertedDate.getDay()) {
+        if (
+          marketFilter.includes(recurrence.market.id) &&
+          recurrence.day_num === convertedDate.getDay()
+        ) {
+          matchingDate.push(foodTruck)
+        } else if (
+          recurrence.day_num === convertedDate.getDay() &&
+          marketFilter.length === 0
+        ) {
           matchingDate.push(foodTruck)
         }
       })
@@ -21,42 +29,20 @@ const PublicFoodTruckFilters = ({ formData, setFoodTrucks }) => {
     return matchingDate
   }
 
-  const filterFoodTrucksByMarket = array => {
-    let matchingMarket = []
-    console.log(array)
-    array.forEach(foodTruck => {
-      console.log(foodTruck.recurrence)
-      // foodTruck.recurrence.forEach(recurrence => {
-      //   if (marketFilter.includes(recurrence.market.id)) {
-      //     matchingMarket.push(foodTruck)
-      //   }
-      // })
-    })
-    return array
-  }
-
   const filterFoodTrucksByCuisine = array => {
-    return array.filter(foodTruck =>
-      foodTruck.cuisines.some(cuisine => cuisineFilter.includes(cuisine.id))
-    )
+    if (cuisineFilter.length !== 0) {
+      return array.filter(foodTruck =>
+        foodTruck.cuisines.some(cuisine => cuisineFilter.includes(cuisine.id))
+      )
+    } else {
+      return array
+    }
   }
-
-  // const foodTruckArray = data => {
-  //   filterFoodTrucksByMarket(data)
-  // }
 
   const foodTruckArray = data => {
-    let filteredByDate = filterFoodTrucksByDay(data)
-    if (marketFilter.length !== 0) {
-      // let filteredByMarket = filterFoodTrucksByMarket(filteredByDate)
-      // if (cuisineFilter.length !== 0) {
-      //   return filterFoodTrucksByCuisine(filteredByDate)
-      //   } else {
-      return filterFoodTrucksByMarket(filteredByDate)
-      // }
-    } else {
-      return filteredByDate
-    }
+    let filteredByDate = filterFoodTrucksByDayandMarket(data)
+    let filteredByCuisine = filterFoodTrucksByCuisine(filteredByDate)
+    return filteredByCuisine
   }
 
   const handleSubmit = e => {

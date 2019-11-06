@@ -10,7 +10,7 @@ const FoodTruckForm = ({
   const [description, setDescription] = useState("")
   const [profilePicture, setProfilePicture] = useState("")
   const [twitterAccount, setTwitterAccount] = useState("")
-  const [cuisine, setCuisine] = useState([])
+  const [cuisines, setCuisines] = useState([])
 
   useEffect(() => {
     initialStates(
@@ -18,7 +18,7 @@ const FoodTruckForm = ({
       setDescription,
       setProfilePicture,
       setTwitterAccount,
-      setCuisine
+      setCuisines
     )
   }, [initialStates])
 
@@ -28,7 +28,8 @@ const FoodTruckForm = ({
       name,
       description,
       profile_picture: profilePicture,
-      twitter_account: twitterAccount
+      twitter_account: twitterAccount,
+      cuisines
     }
     sendAPIRequestFoodTruck(newFoodTruck)
   }
@@ -64,18 +65,19 @@ const FoodTruckForm = ({
       />
       <label>
         Cuisine:
-        <select
-          // value={cuisine.first}
-          // multiple
-          onChange={e => Helpers.handleInputChange(e, setCuisine)}
-        >
-          <option value="">--Please choose an option--</option>
-          {formData.cuisines.map(cuisine => (
-            <option key={cuisine.id} value={cuisine.id}>
-              {cuisine.name}
-            </option>
-          ))}
-        </select>
+        {formData.cuisines.map(cuisine => (
+          <label key={cuisine.id}>
+            <input
+              type="checkbox"
+              id={cuisine.id}
+              name={cuisine.name}
+              onClick={e =>
+                Helpers.handleCheckboxChange(e, setCuisines, cuisines)
+              }
+            />
+            {cuisine.name}
+          </label>
+        ))}
       </label>
 
       <input type="submit" value="Submit" />

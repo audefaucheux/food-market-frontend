@@ -7,6 +7,7 @@ const AdminShowFoodTruck = ({
   description,
   profile_picture,
   twitter_account,
+  cuisines,
   archived,
   editFoodTruck
 }) => {
@@ -14,6 +15,12 @@ const AdminShowFoodTruck = ({
     <div>
       <div>----------------------------------</div>
       <h3>{name}</h3>
+      <div>
+        Cuisine:{" "}
+        {cuisines.length !== 0
+          ? cuisines.map(cuisine => cuisine.name + " | ")
+          : null}
+      </div>
       <p>{description}</p>
       <img src={profile_picture} alt={name} width="30%" />
       <p>{twitter_account}</p>

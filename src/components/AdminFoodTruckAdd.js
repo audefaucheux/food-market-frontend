@@ -8,24 +8,21 @@ const AdminFoodTruckAdd = ({ addFoodTruck, formData }) => {
     setDescription,
     setProfilePicture,
     setTwitterAccount,
-    setCuisine
+    setCuisines
   ) => {
     setName("")
     setDescription("")
     setProfilePicture("")
     setTwitterAccount("")
-    setCuisine([])
-  }
-
-  const sendAPIRequestFoodTruck = data => {
-    addFoodTruck(data)
+    setCuisines([])
   }
 
   return (
     <>
       <Link to="/my_food_trucks">BACK</Link>
       <FoodTruckForm
-        {...{ formData, sendAPIRequestFoodTruck, initialStates }}
+        {...{ formData, initialStates }}
+        sendAPIRequestFoodTruck={addFoodTruck}
       />
     </>
   )

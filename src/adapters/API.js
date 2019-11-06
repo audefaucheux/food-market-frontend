@@ -6,6 +6,7 @@ const FOOD_TRUCKS_URL = `${API_ENDPOINT}/food_trucks`
 const USERS_URL = `${API_ENDPOINT}/users`
 const FORM_DATA_URL = `${API_ENDPOINT}/form_data`
 const SCHEDULE_RECURRENCES_URL = `${API_ENDPOINT}/schedule_recurrences`
+const FOOD_TRUCK_CUISINE_URL = `${API_ENDPOINT}/food_truck_cuisines`
 // const SCHEDULE_DAYS_URL = `${API_ENDPOINT}/schedule_days`
 
 // HEADERS HELPERS

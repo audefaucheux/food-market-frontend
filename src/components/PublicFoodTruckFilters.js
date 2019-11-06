@@ -52,7 +52,7 @@ const PublicFoodTruckFilters = ({ formData }) => {
     let removeArchived = removeArchivedFoodTrucks(data)
     let filteredByDate = filterFoodTrucksByDayandMarket(removeArchived)
     let filteredByCuisine = filterFoodTrucksByCuisine(filteredByDate)
-    return filteredByCuisine
+    return Helpers.sortByName(filteredByCuisine)
   }
 
   const handleSubmit = e => {

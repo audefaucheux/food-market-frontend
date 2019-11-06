@@ -23,9 +23,12 @@ const handleCheckboxChange = (e, setter, array) => {
 
 const convertStringIntoDate = date => new Date(date)
 
+const sortByName = array => array.sort((a, b) => a.name.localeCompare(b.name))
+
 export default {
   handleInputChange,
   dayName,
   handleCheckboxChange,
-  convertStringIntoDate
+  convertStringIntoDate,
+  sortByName
 }

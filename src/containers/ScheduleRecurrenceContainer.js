@@ -9,6 +9,8 @@ const ScheduleRecurrenceContainer = ({
   id,
   recurrences
 }) => {
+  const sortByDayNum = array => array.sort((a, b) => a.day_num - b.day_num)
+
   return (
     <div>
       <h3>Schedule Recurrence</h3>
@@ -21,7 +23,7 @@ const ScheduleRecurrenceContainer = ({
         dayField="weekday"
       />
       <ul>
-        {recurrences.map(recurrence => (
+        {sortByDayNum(recurrences).map(recurrence => (
           <ScheduleRecurrenceShow
             key={recurrence.id}
             {...{ ...recurrence, deleteRecurrence }}

@@ -16,10 +16,13 @@ const AdminFoodTruckEdit = ({ id, selectedTruck, editFoodTruck, formData }) => {
     setDescription(foodTruckDetails.description)
     setProfilePicture(foodTruckDetails.profile_picture)
     setTwitterAccount(foodTruckDetails.twitter_account)
-    setCuisine(foodTruckDetails.cuisines)
+    let cuisineIdArray = foodTruckDetails.cuisines.map(cuisine =>
+      JSON.stringify(cuisine.id)
+    )
+    setCuisine(cuisineIdArray)
   }
 
-  const sendAPIRequestFoodTruck = data => {
+  const sendAPIRequest = data => {
     editFoodTruck(id, data)
   }
 
@@ -27,9 +30,7 @@ const AdminFoodTruckEdit = ({ id, selectedTruck, editFoodTruck, formData }) => {
     <div>
       <p>Edit food truck</p>
       <Link to="/my_food_trucks">BACK</Link>
-      <FoodTruckForm
-        {...{ initialStates, formData, sendAPIRequestFoodTruck }}
-      />
+      <FoodTruckForm {...{ initialStates, formData, sendAPIRequest }} />
     </div>
   )
 }

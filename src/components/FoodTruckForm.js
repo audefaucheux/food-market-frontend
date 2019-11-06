@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Helpers from "../Helpers"
 
-const FoodTruckForm = ({
-  formData,
-  initialStates,
-  sendAPIRequestFoodTruck
-}) => {
+const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [profilePicture, setProfilePicture] = useState("")
@@ -31,7 +27,11 @@ const FoodTruckForm = ({
       twitter_account: twitterAccount,
       cuisines
     }
-    sendAPIRequestFoodTruck(newFoodTruck)
+    sendAPIRequest(newFoodTruck)
+  }
+
+  const cuisineCheck = cuisine => {
+    return cuisines.includes(JSON.stringify(cuisine.id))
   }
 
   return (
@@ -70,8 +70,9 @@ const FoodTruckForm = ({
             <input
               type="checkbox"
               id={cuisine.id}
+              checked={cuisineCheck(cuisine)}
               name={cuisine.name}
-              onClick={e =>
+              onChange={e =>
                 Helpers.handleCheckboxChange(e, setCuisines, cuisines)
               }
             />

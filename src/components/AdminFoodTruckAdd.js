@@ -22,7 +22,7 @@ const AdminFoodTruckAdd = ({ addFoodTruck, formData }) => {
       <Link to="/my_food_trucks">BACK</Link>
       <FoodTruckForm
         {...{ formData, initialStates }}
-        sendAPIRequestFoodTruck={addFoodTruck}
+        sendAPIRequest={addFoodTruck}
       />
     </>
   )

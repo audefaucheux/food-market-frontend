@@ -89,6 +89,12 @@ const addScheduleRecurrence = recurrenceDetails =>
 const deleteScheduleRecurrence = id =>
   destroy(SCHEDULE_RECURRENCES_URL, id, jsonHeaders(authHeader()))
 
+const addFoodTruckCuisine = foodTruckCuisineDetails =>
+  post(
+    FOOD_TRUCK_CUISINE_URL,
+    { food_truck_cuisine: foodTruckCuisineDetails },
+    jsonHeaders(authHeader())
+  )
 // const getScheduleDays = () => get(SCHEDULE_RECURRENCES_URL)
 // const addScheduleDays = recurrenceDetails =>
 //   post(
@@ -131,6 +137,7 @@ export default {
   deleteScheduleRecurrence,
   // getScheduleDays,
   // addScheduleDays,
+  addFoodTruckCuisine,
   login,
   signUp,
   validateUser,

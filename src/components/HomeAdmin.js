@@ -55,18 +55,15 @@ const HomeAdmin = ({ user, formData }) => {
   }
 
   return (
-    <div id="home_admin">
-      <p>HOME ADMIN PAGE</p>
-      <Router>
-        <AdminFoodTruckContainer path="/" {...{ foodTrucks, editFoodTruck }} />
-        <AdminFoodTruckAdd path="add" {...{ addFoodTruck, formData }} />
-        <AdminFoodTruckEdit
-          path="edit/:id"
-          {...{ selectedTruck, editFoodTruck, formData }}
-        />
-        <AdminFoodTruckSchedule path="schedule/:id" {...{ formData }} />
-      </Router>
-    </div>
+    <Router>
+      <AdminFoodTruckContainer path="/" {...{ foodTrucks, editFoodTruck }} />
+      <AdminFoodTruckAdd path="add" {...{ addFoodTruck, formData }} />
+      <AdminFoodTruckEdit
+        path="edit/:id"
+        {...{ selectedTruck, editFoodTruck, formData }}
+      />
+      <AdminFoodTruckSchedule path="schedule/:id" {...{ formData }} />
+    </Router>
   )
 }
 

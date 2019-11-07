@@ -21,8 +21,8 @@
   color: #09d3ac;
 } */
 
-body {
-  margin: 10px;
+.main {
+  margin: 5% 2%;
 }
 
 label {
@@ -37,7 +37,6 @@ select {
   border: solid black;
 }
 
-.primary {
-  border: solid black;
-  margin-left: 5px;
+a {
+  text-decoration: none;
 }

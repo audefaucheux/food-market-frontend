@@ -42,22 +42,24 @@ const App = props => {
   return (
     <div className="App">
       <Navbar user={user} logout={logout} />
-      <Router>
-        <HomePublic path="/" {...{ formData }} />
-        <SignUp path="sign_up" {...{ login }} />
-        <Login path="login" {...{ login }} />
-        {user ? (
-          <HomeAdmin
-            path="my_food_trucks/*"
-            {...{
-              user,
-              formData
-            }}
-          />
-        ) : (
-          () => navigate("/login")
-        )}
-      </Router>
+      <div className="main">
+        <Router>
+          <HomePublic path="/" {...{ formData }} />
+          <SignUp path="sign_up" {...{ login }} />
+          <Login path="login" {...{ login }} />
+          {user ? (
+            <HomeAdmin
+              path="my_food_trucks/*"
+              {...{
+                user,
+                formData
+              }}
+            />
+          ) : (
+            () => navigate("/login")
+          )}
+        </Router>
+      </div>
     </div>
   )
 }

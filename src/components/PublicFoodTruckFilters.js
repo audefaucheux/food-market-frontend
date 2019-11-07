@@ -9,37 +9,80 @@ const PublicFoodTruckFilters = ({ formData }) => {
   ) // set date to today by default
   const [marketsFilter, setMarketsFilter] = useState([])
   const [cuisinesFilter, setCuisinesFilter] = useState([])
-  const [foodTrucks, setFoodTrucks] = useState([])
+  // const [foodTrucks, setFoodTrucks] = useState([])
+  const [recurrences, setRecurrences] = useState([])
 
-  const removeArchivedFoodTrucks = array => {
-    return array.filter(foodTruck => foodTruck.archived === false)
+  // const removeArchivedFoodTrucks = array => {
+  //   return array.filter(foodTruck => foodTruck.archived === false)
+  // }
+
+  // const filterFoodTrucksByDayandMarket = array => {
+  //   let convertedDate = Helpers.convertStringIntoDate(dateFilter)
+  //   let matchingDate = []
+  //   array.forEach(foodTruck =>
+  //     foodTruck.schedule_recurrences.forEach(recurrence => {
+  //       if (
+  //         marketsFilter.includes(JSON.stringify(recurrence.market.id)) &&
+  //         recurrence.day_num === convertedDate.getDay()
+  //       ) {
+  //         matchingDate.push(foodTruck)
+  //       } else if (
+  //         recurrence.day_num === convertedDate.getDay() &&
+  //         marketsFilter.length === 0
+  //       ) {
+  //         matchingDate.push(foodTruck)
+  //       }
+  //     })
+  //   )
+  //   return matchingDate
+  // }
+
+  // const filterFoodTrucksByCuisine = array => {
+  //   if (cuisinesFilter.length !== 0) {
+  //     return array.filter(foodTruck =>
+  //       foodTruck.cuisines.some(cuisine =>
+  //         cuisinesFilter.includes(JSON.stringify(cuisine.id))
+  //       )
+  //     )
+  //   } else {
+  //     return array
+  //   }
+  // }
+
+  // const foodTruckArray = data => {
+  //   let removeArchived = removeArchivedFoodTrucks(data)
+  //   let filteredByDate = filterFoodTrucksByDayandMarket(removeArchived)
+  //   let filteredByCuisine = filterFoodTrucksByCuisine(filteredByDate)
+  //   return Helpers.sortByName(filteredByCuisine)
+  // }
+
+  // const handleSubmit = e => {
+  //   e.preventDefault()
+  //   API.getFoodTrucks().then(data => {
+  //     setFoodTrucks(foodTruckArray(data))
+  //   })
+  //   setSelectedDate(dateFilter)
+  // }
+
+  const filterByDayNum = array => {
+    let getFilterDateNum = Helpers.convertStringIntoDate(dateFilter).getDay()
+    return array.filter(recurrence => recurrence.day_num === getFilterDateNum)
   }
 
-  const filterFoodTrucksByDayandMarket = array => {
-    let convertedDate = Helpers.convertStringIntoDate(dateFilter)
-    let matchingDate = []
-    array.forEach(foodTruck =>
-      foodTruck.schedule_recurrences.forEach(recurrence => {
-        if (
-          marketsFilter.includes(JSON.stringify(recurrence.market.id)) &&
-          recurrence.day_num === convertedDate.getDay()
-        ) {
-          matchingDate.push(foodTruck)
-        } else if (
-          recurrence.day_num === convertedDate.getDay() &&
-          marketsFilter.length === 0
-        ) {
-          matchingDate.push(foodTruck)
-        }
-      })
-    )
-    return matchingDate
+  const filterByMarket = array => {
+    if (marketsFilter.length !== 0) {
+      return array.filter(recurrence =>
+        marketsFilter.includes(JSON.stringify(recurrence.market.id))
+      )
+    } else {
+      return array
+    }
   }
 
-  const filterFoodTrucksByCuisine = array => {
+  const filterByCuisine = array => {
     if (cuisinesFilter.length !== 0) {
-      return array.filter(foodTruck =>
-        foodTruck.cuisines.some(cuisine =>
+      return array.filter(recurrence =>
+        recurrence.food_truck.cuisines.some(cuisine =>
           cuisinesFilter.includes(JSON.stringify(cuisine.id))
         )
       )
@@ -48,17 +91,17 @@ const PublicFoodTruckFilters = ({ formData }) => {
     }
   }
 
-  const foodTruckArray = data => {
-    let removeArchived = removeArchivedFoodTrucks(data)
-    let filteredByDate = filterFoodTrucksByDayandMarket(removeArchived)
-    let filteredByCuisine = filterFoodTrucksByCuisine(filteredByDate)
-    return Helpers.sortByName(filteredByCuisine)
+  const applyFilters = array => {
+    let arrayFilteredByDay = filterByDayNum(array)
+    let arrayFilteredByMarket = filterByMarket(arrayFilteredByDay)
+    let arrayFilteredByCuisine = filterByCuisine(arrayFilteredByMarket)
+    return arrayFilteredByCuisine
   }
 
   const handleSubmit = e => {
     e.preventDefault()
-    API.getFoodTrucks().then(data => {
-      setFoodTrucks(foodTruckArray(data))
+    API.getScheduleRecurrences().then(data => {
+      setRecurrences(applyFilters(data))
     })
   }
 
@@ -123,7 +166,8 @@ const PublicFoodTruckFilters = ({ formData }) => {
         </label>
         <input type="submit" value="Filter" />
       </form>
-      <PublicFoodTrucksContainer {...{ foodTrucks, dateFilter }} />
+      <PublicFoodTrucksContainer {...{ recurrences }} />
+      {/* <PublicFoodTrucksContainer {...{ foodTrucks }} /> */}
     </div>
   )
 }

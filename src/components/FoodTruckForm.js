@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import Helpers from "../Helpers"
+import { Form, Checkbox, Button } from "semantic-ui-react"
 
 const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
   const [name, setName] = useState("")
@@ -35,39 +36,45 @@ const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="name"
-        placeholder="Name"
-        value={name}
-        onChange={e => Helpers.handleInputChange(e, setName)}
-      />
-      <textarea
+    <Form onSubmit={handleSubmit}>
+      <Form.Field required>
+        <label>Food Truck Name: </label>
+        <input
+          type="text"
+          name="name"
+          value={name}
+          onChange={e => Helpers.handleInputChange(e, setName)}
+        />
+      </Form.Field>
+      <Form.TextArea
         name="description"
-        placeholder="Description"
+        label="Description:"
         value={description}
         onChange={e => Helpers.handleInputChange(e, setDescription)}
       />
-      <input
-        type="text"
-        name="profilePicture"
-        placeholder="Profile Picture Url"
-        value={profilePicture}
-        onChange={e => Helpers.handleInputChange(e, setProfilePicture)}
-      />
-      <input
-        type="text"
-        name="twitterAccount"
-        placeholder="Twitter Account"
-        value={twitterAccount}
-        onChange={e => Helpers.handleInputChange(e, setTwitterAccount)}
-      />
-      <label>
-        Cuisine:
+      <Form.Field>
+        <label>Profile Picture URL:</label>
+        <input
+          type="text"
+          name="profilePicture"
+          value={profilePicture}
+          onChange={e => Helpers.handleInputChange(e, setProfilePicture)}
+        />
+      </Form.Field>
+      <Form.Field>
+        <label>Twitter Account:</label>
+        <input
+          type="text"
+          name="twitterAccount"
+          value={twitterAccount}
+          onChange={e => Helpers.handleInputChange(e, setTwitterAccount)}
+        />
+      </Form.Field>
+      <Form.Field>
+        <label>Cuisine:</label>
         {formData.cuisines.map(cuisine => (
-          <label key={cuisine.id}>
-            <input
+          <div key={cuisine.id}>
+            <Checkbox
               type="checkbox"
               id={cuisine.id}
               checked={cuisineCheck(cuisine)}
@@ -75,14 +82,16 @@ const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
               onChange={e =>
                 Helpers.handleCheckboxChange(e, setCuisines, cuisines)
               }
+              label={cuisine.name}
             />
-            {cuisine.name}
-          </label>
+          </div>
         ))}
-      </label>
+      </Form.Field>
 
-      <input type="submit" value="Submit" />
-    </form>
+      <Button color="green" type="submit">
+        Submit
+      </Button>
+    </Form>
   )
 }
 

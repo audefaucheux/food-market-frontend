@@ -48,10 +48,12 @@ const HomeAdmin = ({ user, formData }) => {
   // find selected truck and replace null values with "" to make the form working
   const selectedTruck = id => {
     let truck = foodTrucks.find(foodTruck => foodTruck.id === parseInt(id))
-    Object.keys(truck).forEach(key => {
-      if (truck[key] === null) return (truck[key] = "")
-    })
-    return truck
+    if (foodTrucks.length !== 0) {
+      Object.keys(truck).forEach(key => {
+        if (truck[key] === null) return (truck[key] = "")
+      })
+      return truck
+    }
   }
 
   return (
@@ -62,7 +64,10 @@ const HomeAdmin = ({ user, formData }) => {
         path="edit/:id"
         {...{ selectedTruck, editFoodTruck, formData }}
       />
-      <AdminFoodTruckSchedule path="schedule/:id" {...{ formData }} />
+      <AdminFoodTruckSchedule
+        path="schedule/:id"
+        {...{ formData, selectedTruck }}
+      />
     </Router>
   )
 }

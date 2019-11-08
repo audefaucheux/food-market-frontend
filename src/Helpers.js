@@ -13,10 +13,11 @@ const dayName = dayNum => {
 }
 
 const handleCheckboxChange = (e, setter, array) => {
+  let convertValue = JSON.stringify(parseInt(e.target.id))
   if (e.target.checked) {
-    setter([...array, e.target.id])
+    setter([...array, convertValue])
   } else {
-    let updatedArray = array.filter(el => el !== e.target.id)
+    let updatedArray = array.filter(el => el !== convertValue)
     setter(updatedArray)
   }
 }

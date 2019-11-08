@@ -1,6 +1,7 @@
 import React from "react"
 import FoodTruckForm from "./FoodTruckForm"
 import { Link } from "@reach/router"
+import { Button, Icon } from "semantic-ui-react"
 
 const AdminFoodTruckEdit = ({ id, selectedTruck, editFoodTruck, formData }) => {
   const foodTruckDetails = selectedTruck(id)
@@ -10,16 +11,18 @@ const AdminFoodTruckEdit = ({ id, selectedTruck, editFoodTruck, formData }) => {
     setDescription,
     setProfilePicture,
     setTwitterAccount,
-    setCuisine
+    setCuisines
   ) => {
-    setName(foodTruckDetails.name)
-    setDescription(foodTruckDetails.description)
-    setProfilePicture(foodTruckDetails.profile_picture)
-    setTwitterAccount(foodTruckDetails.twitter_account)
-    let cuisineIdArray = foodTruckDetails.cuisines.map(cuisine =>
-      JSON.stringify(cuisine.id)
-    )
-    setCuisine(cuisineIdArray)
+    if (foodTruckDetails) {
+      setName(foodTruckDetails.name)
+      setDescription(foodTruckDetails.description)
+      setProfilePicture(foodTruckDetails.profile_picture)
+      setTwitterAccount(foodTruckDetails.twitter_account)
+      let cuisineIdArray = foodTruckDetails.cuisines.map(cuisine =>
+        JSON.stringify(cuisine.id)
+      )
+      setCuisines(cuisineIdArray)
+    }
   }
 
   const sendAPIRequest = data => {
@@ -28,8 +31,13 @@ const AdminFoodTruckEdit = ({ id, selectedTruck, editFoodTruck, formData }) => {
 
   return (
     <div>
-      <p>Edit food truck</p>
-      <Link to="/my_food_trucks">BACK</Link>
+      <Button>
+        <Link to="/my_food_trucks">
+          <Icon name="arrow left" />
+          Back
+        </Link>
+      </Button>
+      {/* <h3>Edit {foodTruckDetails.name}</h3> */}
       <FoodTruckForm {...{ initialStates, formData, sendAPIRequest }} />
     </div>
   )

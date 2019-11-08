@@ -1,14 +1,15 @@
 import React from "react"
 import Helpers from "../Helpers"
 
-const PublicShowFoodTruck = ({ food_truck, from_time, to_time }) => {
+const PublicShowFoodTruck = ({ food_truck, from_time, to_time, market }) => {
   return (
     <div>
       <div>----------------------------------</div>
       <h3>{food_truck.name}</h3>
       <p>
-        Time: {from_time} - {to_time}
+        {from_time} - {to_time}
       </p>
+      <p>{market.name}</p>
       <div>
         Cuisine:{" "}
         {food_truck.cuisines.length !== 0

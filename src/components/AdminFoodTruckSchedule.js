@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react"
 import API from "../adapters/API"
 import { Link } from "@reach/router"
 import ScheduleRecurrenceContainer from "../containers/ScheduleRecurrenceContainer"
-// import ScheduleDayContainer from "../containers/ScheduleDayContainer"
+import { Button, Icon } from "semantic-ui-react"
 
-const AdminFoodTruckSchedule = ({ id, formData }) => {
+const AdminFoodTruckSchedule = ({ id, formData, selectedTruck }) => {
   const [recurrences, setRecurrences] = useState([])
+
+  // const truckDetails = selectedTruck(id)
 
   useEffect(() => {
     API.getFoodTruck(id).then(data => setRecurrences(data.schedule_recurrences))
@@ -31,8 +33,13 @@ const AdminFoodTruckSchedule = ({ id, formData }) => {
 
   return (
     <div>
-      <Link to="/my_food_trucks">BACK</Link>
-      {/* {foodTruck.name} schedule: */}
+      <Button>
+        <Link to="/my_food_trucks">
+          <Icon name="arrow left" />
+          Back
+        </Link>
+      </Button>
+      {/* <h2>{truckDetails ? truckDetails.name : null}</h2> */}
       <ScheduleRecurrenceContainer
         {...{ formData, addRecurrence, deleteRecurrence, id, recurrences }}
       />

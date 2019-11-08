@@ -7,6 +7,7 @@
   border-top: 1px solid gray;
   display: flex;
   justify-content: space-around;
+  z-index: 99;
 }
 
 .navbar img {

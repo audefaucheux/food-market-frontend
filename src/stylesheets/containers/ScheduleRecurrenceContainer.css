@@ -1,0 +1,11 @@
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+
+th,
+td {
+  border: 1px solid lightgray;
+  padding: 3px;
+}

@@ -1,28 +1,5 @@
-/* .App {
-  text-align: center;
-} */
-/* 
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
-} */
-
 .main {
-  margin: 5% 2%;
+  margin: 5% 5% 10%;
 }
 
 label {
@@ -30,13 +7,7 @@ label {
   min-width: 50px;
 }
 
-input,
-textarea,
-select {
-  margin: 10px;
-  border: solid black;
-}
-
+button,
 a {
   text-decoration: none;
 }

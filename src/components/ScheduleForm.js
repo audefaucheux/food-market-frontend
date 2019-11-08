@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import Helpers from "../Helpers"
+import { Form, Button } from "semantic-ui-react"
 
 const ScheduleForm = ({ dayField, formData, addRecurrence, id }) => {
   const [day, setDay] = useState("")
@@ -24,7 +25,7 @@ const ScheduleForm = ({ dayField, formData, addRecurrence, id }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <label>
         {dayField}:
         <select
@@ -73,8 +74,10 @@ const ScheduleForm = ({ dayField, formData, addRecurrence, id }) => {
           ))}
         </select>
       </label>
-      <input type="submit" value="Submit" />
-    </form>
+      <Button color="green" type="submit">
+        Submit
+      </Button>
+    </Form>
   )
 }
 

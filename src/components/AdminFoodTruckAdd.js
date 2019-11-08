@@ -1,6 +1,7 @@
 import React from "react"
 import FoodTruckForm from "./FoodTruckForm"
 import { Link } from "@reach/router"
+import { Button, Icon } from "semantic-ui-react"
 
 const AdminFoodTruckAdd = ({ addFoodTruck, formData }) => {
   const initialStates = (
@@ -19,7 +20,12 @@ const AdminFoodTruckAdd = ({ addFoodTruck, formData }) => {
 
   return (
     <>
-      <Link to="/my_food_trucks">BACK</Link>
+      <Button>
+        <Link to="/my_food_trucks">
+          <Icon name="arrow left" />
+          Back
+        </Link>
+      </Button>
       <FoodTruckForm
         {...{ formData, initialStates }}
         sendAPIRequest={addFoodTruck}

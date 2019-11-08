@@ -2,8 +2,7 @@ import React, { useState } from "react"
 import { Link } from "@reach/router"
 import AdminShowFoodTruck from "../components/AdminShowFoodTruck"
 import Helpers from "../Helpers"
-import { Header, Button, Icon } from "semantic-ui-react"
-// import "../stylesheets/containers/AdminFoodTrucksContainer.css"
+import { Header, Button, Icon, Checkbox, Card } from "semantic-ui-react"
 
 const AdminFoodTruckContainer = ({ foodTrucks, editFoodTruck }) => {
   const [archivedFoodTrucks, setArchivedFoodTrucks] = useState("OFF")
@@ -33,20 +32,24 @@ const AdminFoodTruckContainer = ({ foodTrucks, editFoodTruck }) => {
           Add Food Truck
         </Link>
       </Button>
-      <Button onClick={handleClick}>Archived: {archivedFoodTrucks}</Button>
-
+      Archived:
+      <Checkbox toggle onClick={handleClick}>
+        Archived: {archivedFoodTrucks}
+      </Checkbox>
       <Header as="h2">My Food Trucks: </Header>
-      {Helpers.sortByName(foodTrucksArray(foodTrucks)).map(foodTruck => {
-        return (
-          <AdminShowFoodTruck
-            key={foodTruck.id}
-            {...{
-              ...foodTruck,
-              editFoodTruck
-            }}
-          />
-        )
-      })}
+      <Card.Group>
+        {Helpers.sortByName(foodTrucksArray(foodTrucks)).map(foodTruck => {
+          return (
+            <AdminShowFoodTruck
+              key={foodTruck.id}
+              {...{
+                ...foodTruck,
+                editFoodTruck
+              }}
+            />
+          )
+        })}
+      </Card.Group>
     </>
   )
 }

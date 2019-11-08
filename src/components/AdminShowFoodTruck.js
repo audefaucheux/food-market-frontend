@@ -23,17 +23,7 @@ const AdminShowFoodTruck = ({
           </div>
           <div>
             <h3>{name}</h3>
-            <p>
-              {cuisines.length !== 0
-                ? Helpers.sortByName(cuisines).map((cuisine, index) => {
-                    if (index + 1 < cuisines.length) {
-                      return cuisine.name + " | "
-                    } else {
-                      return cuisine.name
-                    }
-                  })
-                : null}
-            </p>
+            <p>{Helpers.showCuisines(cuisines)}</p>
 
             {/* <p>Twitter: {twitter_account}</p> */}
           </div>

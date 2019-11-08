@@ -28,6 +28,18 @@ const App = props => {
     })
   }, [])
 
+  // const myWidget = window.cloudinary.createUploadWidget(
+  //   {
+  //     cloudName: keys.cloudName,
+  //     uploadPreset: keys.uploadPreset
+  //   },
+  //   (error, result) => {
+  //     if (!error && result && result.event === "success") {
+  //       console.log("Done! Here is the image info: ", result.info)
+  //     }
+  //   }
+  // )
+
   const login = user => {
     setUser(user)
     navigate("/my_food_trucks")
@@ -41,7 +53,7 @@ const App = props => {
 
   return (
     <div className="App">
-      <Navbar user={user} logout={logout} />
+      <div className="top-banner"> YUM BREAK</div>
       <div className="main">
         <Router>
           <HomePublic path="/" {...{ formData }} />
@@ -60,6 +72,7 @@ const App = props => {
           )}
         </Router>
       </div>
+      <Navbar user={user} logout={logout} />
     </div>
   )
 }

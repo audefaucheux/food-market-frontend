@@ -2,12 +2,48 @@
   margin: 5% 5% 10%;
 }
 
-label {
-  display: block;
-  min-width: 50px;
+.top-banner {
+  background-color: black;
+  color: white;
+  font-style: bold;
+  height: 2rem;
+  text-align: center;
 }
 
 button,
 a {
   text-decoration: none;
+}
+
+.container-header {
+  display: flex;
+  height: 7rem;
+}
+
+.container-image {
+  width: 6rem;
+  height: 6rem;
+  border: solid black;
+  overflow: hidden;
+  vertical-align: middle;
+  position: relative;
+  margin-right: 5%;
+  border-radius: 50%;
+}
+
+.container-image > img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.container-header-details {
+  display: block;
+}
+
+.food-truck-card {
+  width: 90%;
 }

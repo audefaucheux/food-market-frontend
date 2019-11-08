@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Helpers from "../Helpers"
-import { Form, Checkbox, Button } from "semantic-ui-react"
+import { Form, Checkbox, Button, Image } from "semantic-ui-react"
+import keys from "../private/keys"
 
 const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
   const [name, setName] = useState("")
@@ -18,6 +19,23 @@ const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
       setCuisines
     )
   }, [initialStates])
+
+  const myWidget = window.cloudinary.createUploadWidget(
+    {
+      cloudName: keys.cloudName,
+      uploadPreset: keys.uploadPreset
+    },
+    (error, result) => {
+      if (!error && result && result.event === "success") {
+        setProfilePicture(result.info.secure_url)
+      }
+    }
+  )
+
+  const handleUpload = e => {
+    e.preventDefault()
+    myWidget.open()
+  }
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -53,15 +71,6 @@ const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
         onChange={e => Helpers.handleInputChange(e, setDescription)}
       />
       <Form.Field>
-        <label>Profile Picture URL:</label>
-        <input
-          type="text"
-          name="profilePicture"
-          value={profilePicture}
-          onChange={e => Helpers.handleInputChange(e, setProfilePicture)}
-        />
-      </Form.Field>
-      <Form.Field>
         <label>Twitter Account:</label>
         <input
           type="text"
@@ -70,6 +79,12 @@ const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
           onChange={e => Helpers.handleInputChange(e, setTwitterAccount)}
         />
       </Form.Field>
+      <Button id="upload_widget" onClick={handleUpload}>
+        Upload New Picture
+      </Button>
+      <div className="container-image">
+        <Image src={profilePicture} alt={name} />
+      </div>
       <Form.Field>
         <label>Cuisine:</label>
         {formData.cuisines.map(cuisine => (

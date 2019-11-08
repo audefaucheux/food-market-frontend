@@ -13,7 +13,9 @@ const AdminFoodTruckAdd = ({ addFoodTruck, formData }) => {
   ) => {
     setName("")
     setDescription("")
-    setProfilePicture("")
+    setProfilePicture(
+      "https://toppng.com/public/uploads/preview/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
+    )
     setTwitterAccount("")
     setCuisines([])
   }

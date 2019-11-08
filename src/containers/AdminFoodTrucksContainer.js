@@ -7,6 +7,17 @@ import { Header, Button, Icon, Checkbox, Card } from "semantic-ui-react"
 const AdminFoodTruckContainer = ({ foodTrucks, editFoodTruck }) => {
   const [archivedFoodTrucks, setArchivedFoodTrucks] = useState("OFF")
 
+  // const myWidget = cloudinary.createUploadWidget(
+  //   {
+  //     cloudName: "dwx5abulp",
+  //     uploadPreset: "refxgzzd"
+  //   },
+  //   (error, result) => {
+  //     if (!error && result && result.event === "success") {
+  //       console.log("Done! Here is the image info: ", result.info)
+  //     }
+  //   }
+  // )
   const foodTrucksArray = array => {
     if (archivedFoodTrucks === "ON") {
       return array.filter(foodTruck => foodTruck.archived === true)
@@ -26,6 +37,7 @@ const AdminFoodTruckContainer = ({ foodTrucks, editFoodTruck }) => {
 
   return (
     <>
+      {/* <button onClick={() => myWidget.open()}>Upload Image</button> */}
       <Button>
         <Link to="/my_food_trucks/add">
           <Icon name="add" />

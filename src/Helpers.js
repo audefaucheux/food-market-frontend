@@ -26,10 +26,25 @@ const convertStringIntoDate = date => new Date(date)
 
 const sortByName = array => array.sort((a, b) => a.name.localeCompare(b.name))
 
+const showCuisines = array => {
+  if (array.length !== 0) {
+    return sortByName(array).map((cuisine, index) => {
+      if (index + 1 < array.length) {
+        return cuisine.name + " | "
+      } else {
+        return cuisine.name
+      }
+    })
+  } else {
+    return null
+  }
+}
+
 export default {
   handleInputChange,
   dayName,
   handleCheckboxChange,
   convertStringIntoDate,
-  sortByName
+  sortByName,
+  showCuisines
 }

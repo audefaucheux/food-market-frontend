@@ -79,27 +79,6 @@ const PublicFoodTruckFilters = ({ formData }) => {
             onChange={e => setDateFilter(e.target.value)}
           />
         </label>
-        {/* <label>
-          Market:
-          {formData.markets.map(market => (
-            <label key={market.id}>
-              <input
-                type="checkbox"
-                id={market.id}
-                checked={fieldCheck(market, marketsFilter)}
-                name={market.name}
-                onChange={e =>
-                  Helpers.handleCheckboxChange(
-                    e,
-                    setMarketsFilter,
-                    marketsFilter
-                  )
-                }
-              />
-              {market.name}
-            </label>
-          ))}
-        </label> */}
         <Form.Field>
           <label>Markets:</label>
           {formData.markets.map(market => (
@@ -121,27 +100,6 @@ const PublicFoodTruckFilters = ({ formData }) => {
             </div>
           ))}
         </Form.Field>
-        {/* <label>
-          Cuisine:
-          {formData.cuisines.map(cuisine => (
-            <label key={cuisine.id}>
-              <input
-                type="checkbox"
-                id={cuisine.id}
-                checked={fieldCheck(cuisine, cuisinesFilter)}
-                name={cuisine.name}
-                onChange={e =>
-                  Helpers.handleCheckboxChange(
-                    e,
-                    setCuisinesFilter,
-                    cuisinesFilter
-                  )
-                }
-              />
-              {cuisine.name}
-            </label>
-          ))}
-        </label> */}
         <Form.Field>
           <label>Cuisines:</label>
           {formData.cuisines.map(cuisine => (

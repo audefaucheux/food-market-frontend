@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import Helpers from "../Helpers"
-import { Form, Checkbox, Button, Image } from "semantic-ui-react"
+import { Form, Checkbox, Button } from "semantic-ui-react"
 import keys from "../private/keys"
 
 const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
@@ -19,6 +19,10 @@ const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
       setCuisines
     )
   }, [initialStates])
+
+  const backgroundPic = {
+    backgroundImage: `url(${profilePicture})`
+  }
 
   const myWidget = window.cloudinary.createUploadWidget(
     {
@@ -82,9 +86,8 @@ const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
       <Button id="upload_widget" onClick={handleUpload}>
         Upload New Picture
       </Button>
-      <div className="container-image">
-        <Image src={profilePicture} alt={name} />
-      </div>
+      <div className="container-image" style={backgroundPic}></div>
+
       <Form.Field>
         <label>Cuisine:</label>
         {formData.cuisines.map(cuisine => (

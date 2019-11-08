@@ -14,13 +14,15 @@ const AdminShowFoodTruck = ({
   archived,
   editFoodTruck
 }) => {
+  const backgroundPic = {
+    backgroundImage: `url(${profile_picture})`
+  }
+
   return (
     <Card className="food-truck-card">
       <Card.Content>
         <div className="container-header">
-          <div className="container-image">
-            <img src={profile_picture} alt={name} float="left" width="100%" />
-          </div>
+          <div className="container-image" style={backgroundPic}></div>
           <div>
             <h3>{name}</h3>
             <p>{Helpers.showCuisines(cuisines)}</p>

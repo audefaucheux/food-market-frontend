@@ -1,12 +1,13 @@
 import React from "react"
 import { Link } from "@reach/router"
+import { Icon } from "semantic-ui-react"
 import "../stylesheets/components/Navbar.css"
 
 const Navbar = ({ user, logout }) => {
   return (
     <div className="navbar">
       <Link to="/">
-        <img src={require("../images/icons8-home-96.png")} alt="Home" />
+        <Icon name="home" size="large" />
       </Link>
       {user ? (
         <>
@@ -17,11 +18,7 @@ const Navbar = ({ user, logout }) => {
             />
           </Link>
 
-          <img
-            onClick={logout}
-            src={require("../images/icons8-exit-52.png")}
-            alt="Logout"
-          />
+          <button onClick={logout}>Logout</button>
         </>
       ) : (
         <>

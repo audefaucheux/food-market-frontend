@@ -3,7 +3,13 @@ import Helpers from "../Helpers"
 import { Form, Checkbox, Button } from "semantic-ui-react"
 import keys from "../private/keys"
 
-const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
+const FoodTruckForm = ({
+  formData,
+  initialStates,
+  sendAPIRequest,
+  errors,
+  setErrors
+}) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [profilePicture, setProfilePicture] = useState("")
@@ -43,6 +49,7 @@ const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
 
   const handleSubmit = e => {
     e.preventDefault()
+    setErrors([])
     let newFoodTruck = {
       name,
       description,
@@ -67,6 +74,7 @@ const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
           value={name}
           onChange={e => Helpers.handleInputChange(e, setName)}
         />
+        <small>{Helpers.handleErrorMessage(errors)}</small>
       </Form.Field>
       <Form.TextArea
         name="description"

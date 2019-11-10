@@ -55,7 +55,7 @@ const App = props => {
     <div className="App">
       <div className="top-banner"> YUM BREAK</div>
       <div className="main">
-        <Router>
+        <Router primary={false}>
           <HomePublic path="/" {...{ formData }} />
           <SignUp path="sign_up" {...{ login }} />
           <Login path="login" {...{ login }} />

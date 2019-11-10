@@ -3,11 +3,10 @@ import API from "../adapters/API"
 import { Link } from "@reach/router"
 import ScheduleRecurrenceContainer from "../containers/ScheduleRecurrenceContainer"
 import { Button, Icon } from "semantic-ui-react"
+import Helpers from "../Helpers"
 
-const AdminFoodTruckSchedule = ({ id, formData, selectedTruck }) => {
+const AdminFoodTruckSchedule = ({ id, formData, errors, setErrors }) => {
   const [recurrences, setRecurrences] = useState([])
-
-  // const truckDetails = selectedTruck(id)
 
   useEffect(() => {
     API.getFoodTruck(id).then(data => setRecurrences(data.schedule_recurrences))
@@ -16,9 +15,21 @@ const AdminFoodTruckSchedule = ({ id, formData, selectedTruck }) => {
   const addRecurrence = newRecurrence => {
     API.addScheduleRecurrence(newRecurrence).then(data => {
       if (data.errors) {
-        alert(data.errors)
+        setErrors(data.errors)
       } else if (data.schedule_recurrence) {
         setRecurrences([...recurrences, data.schedule_recurrence])
+      }
+    })
+  }
+
+  const updateRecurrence = (data, id) => {
+    API.updateScheduleRecurrence(id, data).then(data => {
+      if (data.errors) {
+        setErrors(data.errors)
+      } else if (data.schedule_recurrence) {
+        setRecurrences(
+          Helpers.findAndReplace(recurrences, data.schedule_recurrence)
+        )
       }
     })
   }
@@ -41,7 +52,16 @@ const AdminFoodTruckSchedule = ({ id, formData, selectedTruck }) => {
       </Button>
       {/* <h2>{truckDetails ? truckDetails.name : null}</h2> */}
       <ScheduleRecurrenceContainer
-        {...{ formData, addRecurrence, deleteRecurrence, id, recurrences }}
+        {...{
+          formData,
+          addRecurrence,
+          updateRecurrence,
+          deleteRecurrence,
+          id,
+          recurrences,
+          errors,
+          setErrors
+        }}
       />
       {/* <ScheduleDayContainer days={foodTruck.schedule_days} {...{ formData }} /> */}
     </div>

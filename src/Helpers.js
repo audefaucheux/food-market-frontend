@@ -1,3 +1,5 @@
+import React from "react"
+
 const handleInputChange = (e, setter) => {
   setter(e.target.value)
 }
@@ -40,11 +42,34 @@ const showCuisines = array => {
   }
 }
 
+const findAndReplace = (array, data) => {
+  return array.map(element => {
+    if (element.id === data.id) {
+      return data
+    } else {
+      return element
+    }
+  })
+}
+
+const handleErrorMessage = (array, checker1 = "") => {
+  return array.map(
+    (error, index) =>
+      error.toLowerCase().includes(checker1) && (
+        <div key={index} className="error-message">
+          {error}
+        </div>
+      )
+  )
+}
+
 export default {
   handleInputChange,
   dayName,
   handleCheckboxChange,
   convertStringIntoDate,
   sortByName,
-  showCuisines
+  showCuisines,
+  findAndReplace,
+  handleErrorMessage
 }

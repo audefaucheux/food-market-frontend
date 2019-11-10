@@ -8,6 +8,7 @@ const ScheduleRecurrenceShow = ({
   from_time,
   to_time,
   market,
+  handleEditRecurrence,
   deleteRecurrence
 }) => {
   return (
@@ -17,10 +18,7 @@ const ScheduleRecurrenceShow = ({
       <td>{to_time}</td>
       <td>{market.name}</td>
       <td>
-        <Icon
-          onClick={() => console.log("need to build edit functionality")}
-          name="edit"
-        />
+        <Icon onClick={handleEditRecurrence} name="edit" />
         <Icon onClick={() => deleteRecurrence(id)} name="delete" />
       </td>
     </tr>

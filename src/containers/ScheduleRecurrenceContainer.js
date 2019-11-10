@@ -3,19 +3,36 @@ import ScheduleRecurrenceShow from "../components/ScheduleRecurrenceShow"
 import ScheduleForm from "../components/ScheduleForm"
 import "../stylesheets/containers/ScheduleRecurrenceContainer.css"
 import { Button } from "semantic-ui-react"
+// import API from "../adapters/API"
 
 const ScheduleRecurrenceContainer = ({
   formData,
   addRecurrence,
+  updateRecurrence,
   deleteRecurrence,
   id,
-  recurrences
+  recurrences,
+  errors,
+  setErrors
 }) => {
+  const [selectedRecurrence, setSelectedRecurrence] = useState(null)
   const [showForm, setShowForm] = useState(false)
   const sortByDayNum = array => array.sort((a, b) => a.day_num - b.day_num)
 
   const handleNewScheduleClick = () => {
     setShowForm(!showForm)
+  }
+
+  const handleEditRecurrence = recurrence => {
+    setSelectedRecurrence(recurrence)
+    setShowForm(true)
+  }
+
+  const APIrequestSchedule = (data, recurrenceDetails) => {
+    recurrenceDetails
+      ? updateRecurrence(data, recurrenceDetails.id)
+      : addRecurrence(data)
+    setSelectedRecurrence(null)
   }
 
   return (
@@ -28,10 +45,13 @@ const ScheduleRecurrenceContainer = ({
         <ScheduleForm
           {...{
             formData,
-            addRecurrence,
-            id
+            APIrequestSchedule,
+            selectedRecurrence,
+            id,
+            errors,
+            setErrors
           }}
-          dayField="weekday"
+          dayField="Weekday"
         />
       )}
       <table className="schedule-table">
@@ -49,6 +69,7 @@ const ScheduleRecurrenceContainer = ({
             <ScheduleRecurrenceShow
               key={recurrence.id}
               {...{ ...recurrence, deleteRecurrence }}
+              handleEditRecurrence={() => handleEditRecurrence(recurrence)}
             />
           ))}
         </tbody>

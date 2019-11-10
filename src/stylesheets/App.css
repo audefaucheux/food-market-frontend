@@ -40,3 +40,7 @@ a {
 .food-truck-card {
   width: 90%;
 }
+
+.error-message {
+  color: #ed0a02;
+}

@@ -80,10 +80,17 @@ const updateFoodTruck = (id, foodTruckDetails) =>
 const getFormData = () => get(FORM_DATA_URL)
 
 const getScheduleRecurrences = () => get(SCHEDULE_RECURRENCES_URL)
-const addScheduleRecurrence = recurrenceDetails =>
+const addScheduleRecurrence = data =>
   post(
     SCHEDULE_RECURRENCES_URL,
-    { schedule_recurrence: recurrenceDetails },
+    { schedule_recurrence: data },
+    jsonHeaders(authHeader())
+  )
+const updateScheduleRecurrence = (id, data) =>
+  update(
+    SCHEDULE_RECURRENCES_URL,
+    id,
+    { schedule_recurrence: data },
     jsonHeaders(authHeader())
   )
 const deleteScheduleRecurrence = id =>
@@ -134,6 +141,7 @@ export default {
   getFormData,
   getScheduleRecurrences,
   addScheduleRecurrence,
+  updateScheduleRecurrence,
   deleteScheduleRecurrence,
   // getScheduleDays,
   // addScheduleDays,

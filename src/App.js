@@ -7,13 +7,13 @@ import Login from "./components/Login"
 import HomePublic from "./components/HomePublic"
 import SignUp from "./components/SignUp"
 import HomeAdmin from "./components/HomeAdmin"
+import UserSettingsForm from "./components/UserSettingsForm"
 
 const App = props => {
   const [user, setUser] = useState(null)
   const [formData, setFormData] = useState({ markets: [], cuisines: [] })
 
   useEffect(() => {
-    // console.log("app reloaded")
     API.getFormData().then(formData => {
       API.validateUser().then(data => {
         if (data.errors) {
@@ -27,18 +27,6 @@ const App = props => {
       })
     })
   }, [])
-
-  // const myWidget = window.cloudinary.createUploadWidget(
-  //   {
-  //     cloudName: keys.cloudName,
-  //     uploadPreset: keys.uploadPreset
-  //   },
-  //   (error, result) => {
-  //     if (!error && result && result.event === "success") {
-  //       console.log("Done! Here is the image info: ", result.info)
-  //     }
-  //   }
-  // )
 
   const login = user => {
     setUser(user)
@@ -55,22 +43,19 @@ const App = props => {
     <div className="App">
       <div className="top-banner"> YUM BREAK</div>
       <div className="main">
-        <Router primary={false}>
-          <HomePublic path="/" {...{ formData }} />
-          <SignUp path="sign_up" {...{ login }} />
-          <Login path="login" {...{ login }} />
-          {user ? (
-            <HomeAdmin
-              path="my_food_trucks/*"
-              {...{
-                user,
-                formData
-              }}
-            />
-          ) : (
-            () => navigate("/login")
-          )}
-        </Router>
+        {user ? (
+          <Router primary={false}>
+            <HomePublic path="/" {...{ formData }} />
+            <HomeAdmin path="my_food_trucks/*" {...{ user, formData }} />
+            <UserSettingsForm path="user_settings" {...{ user }} />
+          </Router>
+        ) : (
+          <Router primary={false}>
+            <HomePublic path="/" {...{ formData }} />
+            <SignUp path="sign_up" {...{ login }} />
+            <Login path="login" {...{ login }} />
+          </Router>
+        )}
       </div>
       <Navbar user={user} logout={logout} />
     </div>

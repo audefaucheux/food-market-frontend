@@ -59,7 +59,11 @@ const destroy = (url, id, headers = {}) => {
 
 // DATA APIs
 
-const getUser = user_id => get(USERS_URL + "/" + user_id)
+const getUser = userId => get(USERS_URL + "/" + userId)
+const updateUser = (userId, userDetails) =>
+  update(USERS_URL, userId, { user: userDetails }, jsonHeaders()).then(
+    storeToken
+  )
 
 const getFoodTrucks = () => get(FOOD_TRUCKS_URL)
 const getFoodTruck = food_truck_id => get(FOOD_TRUCKS_URL + "/" + food_truck_id)
@@ -134,6 +138,7 @@ const logout = () => {
 
 export default {
   getUser,
+  updateUser,
   getFoodTrucks,
   getFoodTruck,
   addFoodTruck,

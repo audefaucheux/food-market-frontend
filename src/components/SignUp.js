@@ -61,7 +61,7 @@ const SignUp = ({ login }) => {
             {Helpers.handleErrorMessage(errors, "password confirmation")}
           </small>
         </Form.Field>
-        <Button type="submit">Sign Up</Button>
+        <Button>Sign Up</Button>
       </Form>
     </div>
   )

@@ -96,9 +96,7 @@ const ScheduleForm = ({
         </select>
         <small>{Helpers.handleErrorMessage(errors, "market")}</small>
       </Form.Field>
-      <Button color="green" type="submit">
-        Submit
-      </Button>
+      <Button color="green">Submit</Button>
     </Form>
   )
 }

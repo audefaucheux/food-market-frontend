@@ -114,9 +114,7 @@ const FoodTruckForm = ({
         ))}
       </Form.Field>
 
-      <Button color="green" type="submit">
-        Submit
-      </Button>
+      <Button color="green">Submit</Button>
     </Form>
   )
 }

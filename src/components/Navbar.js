@@ -17,7 +17,9 @@ const Navbar = ({ user, logout }) => {
               alt="My Food Trucks"
             />
           </Link>
-
+          <Link to="/user_settings">
+            <Icon name="setting" />
+          </Link>
           <button onClick={logout}>Logout</button>
         </>
       ) : (

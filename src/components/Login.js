@@ -43,9 +43,9 @@ const Login = ({ login }) => {
             value={password}
             onChange={e => handleInputChange(e, setPassword)}
           />
-          <small>{Helpers.handleErrorMessage(errors)}</small>
+          {Helpers.handleErrorMessage(errors)}
         </Form.Field>
-        <Button type="submit">Login</Button>
+        <Button>Login</Button>
       </Form>
     </div>
   )

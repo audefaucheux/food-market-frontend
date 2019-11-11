@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import Helpers from "../Helpers"
-import { Form, Checkbox, Button, Icon } from "semantic-ui-react"
+import { Form, Checkbox, Button } from "semantic-ui-react"
 import keys from "../private/keys"
 import "../stylesheets/components/FoodTruckForm.css"
 
@@ -40,12 +40,15 @@ const FoodTruckForm = ({
     (error, result) => {
       if (!error && result && result.event === "success") {
         setProfilePicture(result.info.secure_url)
+      } else if (result.event === "abort") {
+        setLoading(false)
       }
     }
   )
 
   const handleUpload = e => {
     e.preventDefault()
+    setLoading(true)
     myWidget.open()
   }
 
@@ -83,14 +86,14 @@ const FoodTruckForm = ({
           </Form.Field>
         </div>
         <div className="profile-pic-form">
+          <div className="container-image-form" style={backgroundPic}></div>
           <div
             id="upload_widget"
-            className="edit-proile-pic"
+            className="edit-profile-pic"
             onClick={handleUpload}
           >
-            <Icon name="edit" />
+            Edit Image
           </div>
-          <div className="container-image-form" style={backgroundPic}></div>
         </div>
       </div>
       <Form.TextArea
@@ -100,7 +103,9 @@ const FoodTruckForm = ({
         value={description}
         onChange={e => Helpers.handleInputChange(e, setDescription)}
       />
-      <small>Characters left: {100 - description.length}</small>
+      <small className="extra-info-form">
+        Characters left: {100 - description.length}
+      </small>
       <Form.Field>
         <label>Twitter Account:</label>
         <input

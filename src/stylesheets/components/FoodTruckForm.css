@@ -15,24 +15,26 @@
   margin: 1rem 0;
   width: 7rem;
   text-align: center;
-  float: right;
-  position: relative;
+}
+
+.edit-profile-pic {
+  font-size: 1rem;
+  align-self: center;
+  text-decoration: underline;
 }
 
 .container-image-form {
-  width: 6rem;
-  height: 6rem;
+  width: 5rem;
+  height: 5rem;
   border: 1px solid gray;
   overflow: hidden;
   vertical-align: middle;
-  position: relative;
+  align-self: center;
   border-radius: 50%;
   background-size: cover;
   background-position: center;
 }
 
-.edit-proile-pic {
-  position: absolute;
-  right: 0;
-  bottom: 0;
+.extra-info-form {
+  float: right;
 }

@@ -1,43 +1,67 @@
-/* .App {
-  text-align: center;
-} */
-/* 
-.App-logo {
-  height: 40vmin;
+.app {
+  font-family: "Noto Sans", sans-serif;
+}
+.main {
+  margin: 5% 5% 10%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.top-banner {
+  background-color: black;
   color: white;
+  font-style: bold;
+  height: 3rem;
+  text-align: center;
+  font-family: "Chewy", cursive;
+  font-size: 2rem;
+  display: flex;
 }
 
-.App-link {
-  color: #09d3ac;
-} */
-
-body {
-  margin: 10px;
+.top-banner > span {
+  margin: auto;
 }
 
-label {
+button,
+a {
+  text-decoration: none;
+}
+
+.container-header {
+  display: flex;
+  height: 7rem;
+}
+
+.container-image {
+  width: 6rem;
+  height: 6rem;
+  border: 1px solid gray;
+  overflow: hidden;
+  vertical-align: middle;
+  position: relative;
+  margin-right: 5%;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
+
+.container-header-details {
   display: block;
-  min-width: 50px;
 }
 
-input,
-textarea,
-select {
-  margin: 10px;
-  border: solid black;
+.food-truck-card {
+  min-width: 96%;
 }
 
-.primary {
-  border: solid black;
-  margin-left: 5px;
+.error-message {
+  color: #ed0a02;
+}
+
+.cuisine-container {
+  display: flex;
+  flex-wrap: wrap;
+  /* max-height: 8rem; */
+  overflow: scroll;
+}
+
+.cuisine-container > div {
+  min-width: 40%;
 }

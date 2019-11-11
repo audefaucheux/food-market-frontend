@@ -1,43 +1,58 @@
 import React from "react"
-import { Link } from "@reach/router"
+import { navigate } from "@reach/router"
+import Helpers from "../Helpers"
+import { Card, Button } from "semantic-ui-react"
+import "../stylesheets/components/AdminShowFoodTruck.css"
 
 const AdminShowFoodTruck = ({
   id,
   name,
   description,
   profile_picture,
-  twitter_account,
+  // twitter_account,
   cuisines,
   archived,
   editFoodTruck
 }) => {
+  const backgroundPic = {
+    backgroundImage: `url(${profile_picture})`
+  }
+
   return (
-    <div>
-      <div>----------------------------------</div>
-      <h3>{name}</h3>
-      <div>
-        Cuisine(s):{" "}
-        {cuisines.length !== 0
-          ? cuisines.map(cuisine => cuisine.name + " | ")
-          : null}
-      </div>
-      <p>{description}</p>
-      <img src={profile_picture} alt={name} width="30%" />
-      <p>Twitter account: {twitter_account}</p>
-      <p>Archived: {archived ? "true" : "false"}</p>
-      <Link to={`edit/${id}`} className="primary">
-        Edit
-      </Link>
-      <Link to={`schedule/${id}`} className="primary">
-        Schedule
-      </Link>{" "}
-      <button
-        onClick={() => editFoodTruck(id, { archived: !archived })}
-        className="primary"
-      >
-        {archived ? "Reactivate" : "Archive"}
-      </button>
-    </div>
+    <Card className="food-truck-card">
+      <Card.Content>
+        <div className="container-header">
+          <div className="container-image" style={backgroundPic}></div>
+          <div>
+            <h3>{name}</h3>
+            <p>Cuisines: {Helpers.showCuisines(cuisines)}</p>
+
+            {/* <p>Twitter: {twitter_account}</p> */}
+          </div>
+        </div>
+        <p>{description}</p>
+      </Card.Content>
+      <Card.Content>
+        <Button
+          size="small"
+          onClick={() => navigate(`/my_food_trucks/edit/${id}`)}
+        >
+          Edit
+        </Button>
+        <Button
+          size="small"
+          onClick={() => navigate(`/my_food_trucks/schedule/${id}`)}
+        >
+          Schedule
+        </Button>
+        <Button
+          size="small"
+          onClick={() => editFoodTruck(id, { archived: !archived })}
+        >
+          {archived ? "Reactivate" : "Archive"}
+        </Button>
+      </Card.Content>
+    </Card>
   )
 }
 

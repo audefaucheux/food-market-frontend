@@ -1,45 +1,32 @@
 import React from "react"
 import Helpers from "../Helpers"
+import { Card } from "semantic-ui-react"
 
-const PublicShowFoodTruck = ({
-  name,
-  description,
-  profile_picture,
-  twitter_account,
-  cuisines,
-  schedule_recurrences,
-  dateFilter
-}) => {
-  const findTimeandMarket = () => {
-    let convertedDate = Helpers.convertStringIntoDate(dateFilter)
-    let filteredReccurence = schedule_recurrences.find(
-      recurrence => recurrence.day_num === convertedDate.getDay()
-    )
-    return (
-      <>
-        <p>
-          Time: {filteredReccurence.from_time} - {filteredReccurence.to_time}
-        </p>
-        <p>Market: {filteredReccurence.market.name}</p>
-      </>
-    )
+const PublicShowFoodTruck = ({ food_truck, from_time, to_time, market }) => {
+  const backgroundPic = {
+    backgroundImage: `url(${food_truck.profile_picture})`
   }
 
   return (
-    <div>
-      <div>----------------------------------</div>
-      <h3>{name}</h3>
-      {findTimeandMarket()}
-      <div>
-        Cuisine:{" "}
-        {cuisines.length !== 0
-          ? cuisines.map(cuisine => cuisine.name + " | ")
-          : null}
-      </div>
-      <p>Description: {description}</p>
-      <img src={profile_picture} alt={name} width="30%" />
-      <p>Twitter Account: {twitter_account}</p>
-    </div>
+    <Card className="food-truck-card">
+      <Card.Content>
+        <div className="container-header">
+          <div className="container-image" style={backgroundPic}></div>
+          <div className="container-header-details">
+            <h3>{food_truck.name}</h3>
+            <p>
+              {from_time} - {to_time}
+            </p>
+            <p>{market.name}</p>
+          </div>
+        </div>
+      </Card.Content>
+      <Card.Content>
+        <p>Cuisine(s): {Helpers.showCuisines(food_truck.cuisines)}</p>
+        <p>{food_truck.description}</p>
+      </Card.Content>
+      {/* <p>Twitter Account: {food_truck.twitter_account}</p> */}
+    </Card>
   )
 }
 

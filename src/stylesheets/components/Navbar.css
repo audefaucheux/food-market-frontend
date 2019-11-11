@@ -1,8 +1,22 @@
 .navbar {
+  background-color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 3rem;
+  border-top: 1px solid gray;
   display: flex;
-  margin: auto;
+  justify-content: space-around;
+  z-index: 99;
 }
 
-.navbar > a {
-  margin: 5px;
+.navbar a {
+  vertical-align: middle;
+  max-height: 90%;
+  padding-top: 1%;
+}
+
+.navbar > a > img {
+  height: 100%;
+  width: auto;
 }

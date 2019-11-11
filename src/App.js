@@ -7,13 +7,15 @@ import Login from "./components/Login"
 import HomePublic from "./components/HomePublic"
 import SignUp from "./components/SignUp"
 import HomeAdmin from "./components/HomeAdmin"
+// import UserSettingsForm from "./components/UserSettingsForm"
+import UserSettingsMenu from "./containers/UserSettingsMenu"
 
 const App = props => {
   const [user, setUser] = useState(null)
   const [formData, setFormData] = useState({ markets: [], cuisines: [] })
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    // console.log("app reloaded")
     API.getFormData().then(formData => {
       API.validateUser().then(data => {
         if (data.errors) {
@@ -40,24 +42,29 @@ const App = props => {
   }
 
   return (
-    <div className="App">
-      <Navbar user={user} logout={logout} />
-      <Router>
-        <HomePublic path="/" {...{ formData }} />
-        <SignUp path="sign_up" {...{ login }} />
-        <Login path="login" {...{ login }} />
+    <div className="app">
+      <div className="top-banner">
+        <span>YUM BREAK</span>
+      </div>
+      <div className="main">
         {user ? (
-          <HomeAdmin
-            path="my_food_trucks/*"
-            {...{
-              user,
-              formData
-            }}
-          />
+          <Router primary={false}>
+            <HomePublic path="/" {...{ formData, loading, setLoading }} />
+            <HomeAdmin
+              path="my_food_trucks/*"
+              {...{ user, formData, loading, setLoading }}
+            />
+            <UserSettingsMenu path="user_settings/*" {...{ user, logout }} />
+          </Router>
         ) : (
-          () => navigate("/login")
+          <Router primary={false}>
+            <HomePublic path="/" {...{ formData }} />
+            <SignUp path="sign_up" {...{ login }} />
+            <Login path="login" {...{ login }} />
+          </Router>
         )}
-      </Router>
+      </div>
+      <Navbar {...{ user }} />
     </div>
   )
 }

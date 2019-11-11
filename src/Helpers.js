@@ -1,3 +1,6 @@
+import React from "react"
+import { Dimmer, Loader } from "semantic-ui-react"
+
 const handleInputChange = (e, setter) => {
   setter(e.target.value)
 }
@@ -12,20 +15,69 @@ const dayName = dayNum => {
   if (dayNum === 7) return "Sunday"
 }
 
-const handleCheckboxChange = (e, setter, array) => {
-  if (e.target.checked) {
-    setter([...array, e.target.id])
+const handleCheckboxChange = (e, setter, array, limit = "") => {
+  let convertValue = JSON.stringify(parseInt(e.target.id))
+  if (e.target.checked && array.length < limit) {
+    setter([...array, convertValue])
   } else {
-    let updatedArray = array.filter(el => el !== e.target.id)
+    let updatedArray = array.filter(el => el !== convertValue)
     setter(updatedArray)
   }
 }
 
 const convertStringIntoDate = date => new Date(date)
 
+const sortByName = array => array.sort((a, b) => a.name.localeCompare(b.name))
+
+const showCuisines = array => {
+  if (array.length !== 0) {
+    return sortByName(array).map((cuisine, index) => {
+      if (index + 1 < array.length) {
+        return cuisine.name + " | "
+      } else {
+        return cuisine.name
+      }
+    })
+  } else {
+    return null
+  }
+}
+
+const findAndReplace = (array, data) => {
+  return array.map(element => {
+    if (element.id === data.id) {
+      return data
+    } else {
+      return element
+    }
+  })
+}
+
+const handleErrorMessage = (array, checker1 = "") => {
+  return array.map(
+    (error, index) =>
+      error.toLowerCase().includes(checker1) && (
+        <div key={index} className="error-message">
+          {error}
+        </div>
+      )
+  )
+}
+
+const showLoader = () => (
+  <Dimmer active inverted page>
+    <Loader inverted>Loading</Loader>
+  </Dimmer>
+)
+
 export default {
   handleInputChange,
   dayName,
   handleCheckboxChange,
-  convertStringIntoDate
+  convertStringIntoDate,
+  sortByName,
+  showCuisines,
+  findAndReplace,
+  handleErrorMessage,
+  showLoader
 }

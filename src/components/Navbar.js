@@ -1,32 +1,31 @@
 import React from "react"
 import { Link } from "@reach/router"
+import { Icon } from "semantic-ui-react"
 import "../stylesheets/components/Navbar.css"
 
-const Navbar = ({ user, logout }) => {
-  const navbarItems = [
-    { title: "Home", path: "/", loggedIn: false },
-    { title: "Sign Up", path: "/sign_up", loggedIn: false },
-    { title: "Login", path: "/login", loggedIn: false },
-    { title: "My Food Trucks", path: "/my_food_trucks", loggedIn: true }
-  ]
-
-  // const filterNavbar = navbarItems => {
-  //   return navbarItems.filter(item => item.loggedIn === !!user)
-  // }
-
-  // const displayNavbar = filterNavbar(navbarItems)
-
+const Navbar = ({ user }) => {
   return (
-    <div>
-      <div className="navbar">
-        {navbarItems.map(item => (
-          <Link key={item.title} to={item.path}>
-            {item.title}
+    <div className="navbar">
+      <Link to="/">
+        <Icon name="home" size="large" />
+      </Link>
+      {user ? (
+        <>
+          <Link to="/my_food_trucks">
+            <img
+              src={require("../images/icons8-food-truck-64.png")}
+              alt="My Food Trucks"
+            />
           </Link>
-        ))}
-        {user ? <button onClick={logout}>Logout</button> : null}
-      </div>
-      {/* <p>{user && `Hello ${user.email}`}</p> */}
+          <Link to="/user_settings">
+            <Icon name="setting" />
+          </Link>
+        </>
+      ) : (
+        <>
+          <Link to="/login">Login</Link> <Link to="/sign_up">Sign Up</Link>
+        </>
+      )}
     </div>
   )
 }

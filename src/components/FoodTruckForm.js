@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react"
 import Helpers from "../Helpers"
+import { Form, Checkbox, Button, Icon } from "semantic-ui-react"
+import keys from "../private/keys"
+import "../stylesheets/components/FoodTruckForm.css"
 
-const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
+const FoodTruckForm = ({
+  formData,
+  initialStates,
+  sendAPIRequest,
+  errors,
+  setErrors,
+  setLoading
+}) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [profilePicture, setProfilePicture] = useState("")
@@ -18,8 +28,30 @@ const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
     )
   }, [initialStates])
 
+  const backgroundPic = {
+    backgroundImage: `url(${profilePicture})`
+  }
+
+  const myWidget = window.cloudinary.createUploadWidget(
+    {
+      cloudName: keys.cloudName,
+      uploadPreset: keys.uploadPreset
+    },
+    (error, result) => {
+      if (!error && result && result.event === "success") {
+        setProfilePicture(result.info.secure_url)
+      }
+    }
+  )
+
+  const handleUpload = e => {
+    e.preventDefault()
+    myWidget.open()
+  }
+
   const handleSubmit = e => {
     e.preventDefault()
+    setLoading(true)
     let newFoodTruck = {
       name,
       description,
@@ -28,6 +60,7 @@ const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
       cuisines
     }
     sendAPIRequest(newFoodTruck)
+    setErrors([])
   }
 
   const cuisineCheck = cuisine => {
@@ -35,54 +68,70 @@ const FoodTruckForm = ({ formData, initialStates, sendAPIRequest }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="name"
-        placeholder="Name"
-        value={name}
-        onChange={e => Helpers.handleInputChange(e, setName)}
-      />
-      <textarea
+    <Form onSubmit={handleSubmit}>
+      <div className="container-name-pic">
+        <div className="container-name">
+          <Form.Field required>
+            <label>Food Truck Name: </label>
+            <input
+              type="text"
+              name="name"
+              value={name}
+              onChange={e => Helpers.handleInputChange(e, setName)}
+            />
+            <small>{Helpers.handleErrorMessage(errors)}</small>
+          </Form.Field>
+        </div>
+        <div className="profile-pic-form">
+          <div
+            id="upload_widget"
+            className="edit-proile-pic"
+            onClick={handleUpload}
+          >
+            <Icon name="edit" />
+          </div>
+          <div className="container-image-form" style={backgroundPic}></div>
+        </div>
+      </div>
+      <Form.TextArea
         name="description"
-        placeholder="Description"
+        label="Description (max 100 chars):"
+        maxLength={100}
         value={description}
         onChange={e => Helpers.handleInputChange(e, setDescription)}
       />
-      <input
-        type="text"
-        name="profilePicture"
-        placeholder="Profile Picture Url"
-        value={profilePicture}
-        onChange={e => Helpers.handleInputChange(e, setProfilePicture)}
-      />
-      <input
-        type="text"
-        name="twitterAccount"
-        placeholder="Twitter Account"
-        value={twitterAccount}
-        onChange={e => Helpers.handleInputChange(e, setTwitterAccount)}
-      />
-      <label>
-        Cuisine:
-        {formData.cuisines.map(cuisine => (
-          <label key={cuisine.id}>
-            <input
-              type="checkbox"
-              id={cuisine.id}
-              checked={cuisineCheck(cuisine)}
-              name={cuisine.name}
-              onChange={e =>
-                Helpers.handleCheckboxChange(e, setCuisines, cuisines)
-              }
-            />
-            {cuisine.name}
-          </label>
-        ))}
-      </label>
+      <small>Characters left: {100 - description.length}</small>
+      <Form.Field>
+        <label>Twitter Account:</label>
+        <input
+          type="text"
+          name="twitterAccount"
+          value={twitterAccount}
+          onChange={e => Helpers.handleInputChange(e, setTwitterAccount)}
+        />
+      </Form.Field>
+      <Form.Field>
+        <label>Cuisines (3 max):</label>
+        <div className="cuisine-container">
+          {formData.cuisines.map(cuisine => (
+            <div key={cuisine.id}>
+              <Checkbox
+                type="checkbox"
+                id={cuisine.id}
+                checked={cuisineCheck(cuisine)}
+                name={cuisine.name}
+                onChange={e =>
+                  Helpers.handleCheckboxChange(e, setCuisines, cuisines, 3)
+                }
+                label={cuisine.name}
+              />
+            </div>
+          ))}
+        </div>
+      </Form.Field>
 
-      <input type="submit" value="Submit" />
-    </form>
+      <Button color="green">Submit</Button>
+    </Form>
   )
 }
 

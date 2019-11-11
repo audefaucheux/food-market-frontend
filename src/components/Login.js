@@ -1,9 +1,12 @@
 import React, { useState } from "react"
 import API from "../adapters/API"
+import { Form, Button } from "semantic-ui-react"
+import Helpers from "../Helpers"
 
 const Login = ({ login }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [errors, setErrors] = useState([])
 
   const handleInputChange = (e, setter) => {
     setter(e.target.value)
@@ -11,37 +14,39 @@ const Login = ({ login }) => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    API.login({ email: email, password: password })
-      .then(data => {
-        if (data.errors) {
-          throw Error(data.errors)
-        } else {
-          login(data.user)
-        }
-      })
-      .catch(alert)
+    setErrors([])
+    API.login({ email: email, password: password }).then(data => {
+      if (data.errors) {
+        setErrors(data.errors)
+      } else {
+        login(data.user)
+      }
+    })
   }
 
   return (
     <div>
       <p>LOGIN PAGE</p>
-      <form onSubmit={handleSubmit}>
-        <input
+      <Form onSubmit={handleSubmit} error>
+        <Form.Input
           type="email"
+          label="Email:"
           name="email"
-          placeholder="email"
           value={email}
           onChange={e => handleInputChange(e, setEmail)}
-        ></input>
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          value={password}
-          onChange={e => handleInputChange(e, setPassword)}
-        ></input>
-        <input type="submit" value="Login" />
-      </form>
+        />
+        <Form.Field>
+          <label>Password:</label>
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={e => handleInputChange(e, setPassword)}
+          />
+          {Helpers.handleErrorMessage(errors)}
+        </Form.Field>
+        <Button color="green">Login</Button>
+      </Form>
     </div>
   )
 }

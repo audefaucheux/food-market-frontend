@@ -5,9 +5,11 @@ import AdminFoodTruckEdit from "./AdminFoodTruckEdit"
 import AdminFoodTruckSchedule from "./AdminFoodTruckSchedule"
 import AdminFoodTruckContainer from "../containers/AdminFoodTrucksContainer"
 import API from "../adapters/API"
+import Helpers from "../Helpers"
 
-const HomeAdmin = ({ user, formData }) => {
+const HomeAdmin = ({ user, formData, loading, setLoading }) => {
   const [foodTrucks, setFoodTrucks] = useState([])
+  const [errors, setErrors] = useState([])
 
   useEffect(() => {
     API.getUser(user.id).then(data => setFoodTrucks(data.food_trucks))
@@ -16,20 +18,11 @@ const HomeAdmin = ({ user, formData }) => {
   const addFoodTruck = newFoodTruck => {
     API.addFoodTruck(newFoodTruck).then(data => {
       if (data.errors) {
-        alert(data.errors)
+        setErrors(data.errors)
       } else if (data.food_truck) {
         setFoodTrucks([...foodTrucks, data.food_truck])
+        setLoading(false)
         navigate("/my_food_trucks")
-      }
-    })
-  }
-
-  const findAndReplace = (array, data) => {
-    return array.map(element => {
-      if (element.id === data.id) {
-        return data
-      } else {
-        return element
       }
     })
   }
@@ -37,9 +30,10 @@ const HomeAdmin = ({ user, formData }) => {
   const editFoodTruck = (id, updatedFoodTruck) => {
     API.updateFoodTruck(id, updatedFoodTruck).then(data => {
       if (data.errors) {
-        alert(data.errors)
+        setErrors(data.errors)
       } else if (data.food_truck) {
-        setFoodTrucks(findAndReplace(foodTrucks, data.food_truck))
+        setFoodTrucks(Helpers.findAndReplace(foodTrucks, data.food_truck))
+        setLoading(false)
         navigate("/my_food_trucks")
       }
     })
@@ -48,25 +42,38 @@ const HomeAdmin = ({ user, formData }) => {
   // find selected truck and replace null values with "" to make the form working
   const selectedTruck = id => {
     let truck = foodTrucks.find(foodTruck => foodTruck.id === parseInt(id))
-    Object.keys(truck).forEach(key => {
-      if (truck[key] === null) return (truck[key] = "")
-    })
-    return truck
+    if (foodTrucks.length !== 0) {
+      Object.keys(truck).forEach(key => {
+        if (truck[key] === null) return (truck[key] = "")
+      })
+      return truck
+    }
   }
 
   return (
-    <div id="home_admin">
-      <p>HOME ADMIN PAGE</p>
-      <Router>
-        <AdminFoodTruckContainer path="/" {...{ foodTrucks, editFoodTruck }} />
-        <AdminFoodTruckAdd path="add" {...{ addFoodTruck, formData }} />
-        <AdminFoodTruckEdit
-          path="edit/:id"
-          {...{ selectedTruck, editFoodTruck, formData }}
-        />
-        <AdminFoodTruckSchedule path="schedule/:id" {...{ formData }} />
-      </Router>
-    </div>
+    <Router primary={false}>
+      <AdminFoodTruckContainer path="/" {...{ foodTrucks, editFoodTruck }} />
+      <AdminFoodTruckAdd
+        path="add"
+        {...{ addFoodTruck, formData, errors, setErrors, loading, setLoading }}
+      />
+      <AdminFoodTruckEdit
+        path="edit/:id"
+        {...{
+          selectedTruck,
+          editFoodTruck,
+          formData,
+          errors,
+          setErrors,
+          loading,
+          setLoading
+        }}
+      />
+      <AdminFoodTruckSchedule
+        path="schedule/:id"
+        {...{ formData, selectedTruck, errors, setErrors }}
+      />
+    </Router>
   )
 }
 

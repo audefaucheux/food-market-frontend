@@ -1,5 +1,6 @@
 import React from "react"
 import Helpers from "../Helpers"
+import { Icon } from "semantic-ui-react"
 
 const ScheduleRecurrenceShow = ({
   id,
@@ -7,21 +8,20 @@ const ScheduleRecurrenceShow = ({
   from_time,
   to_time,
   market,
+  handleEditRecurrence,
   deleteRecurrence
 }) => {
   return (
-    <li>
-      {Helpers.dayName(day_num)} - from:{from_time} to:{to_time} - {market.name}
-      <button
-        className="primary"
-        onClick={() => console.log("need to build edit functionality")}
-      >
-        Edit
-      </button>
-      <button className="primary" onClick={() => deleteRecurrence(id)}>
-        Delete
-      </button>
-    </li>
+    <tr>
+      <td>{Helpers.dayName(day_num)}</td>
+      <td>{from_time}</td>
+      <td>{to_time}</td>
+      <td>{market.name}</td>
+      <td>
+        <Icon onClick={handleEditRecurrence} name="edit" />
+        <Icon onClick={() => deleteRecurrence(id)} name="delete" />
+      </td>
+    </tr>
   )
 }
 

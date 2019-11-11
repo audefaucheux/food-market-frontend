@@ -1,0 +1,16 @@
+.recurrence-page {
+  margin-top: 1rem;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0px;
+  margin-top: 1rem;
+}
+
+th,
+td {
+  border: 1px solid lightgray;
+  padding: 3px;
+}

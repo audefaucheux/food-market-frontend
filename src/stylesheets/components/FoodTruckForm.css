@@ -1,0 +1,38 @@
+.container-name-pic {
+  display: flex;
+}
+
+.container-name {
+  width: 65%;
+  margin-right: 10%;
+  align-self: flex-end;
+  padding: 0 0 1rem;
+}
+
+.profile-pic-form {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+  width: 7rem;
+  text-align: center;
+  float: right;
+  position: relative;
+}
+
+.container-image-form {
+  width: 6rem;
+  height: 6rem;
+  border: 1px solid gray;
+  overflow: hidden;
+  vertical-align: middle;
+  position: relative;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
+
+.edit-proile-pic {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}

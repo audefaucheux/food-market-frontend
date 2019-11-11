@@ -1,7 +1,6 @@
 import React, { useState } from "react"
-import { Form, Button, Header, Message } from "semantic-ui-react"
+import { Form, Button, Message } from "semantic-ui-react"
 import API from "../adapters/API"
-// import Helpers from "../Helpers"
 
 const UserSettingsForm = ({ user }) => {
   const [currentPassword, setCurrentPassword] = useState("")
@@ -25,7 +24,6 @@ const UserSettingsForm = ({ user }) => {
 
   return (
     <div>
-      <Header>UPDATE PASSWORD:</Header>
       {messages.success &&
         messages.success.map((message, index) => (
           <Message success content={message} key={index} />

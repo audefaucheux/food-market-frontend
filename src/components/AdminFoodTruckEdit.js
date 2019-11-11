@@ -1,7 +1,7 @@
 import React from "react"
 import FoodTruckForm from "./FoodTruckForm"
 import { Link } from "@reach/router"
-import { Button, Icon } from "semantic-ui-react"
+import { Icon } from "semantic-ui-react"
 
 const AdminFoodTruckEdit = ({
   id,
@@ -38,12 +38,9 @@ const AdminFoodTruckEdit = ({
 
   return (
     <div>
-      <Button>
-        <Link to="/my_food_trucks">
-          <Icon name="arrow left" />
-          Back
-        </Link>
-      </Button>
+      <Link to="/my_food_trucks">
+        <Icon name="arrow left" />
+      </Link>
       {/* <h3>Edit {foodTruckDetails.name}</h3> */}
       <FoodTruckForm
         {...{ initialStates, formData, sendAPIRequest, errors, setErrors }}

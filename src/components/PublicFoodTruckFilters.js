@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import PublicFoodTrucksContainer from "../containers/PublicFoodTrucksContainer"
 import API from "../adapters/API"
 import Helpers from "../Helpers"
-import { Form, Button, Checkbox } from "semantic-ui-react"
+import { Form, Button, Checkbox, Header } from "semantic-ui-react"
 
 const PublicFoodTruckFilters = ({ formData }) => {
   const [dateFilter, setDateFilter] = useState(
@@ -68,17 +68,17 @@ const PublicFoodTruckFilters = ({ formData }) => {
 
   return (
     <div>
-      <p>FILTERS</p>
+      <Header>FILTERS:</Header>
       <Form onSubmit={handleSubmit}>
-        <label>
-          Day:
+        <Form.Field>
+          <label>Day:</label>
           <input
             type="date"
             name="date"
             value={dateFilter}
             onChange={e => setDateFilter(e.target.value)}
           />
-        </label>
+        </Form.Field>
         <Form.Field>
           <label>Markets:</label>
           {formData.markets.map(market => (
@@ -126,7 +126,6 @@ const PublicFoodTruckFilters = ({ formData }) => {
         </Button>
       </Form>
       <PublicFoodTrucksContainer {...{ recurrences }} />
-      {/* <PublicFoodTrucksContainer {...{ foodTrucks }} /> */}
     </div>
   )
 }

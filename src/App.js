@@ -7,7 +7,8 @@ import Login from "./components/Login"
 import HomePublic from "./components/HomePublic"
 import SignUp from "./components/SignUp"
 import HomeAdmin from "./components/HomeAdmin"
-import UserSettingsForm from "./components/UserSettingsForm"
+// import UserSettingsForm from "./components/UserSettingsForm"
+import UserSettingsMenu from "./containers/UserSettingsMenu"
 
 const App = props => {
   const [user, setUser] = useState(null)
@@ -40,14 +41,15 @@ const App = props => {
   }
 
   return (
-    <div className="App">
+    <div className="app">
       <div className="top-banner"> YUM BREAK</div>
       <div className="main">
         {user ? (
           <Router primary={false}>
             <HomePublic path="/" {...{ formData }} />
             <HomeAdmin path="my_food_trucks/*" {...{ user, formData }} />
-            <UserSettingsForm path="user_settings" {...{ user }} />
+            {/* <UserSettingsForm path="user_settings" {...{ user, logout }} /> */}
+            <UserSettingsMenu path="user_settings/*" {...{ user, logout }} />
           </Router>
         ) : (
           <Router primary={false}>
@@ -57,7 +59,7 @@ const App = props => {
           </Router>
         )}
       </div>
-      <Navbar user={user} logout={logout} />
+      <Navbar {...{ user }} />
     </div>
   )
 }

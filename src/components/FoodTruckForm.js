@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
 import Helpers from "../Helpers"
-import { Form, Checkbox, Button } from "semantic-ui-react"
+import { Form, Checkbox, Button, Icon } from "semantic-ui-react"
 import keys from "../private/keys"
+import "../stylesheets/components/FoodTruckForm.css"
 
 const FoodTruckForm = ({
   formData,
@@ -66,16 +67,30 @@ const FoodTruckForm = ({
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Field required>
-        <label>Food Truck Name: </label>
-        <input
-          type="text"
-          name="name"
-          value={name}
-          onChange={e => Helpers.handleInputChange(e, setName)}
-        />
-        <small>{Helpers.handleErrorMessage(errors)}</small>
-      </Form.Field>
+      <div className="container-name-pic">
+        <div className="container-name">
+          <Form.Field required>
+            <label>Food Truck Name: </label>
+            <input
+              type="text"
+              name="name"
+              value={name}
+              onChange={e => Helpers.handleInputChange(e, setName)}
+            />
+            <small>{Helpers.handleErrorMessage(errors)}</small>
+          </Form.Field>
+        </div>
+        <div className="profile-pic-form">
+          <div
+            id="upload_widget"
+            className="edit-proile-pic"
+            onClick={handleUpload}
+          >
+            <Icon name="edit" />
+          </div>
+          <div className="container-image-form" style={backgroundPic}></div>
+        </div>
+      </div>
       <Form.TextArea
         name="description"
         label="Description:"
@@ -91,13 +106,8 @@ const FoodTruckForm = ({
           onChange={e => Helpers.handleInputChange(e, setTwitterAccount)}
         />
       </Form.Field>
-      <Button id="upload_widget" onClick={handleUpload}>
-        Upload New Picture
-      </Button>
-      <div className="container-image" style={backgroundPic}></div>
-
       <Form.Field>
-        <label>Cuisine:</label>
+        <label>Cuisine(s):</label>
         {formData.cuisines.map(cuisine => (
           <div key={cuisine.id}>
             <Checkbox

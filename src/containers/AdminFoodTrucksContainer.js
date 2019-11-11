@@ -2,16 +2,22 @@ import React, { useState } from "react"
 import { Link } from "@reach/router"
 import AdminShowFoodTruck from "../components/AdminShowFoodTruck"
 import Helpers from "../Helpers"
-import { Header, Button, Icon, Checkbox, Card } from "semantic-ui-react"
+import { Button, Icon, Card, Menu, Header } from "semantic-ui-react"
 
 const AdminFoodTruckContainer = ({ foodTrucks, editFoodTruck }) => {
-  const [archivedFoodTrucks, setArchivedFoodTrucks] = useState(false)
+  const [archiveToggle, setArchiveToggle] = useState(false)
+
+  const archivedFoodTrucks = array =>
+    array.filter(foodTruck => foodTruck.archived === true)
+
+  const activeFoodTrucks = array =>
+    array.filter(foodTruck => foodTruck.archived === false)
 
   const foodTrucksArray = array => {
-    if (archivedFoodTrucks) {
-      return array.filter(foodTruck => foodTruck.archived === true)
+    if (archiveToggle) {
+      return archivedFoodTrucks(array)
     } else {
-      return array.filter(foodTruck => foodTruck.archived === false)
+      return activeFoodTrucks(array)
     }
   }
 
@@ -23,16 +29,21 @@ const AdminFoodTruckContainer = ({ foodTrucks, editFoodTruck }) => {
           Add Food Truck
         </Link>
       </Button>
-      Archived:
-      <Checkbox
-        toggle
-        onClick={() => setArchivedFoodTrucks(!archivedFoodTrucks)}
-      >
-        Archived: {archivedFoodTrucks}
-      </Checkbox>
-      <Header as="h2">
-        My {archivedFoodTrucks ? "Archived" : "Active"} Food Trucks:{" "}
-      </Header>
+      <Header> My Food Trucks: </Header>
+      <Menu pointing secondary>
+        <Menu.Item
+          active={archiveToggle === false}
+          onClick={() => setArchiveToggle(false)}
+        >
+          Active ({activeFoodTrucks(foodTrucks).length})
+        </Menu.Item>
+        <Menu.Item
+          active={archiveToggle === true}
+          onClick={() => setArchiveToggle(true)}
+        >
+          Archived ({archivedFoodTrucks(foodTrucks).length})
+        </Menu.Item>
+      </Menu>
       <Card.Group>
         {Helpers.sortByName(foodTrucksArray(foodTrucks)).map(foodTruck => {
           return (

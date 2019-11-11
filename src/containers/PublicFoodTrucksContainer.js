@@ -1,11 +1,12 @@
 import React from "react"
 import PublicShowFoodTruck from "../components/PublicShowFoodTruck"
-import { Card } from "semantic-ui-react"
+import { Card, Header } from "semantic-ui-react"
+import "../stylesheets/containers/PublicFoodTruckContainer.css"
 
 const PublicFoodTruckContainer = ({ recurrences }) => {
   return (
-    <div>
-      <p>LIST OF FOOD TRUCKS</p>
+    <div className="filter-results">
+      <Header>LIST OF FOOD TRUCKS:</Header>
       <Card.Group>
         {recurrences.length !== 0
           ? recurrences.map(recurrence => (

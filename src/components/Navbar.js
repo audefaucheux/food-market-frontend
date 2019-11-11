@@ -3,7 +3,7 @@ import { Link } from "@reach/router"
 import { Icon } from "semantic-ui-react"
 import "../stylesheets/components/Navbar.css"
 
-const Navbar = ({ user, logout }) => {
+const Navbar = ({ user }) => {
   return (
     <div className="navbar">
       <Link to="/">
@@ -20,7 +20,6 @@ const Navbar = ({ user, logout }) => {
           <Link to="/user_settings">
             <Icon name="setting" />
           </Link>
-          <button onClick={logout}>Logout</button>
         </>
       ) : (
         <>

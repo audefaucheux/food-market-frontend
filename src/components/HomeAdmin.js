@@ -7,7 +7,7 @@ import AdminFoodTruckContainer from "../containers/AdminFoodTrucksContainer"
 import API from "../adapters/API"
 import Helpers from "../Helpers"
 
-const HomeAdmin = ({ user, formData }) => {
+const HomeAdmin = ({ user, formData, loading, setLoading }) => {
   const [foodTrucks, setFoodTrucks] = useState([])
   const [errors, setErrors] = useState([])
 
@@ -21,6 +21,7 @@ const HomeAdmin = ({ user, formData }) => {
         setErrors(data.errors)
       } else if (data.food_truck) {
         setFoodTrucks([...foodTrucks, data.food_truck])
+        setLoading(false)
         navigate("/my_food_trucks")
       }
     })
@@ -32,6 +33,7 @@ const HomeAdmin = ({ user, formData }) => {
         setErrors(data.errors)
       } else if (data.food_truck) {
         setFoodTrucks(Helpers.findAndReplace(foodTrucks, data.food_truck))
+        setLoading(false)
         navigate("/my_food_trucks")
       }
     })
@@ -53,11 +55,19 @@ const HomeAdmin = ({ user, formData }) => {
       <AdminFoodTruckContainer path="/" {...{ foodTrucks, editFoodTruck }} />
       <AdminFoodTruckAdd
         path="add"
-        {...{ addFoodTruck, formData, errors, setErrors }}
+        {...{ addFoodTruck, formData, errors, setErrors, loading, setLoading }}
       />
       <AdminFoodTruckEdit
         path="edit/:id"
-        {...{ selectedTruck, editFoodTruck, formData, errors, setErrors }}
+        {...{
+          selectedTruck,
+          editFoodTruck,
+          formData,
+          errors,
+          setErrors,
+          loading,
+          setLoading
+        }}
       />
       <AdminFoodTruckSchedule
         path="schedule/:id"

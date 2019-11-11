@@ -22,7 +22,7 @@ const PublicShowFoodTruck = ({ food_truck, from_time, to_time, market }) => {
         </div>
       </Card.Content>
       <Card.Content>
-        <p>Cuisine: {Helpers.showCuisines(food_truck.cuisines)}</p>
+        <p>Cuisine(s): {Helpers.showCuisines(food_truck.cuisines)}</p>
         <p>{food_truck.description}</p>
       </Card.Content>
       {/* <p>Twitter Account: {food_truck.twitter_account}</p> */}

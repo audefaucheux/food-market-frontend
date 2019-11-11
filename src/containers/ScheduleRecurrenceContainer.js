@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import ScheduleRecurrenceShow from "../components/ScheduleRecurrenceShow"
 import ScheduleForm from "../components/ScheduleForm"
 import "../stylesheets/containers/ScheduleRecurrenceContainer.css"
-import { Button } from "semantic-ui-react"
+import { Button, Header } from "semantic-ui-react"
 // import API from "../adapters/API"
 
 const ScheduleRecurrenceContainer = ({
@@ -36,8 +36,8 @@ const ScheduleRecurrenceContainer = ({
   }
 
   return (
-    <div>
-      <h3>Schedule Recurrence</h3>
+    <div className="recurrence-page">
+      <Header>Schedule Recurrence(s):</Header>
       <Button onClick={handleNewScheduleClick}>
         {showForm ? "Hide Form" : "Add Schedule"}
       </Button>

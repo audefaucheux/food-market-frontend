@@ -4,13 +4,14 @@ import API from "../adapters/API"
 import Helpers from "../Helpers"
 import { Form, Button, Checkbox, Header } from "semantic-ui-react"
 
-const PublicFoodTruckFilters = ({ formData }) => {
+const PublicFoodTruckFilters = ({ formData, loading, setLoading }) => {
   const [dateFilter, setDateFilter] = useState(
     new Date().toISOString().slice(0, 10)
   ) // set date to today by default
   const [marketsFilter, setMarketsFilter] = useState([])
   const [cuisinesFilter, setCuisinesFilter] = useState([])
   const [recurrences, setRecurrences] = useState([])
+  const [message, setMessage] = useState("")
 
   const filterByDayNum = array => {
     let getFilterDateNum = Helpers.convertStringIntoDate(dateFilter).getDay()
@@ -48,13 +49,17 @@ const PublicFoodTruckFilters = ({ formData }) => {
     let showActiveTrucks = removeArchivedFoodTrucks(arrayFilteredByDay)
     let arrayFilteredByMarket = filterByMarket(showActiveTrucks)
     let arrayFilteredByCuisine = filterByCuisine(arrayFilteredByMarket)
+    arrayFilteredByCuisine.length === 0 && setMessage("No match found")
     return arrayFilteredByCuisine
   }
 
   const handleSubmit = e => {
+    setLoading(true)
     e.preventDefault()
+    setMessage("")
     API.getScheduleRecurrences().then(data => {
       setRecurrences(applyFilters(data))
+      setLoading(false)
     })
   }
 
@@ -102,30 +107,32 @@ const PublicFoodTruckFilters = ({ formData }) => {
         </Form.Field>
         <Form.Field>
           <label>Cuisines:</label>
-          {formData.cuisines.map(cuisine => (
-            <div key={`${cuisine.id}-cuisine`}>
-              <Checkbox
-                type="checkbox"
-                id={`${cuisine.id}-cuisine`}
-                defaultChecked={cuisinesCheck(cuisine)}
-                name={cuisine.name}
-                onChange={e =>
-                  Helpers.handleCheckboxChange(
-                    e,
-                    setCuisinesFilter,
-                    cuisinesFilter
-                  )
-                }
-                label={cuisine.name}
-              />
-            </div>
-          ))}
+          <div className="cuisine-container">
+            {formData.cuisines.map(cuisine => (
+              <div key={`${cuisine.id}-cuisine`}>
+                <Checkbox
+                  type="checkbox"
+                  id={`${cuisine.id}-cuisine`}
+                  defaultChecked={cuisinesCheck(cuisine)}
+                  name={cuisine.name}
+                  onChange={e =>
+                    Helpers.handleCheckboxChange(
+                      e,
+                      setCuisinesFilter,
+                      cuisinesFilter
+                    )
+                  }
+                  label={cuisine.name}
+                />
+              </div>
+            ))}
+          </div>
         </Form.Field>
         <Button color="green" type="submit">
           Submit
         </Button>
       </Form>
-      <PublicFoodTrucksContainer {...{ recurrences }} />
+      <PublicFoodTrucksContainer {...{ recurrences, message, loading }} />
     </div>
   )
 }

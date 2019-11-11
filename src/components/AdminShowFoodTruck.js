@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "@reach/router"
+import { navigate } from "@reach/router"
 import Helpers from "../Helpers"
 import { Card, Button } from "semantic-ui-react"
 import "../stylesheets/components/AdminShowFoodTruck.css"
@@ -25,7 +25,7 @@ const AdminShowFoodTruck = ({
           <div className="container-image" style={backgroundPic}></div>
           <div>
             <h3>{name}</h3>
-            <p>{Helpers.showCuisines(cuisines)}</p>
+            <p>Cuisines: {Helpers.showCuisines(cuisines)}</p>
 
             {/* <p>Twitter: {twitter_account}</p> */}
           </div>
@@ -33,15 +33,17 @@ const AdminShowFoodTruck = ({
         <p>{description}</p>
       </Card.Content>
       <Card.Content>
-        <Button size="small">
-          <Link to={`edit/${id}`} className="primary">
-            Edit
-          </Link>
+        <Button
+          size="small"
+          onClick={() => navigate(`/my_food_trucks/edit/${id}`)}
+        >
+          Edit
         </Button>
-        <Button size="small">
-          <Link to={`schedule/${id}`} className="primary">
-            Schedule
-          </Link>{" "}
+        <Button
+          size="small"
+          onClick={() => navigate(`/my_food_trucks/schedule/${id}`)}
+        >
+          Schedule
         </Button>
         <Button
           size="small"

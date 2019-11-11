@@ -1,18 +1,23 @@
 import React from "react"
 import PublicShowFoodTruck from "../components/PublicShowFoodTruck"
-import { Card, Header } from "semantic-ui-react"
+import { Card, Header, Message } from "semantic-ui-react"
+import Helpers from "../Helpers"
 import "../stylesheets/containers/PublicFoodTruckContainer.css"
 
-const PublicFoodTruckContainer = ({ recurrences }) => {
+const PublicFoodTruckContainer = ({ recurrences, message, loading }) => {
   return (
     <div className="filter-results">
-      <Header>LIST OF FOOD TRUCKS:</Header>
+      <Header>RESULT ({recurrences.length})</Header>
+
+      {message === "No match found" && <Message error content={message} />}
+      {loading && Helpers.showLoader()}
       <Card.Group>
-        {recurrences.length !== 0
-          ? recurrences.map(recurrence => (
+        {recurrences.length !== 0 &&
+          recurrences
+            .sort((a, b) => a.food_truck.name.localeCompare(b.food_truck.name))
+            .map(recurrence => (
               <PublicShowFoodTruck key={recurrence.id} {...{ ...recurrence }} />
-            ))
-          : null}
+            ))}
       </Card.Group>
     </div>
   )

@@ -2,6 +2,7 @@ import React from "react"
 import FoodTruckForm from "./FoodTruckForm"
 import { Link } from "@reach/router"
 import { Icon } from "semantic-ui-react"
+import Helpers from "../Helpers"
 
 const AdminFoodTruckEdit = ({
   id,
@@ -9,7 +10,9 @@ const AdminFoodTruckEdit = ({
   editFoodTruck,
   formData,
   errors,
-  setErrors
+  setErrors,
+  loading,
+  setLoading
 }) => {
   const foodTruckDetails = selectedTruck(id)
 
@@ -20,7 +23,7 @@ const AdminFoodTruckEdit = ({
     setTwitterAccount,
     setCuisines
   ) => {
-    if (foodTruckDetails) {
+    if (foodTruckDetails && !loading) {
       setName(foodTruckDetails.name)
       setDescription(foodTruckDetails.description)
       setProfilePicture(foodTruckDetails.profile_picture)
@@ -41,9 +44,17 @@ const AdminFoodTruckEdit = ({
       <Link to="/my_food_trucks">
         <Icon name="arrow left" />
       </Link>
+      {loading && Helpers.showLoader()}
       {/* <h3>Edit {foodTruckDetails.name}</h3> */}
       <FoodTruckForm
-        {...{ initialStates, formData, sendAPIRequest, errors, setErrors }}
+        {...{
+          initialStates,
+          formData,
+          sendAPIRequest,
+          errors,
+          setErrors,
+          setLoading
+        }}
       />
     </div>
   )

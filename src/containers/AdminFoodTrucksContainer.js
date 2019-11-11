@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Link } from "@reach/router"
+import { navigate } from "@reach/router"
 import AdminShowFoodTruck from "../components/AdminShowFoodTruck"
 import Helpers from "../Helpers"
 import { Button, Icon, Card, Menu, Header } from "semantic-ui-react"
@@ -23,11 +23,8 @@ const AdminFoodTruckContainer = ({ foodTrucks, editFoodTruck }) => {
 
   return (
     <>
-      <Button>
-        <Link to="/my_food_trucks/add">
-          <Icon name="add" />
-          Add Food Truck
-        </Link>
+      <Button color="green" onClick={() => navigate("/my_food_trucks/add")}>
+        <Icon name="add" /> Add
       </Button>
       <Header> My Food Trucks: </Header>
       <Menu pointing secondary>

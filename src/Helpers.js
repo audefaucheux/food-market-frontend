@@ -1,4 +1,5 @@
 import React from "react"
+import { Dimmer, Loader } from "semantic-ui-react"
 
 const handleInputChange = (e, setter) => {
   setter(e.target.value)
@@ -14,9 +15,9 @@ const dayName = dayNum => {
   if (dayNum === 7) return "Sunday"
 }
 
-const handleCheckboxChange = (e, setter, array) => {
+const handleCheckboxChange = (e, setter, array, limit = "") => {
   let convertValue = JSON.stringify(parseInt(e.target.id))
-  if (e.target.checked) {
+  if (e.target.checked && array.length < limit) {
     setter([...array, convertValue])
   } else {
     let updatedArray = array.filter(el => el !== convertValue)
@@ -63,6 +64,12 @@ const handleErrorMessage = (array, checker1 = "") => {
   )
 }
 
+const showLoader = () => (
+  <Dimmer active inverted page>
+    <Loader inverted>Loading</Loader>
+  </Dimmer>
+)
+
 export default {
   handleInputChange,
   dayName,
@@ -71,5 +78,6 @@ export default {
   sortByName,
   showCuisines,
   findAndReplace,
-  handleErrorMessage
+  handleErrorMessage,
+  showLoader
 }

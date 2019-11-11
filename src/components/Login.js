@@ -45,7 +45,7 @@ const Login = ({ login }) => {
           />
           {Helpers.handleErrorMessage(errors)}
         </Form.Field>
-        <Button>Login</Button>
+        <Button color="green">Login</Button>
       </Form>
     </div>
   )

@@ -9,7 +9,8 @@ const FoodTruckForm = ({
   initialStates,
   sendAPIRequest,
   errors,
-  setErrors
+  setErrors,
+  setLoading
 }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
@@ -50,7 +51,7 @@ const FoodTruckForm = ({
 
   const handleSubmit = e => {
     e.preventDefault()
-    setErrors([])
+    setLoading(true)
     let newFoodTruck = {
       name,
       description,
@@ -59,6 +60,7 @@ const FoodTruckForm = ({
       cuisines
     }
     sendAPIRequest(newFoodTruck)
+    setErrors([])
   }
 
   const cuisineCheck = cuisine => {
@@ -93,10 +95,12 @@ const FoodTruckForm = ({
       </div>
       <Form.TextArea
         name="description"
-        label="Description:"
+        label="Description (max 100 chars):"
+        maxLength={100}
         value={description}
         onChange={e => Helpers.handleInputChange(e, setDescription)}
       />
+      <small>Characters left: {100 - description.length}</small>
       <Form.Field>
         <label>Twitter Account:</label>
         <input
@@ -107,21 +111,23 @@ const FoodTruckForm = ({
         />
       </Form.Field>
       <Form.Field>
-        <label>Cuisine(s):</label>
-        {formData.cuisines.map(cuisine => (
-          <div key={cuisine.id}>
-            <Checkbox
-              type="checkbox"
-              id={cuisine.id}
-              checked={cuisineCheck(cuisine)}
-              name={cuisine.name}
-              onChange={e =>
-                Helpers.handleCheckboxChange(e, setCuisines, cuisines)
-              }
-              label={cuisine.name}
-            />
-          </div>
-        ))}
+        <label>Cuisines (3 max):</label>
+        <div className="cuisine-container">
+          {formData.cuisines.map(cuisine => (
+            <div key={cuisine.id}>
+              <Checkbox
+                type="checkbox"
+                id={cuisine.id}
+                checked={cuisineCheck(cuisine)}
+                name={cuisine.name}
+                onChange={e =>
+                  Helpers.handleCheckboxChange(e, setCuisines, cuisines, 3)
+                }
+                label={cuisine.name}
+              />
+            </div>
+          ))}
+        </div>
       </Form.Field>
 
       <Button color="green">Submit</Button>

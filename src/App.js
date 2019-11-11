@@ -13,6 +13,7 @@ import UserSettingsMenu from "./containers/UserSettingsMenu"
 const App = props => {
   const [user, setUser] = useState(null)
   const [formData, setFormData] = useState({ markets: [], cuisines: [] })
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     API.getFormData().then(formData => {
@@ -42,13 +43,17 @@ const App = props => {
 
   return (
     <div className="app">
-      <div className="top-banner"> YUM BREAK</div>
+      <div className="top-banner">
+        <span>YUM BREAK</span>
+      </div>
       <div className="main">
         {user ? (
           <Router primary={false}>
-            <HomePublic path="/" {...{ formData }} />
-            <HomeAdmin path="my_food_trucks/*" {...{ user, formData }} />
-            {/* <UserSettingsForm path="user_settings" {...{ user, logout }} /> */}
+            <HomePublic path="/" {...{ formData, loading, setLoading }} />
+            <HomeAdmin
+              path="my_food_trucks/*"
+              {...{ user, formData, loading, setLoading }}
+            />
             <UserSettingsMenu path="user_settings/*" {...{ user, logout }} />
           </Router>
         ) : (

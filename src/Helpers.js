@@ -16,7 +16,7 @@ const dayName = dayNum => {
   if (dayNum === 7) return "Sunday"
 }
 
-const handleCheckboxChange = (e, setter, array, limit = "") => {
+const handleCheckboxChange = (e, setter, array, limit = array.length + 1) => {
   let convertValue = JSON.stringify(parseInt(e.target.id))
   if (e.target.checked && array.length < limit) {
     setter([...array, convertValue])

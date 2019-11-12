@@ -7,23 +7,24 @@ import Login from "./components/Login"
 import HomePublic from "./components/HomePublic"
 import SignUp from "./components/SignUp"
 import HomeAdmin from "./components/HomeAdmin"
-// import UserSettingsForm from "./components/UserSettingsForm"
 import UserSettingsMenu from "./containers/UserSettingsMenu"
 
-const App = props => {
+const App = () => {
   const [user, setUser] = useState(null)
   const [formData, setFormData] = useState({ markets: [], cuisines: [] })
   const [loading, setLoading] = useState(false)
+  const [buttonClicked, setButtonClicked] = useState(window.location.pathname)
 
   useEffect(() => {
+    console.log("re run use effect App")
     API.getFormData().then(formData => {
       API.validateUser().then(data => {
         if (data.errors) {
-          navigate("/login")
+          handleRedirect("/login")
           alert(data.errors)
         } else if (data.user) {
           setUser(data.user)
-          // navigate("/my_food_trucks")
+          // handleRedirect("/my_food_trucks")
         }
         setFormData(formData)
       })
@@ -32,13 +33,18 @@ const App = props => {
 
   const login = user => {
     setUser(user)
-    navigate("/my_food_trucks")
+    handleRedirect("/my_food_trucks")
   }
 
   const logout = () => {
     API.logout()
     setUser(null)
-    navigate("/login")
+    handleRedirect("/login")
+  }
+
+  const handleRedirect = path => {
+    setButtonClicked(path)
+    navigate(path)
   }
 
   return (
@@ -47,24 +53,22 @@ const App = props => {
         <span>YUM BREAK</span>
       </div>
       <div className="main">
-        {user ? (
-          <Router primary={false}>
-            <HomePublic path="/" {...{ formData, loading, setLoading }} />
+        <Router primary={false}>
+          <HomePublic path="/" {...{ formData, loading, setLoading }} />
+          {user && (
             <HomeAdmin
               path="my_food_trucks/*"
               {...{ user, formData, loading, setLoading }}
             />
+          )}
+          {user && (
             <UserSettingsMenu path="user_settings/*" {...{ user, logout }} />
-          </Router>
-        ) : (
-          <Router primary={false}>
-            <HomePublic path="/" {...{ formData }} />
-            <SignUp path="sign_up" {...{ login }} />
-            <Login path="login" {...{ login }} />
-          </Router>
-        )}
+          )}
+          <SignUp path="sign_up" {...{ login }} />
+          <Login path="login" {...{ login }} />
+        </Router>
       </div>
-      <Navbar {...{ user }} />
+      <Navbar {...{ user, buttonClicked, setButtonClicked, handleRedirect }} />
     </div>
   )
 }

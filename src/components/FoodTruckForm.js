@@ -9,8 +9,7 @@ const FoodTruckForm = ({
   initialStates,
   sendAPIRequest,
   errors,
-  setErrors,
-  setLoading
+  setErrors
 }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
@@ -39,22 +38,24 @@ const FoodTruckForm = ({
     },
     (error, result) => {
       if (!error && result && result.event === "success") {
+        console.log("update picture")
         setProfilePicture(result.info.secure_url)
       } else if (result.event === "abort") {
-        setLoading(false)
+        console.log("loading stop")
+        //
       }
     }
   )
 
   const handleUpload = e => {
     e.preventDefault()
-    setLoading(true)
+    // setLoading(true)
     myWidget.open()
   }
 
   const handleSubmit = e => {
     e.preventDefault()
-    setLoading(true)
+    // setLoading(true)
     let newFoodTruck = {
       name,
       description,

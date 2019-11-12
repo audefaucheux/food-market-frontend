@@ -1,5 +1,6 @@
 import React from "react"
-import { Dimmer, Loader } from "semantic-ui-react"
+import { navigate } from "@reach/router"
+import { Dimmer, Loader, Icon } from "semantic-ui-react"
 
 const handleInputChange = (e, setter) => {
   setter(e.target.value)
@@ -70,6 +71,10 @@ const showLoader = () => (
   </Dimmer>
 )
 
+const backButton = () => (
+  <Icon name="arrow left" onClick={() => navigate("/my_food_trucks")} />
+)
+
 export default {
   handleInputChange,
   dayName,
@@ -79,5 +84,6 @@ export default {
   showCuisines,
   findAndReplace,
   handleErrorMessage,
-  showLoader
+  showLoader,
+  backButton
 }

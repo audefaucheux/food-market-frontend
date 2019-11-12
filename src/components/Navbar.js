@@ -1,31 +1,62 @@
 import React from "react"
-import { Link } from "@reach/router"
 import { Icon } from "semantic-ui-react"
 import "../stylesheets/components/Navbar.css"
 
-const Navbar = ({ user }) => {
+const Navbar = ({ user, buttonClicked, handleRedirect }) => {
+  const navbarItems = [
+    {
+      active: buttonClicked === "/" ? "active" : "",
+      hidden: "",
+      path: "/",
+      icon: "home",
+      text: "Home"
+    },
+    {
+      active: buttonClicked === "/my_food_trucks" ? "active" : "",
+      hidden: !user ? "hidden" : "",
+      path: "/my_food_trucks",
+      icon: "truck",
+      text: "My Food Trucks"
+    },
+    {
+      active: buttonClicked === "/user_settings" ? "active" : "",
+      hidden: !user ? "hidden" : "",
+      path: "/user_settings",
+      icon: "setting",
+      text: "Settings"
+    },
+    {
+      active: buttonClicked === "/login" ? "active" : "",
+      hidden: user ? "hidden" : "",
+      path: "/login",
+      icon: "sign in",
+      text: "Login"
+    },
+    {
+      active: buttonClicked === "/sign_up" ? "active" : "",
+      hidden: user ? "hidden" : "",
+      path: "/sign_up",
+      icon: "signup",
+      text: "Sign Up"
+    }
+  ]
+
   return (
     <div className="navbar">
-      <Link to="/">
-        <Icon name="home" size="large" />
-      </Link>
-      {user ? (
-        <>
-          <Link to="/my_food_trucks">
-            <img
-              src={require("../images/icons8-food-truck-64.png")}
-              alt="My Food Trucks"
-            />
-          </Link>
-          <Link to="/user_settings">
-            <Icon name="setting" />
-          </Link>
-        </>
-      ) : (
-        <>
-          <Link to="/login">Login</Link> <Link to="/sign_up">Sign Up</Link>
-        </>
-      )}
+      {navbarItems.map(item => {
+        return (
+          <div
+            key={item.path}
+            className={`navbar-item ${item.active} ${item.hidden}`}
+            onClick={() => handleRedirect(item.path)}
+          >
+            <div>
+              <Icon name={item.icon} />
+            </div>
+            <div>{item.text}</div>
+          </div>
+        )
+      })}
     </div>
   )
 }

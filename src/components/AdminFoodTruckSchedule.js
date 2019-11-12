@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react"
 import API from "../adapters/API"
-import { Link } from "@reach/router"
 import ScheduleRecurrenceContainer from "../containers/ScheduleRecurrenceContainer"
-import { Icon } from "semantic-ui-react"
 import Helpers from "../Helpers"
 
 const AdminFoodTruckSchedule = ({ id, formData, errors, setErrors }) => {
@@ -44,9 +42,7 @@ const AdminFoodTruckSchedule = ({ id, formData, errors, setErrors }) => {
 
   return (
     <div>
-      <Link to="/my_food_trucks">
-        <Icon name="arrow left" />
-      </Link>
+      {Helpers.backButton()}
       {/* <h2>{truckDetails ? truckDetails.name : null}</h2> */}
       <ScheduleRecurrenceContainer
         {...{

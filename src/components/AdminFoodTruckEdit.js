@@ -1,7 +1,5 @@
 import React from "react"
 import FoodTruckForm from "./FoodTruckForm"
-import { Link } from "@reach/router"
-import { Icon } from "semantic-ui-react"
 import Helpers from "../Helpers"
 
 const AdminFoodTruckEdit = ({
@@ -41,9 +39,7 @@ const AdminFoodTruckEdit = ({
 
   return (
     <div>
-      <Link to="/my_food_trucks">
-        <Icon name="arrow left" />
-      </Link>
+      {Helpers.backButton()}
       {loading && Helpers.showLoader()}
       {/* <h3>Edit {foodTruckDetails.name}</h3> */}
       <FoodTruckForm

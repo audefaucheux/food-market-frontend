@@ -3,20 +3,26 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 3rem;
+  height: 3.7rem;
   border-top: 1px solid gray;
   display: flex;
-  justify-content: space-around;
   z-index: 99;
 }
 
-.navbar a {
-  vertical-align: middle;
-  max-height: 90%;
-  padding-top: 1%;
+.navbar-item {
+  flex-direction: column;
+  text-align: center;
+  align-content: center;
+  margin: 0 auto;
+  min-width: 6rem;
 }
 
-.navbar > a > img {
-  height: 100%;
-  width: auto;
+.active {
+  color: #4792fc;
+  border-top: solid #4792fc;
+}
+
+.navbar-item > div > i {
+  font-size: 1.5rem;
+  padding: 0.4rem 0 0.1rem;
 }

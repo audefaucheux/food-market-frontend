@@ -1,5 +1,6 @@
 import React from "react"
-import { Dimmer, Loader } from "semantic-ui-react"
+import { navigate } from "@reach/router"
+import { Dimmer, Loader, Icon } from "semantic-ui-react"
 
 const handleInputChange = (e, setter) => {
   setter(e.target.value)
@@ -15,7 +16,7 @@ const dayName = dayNum => {
   if (dayNum === 7) return "Sunday"
 }
 
-const handleCheckboxChange = (e, setter, array, limit = "") => {
+const handleCheckboxChange = (e, setter, array, limit = array.length + 1) => {
   let convertValue = JSON.stringify(parseInt(e.target.id))
   if (e.target.checked && array.length < limit) {
     setter([...array, convertValue])
@@ -70,6 +71,20 @@ const showLoader = () => (
   </Dimmer>
 )
 
+const backButton = () => (
+  <Icon name="arrow left" onClick={() => navigate("/my_food_trucks")} />
+)
+
+const selectedTruck = (id, array) => {
+  let truck = array.find(foodTruck => foodTruck.id === parseInt(id))
+  if (array.length !== 0) {
+    Object.keys(truck).forEach(key => {
+      if (truck[key] === null) return (truck[key] = "")
+    })
+    return truck
+  }
+}
+
 export default {
   handleInputChange,
   dayName,
@@ -79,5 +94,7 @@ export default {
   showCuisines,
   findAndReplace,
   handleErrorMessage,
-  showLoader
+  showLoader,
+  backButton,
+  selectedTruck
 }

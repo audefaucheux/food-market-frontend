@@ -7,23 +7,23 @@ import Login from "./components/Login"
 import HomePublic from "./components/HomePublic"
 import SignUp from "./components/SignUp"
 import HomeAdmin from "./components/HomeAdmin"
-// import UserSettingsForm from "./components/UserSettingsForm"
 import UserSettingsMenu from "./containers/UserSettingsMenu"
 
-const App = props => {
+const App = () => {
   const [user, setUser] = useState(null)
   const [formData, setFormData] = useState({ markets: [], cuisines: [] })
-  const [loading, setLoading] = useState(false)
+  const [globalLoading, setGlobalLoading] = useState(false)
+  const [buttonClicked, setButtonClicked] = useState(window.location.pathname)
 
   useEffect(() => {
     API.getFormData().then(formData => {
       API.validateUser().then(data => {
         if (data.errors) {
-          navigate("/login")
+          handleRedirect("/login")
           alert(data.errors)
         } else if (data.user) {
           setUser(data.user)
-          // navigate("/my_food_trucks")
+          // handleRedirect("/my_food_trucks")
         }
         setFormData(formData)
       })
@@ -32,39 +32,55 @@ const App = props => {
 
   const login = user => {
     setUser(user)
-    navigate("/my_food_trucks")
+    handleRedirect("/my_food_trucks")
   }
 
   const logout = () => {
     API.logout()
     setUser(null)
-    navigate("/login")
+    handleRedirect("/login")
+  }
+
+  const handleRedirect = path => {
+    setButtonClicked(path)
+    navigate(path)
   }
 
   return (
     <div className="app">
       <div className="top-banner">
-        <span>YUM BREAK</span>
+        <img
+          src={require("./images/logo-bonfire-no-background-no-text.png")}
+          alt="logo-with-background"
+        />
+        <h2>Yum Break</h2>
       </div>
       <div className="main">
-        {user ? (
-          <Router primary={false}>
-            <HomePublic path="/" {...{ formData, loading, setLoading }} />
+        <Router primary={false}>
+          <HomePublic
+            path="/"
+            {...{ formData, globalLoading, setGlobalLoading, handleRedirect }}
+          />
+          {user && (
             <HomeAdmin
               path="my_food_trucks/*"
-              {...{ user, formData, loading, setLoading }}
+              {...{
+                user,
+                formData,
+                globalLoading,
+                setGlobalLoading,
+                handleRedirect
+              }}
             />
+          )}
+          {user && (
             <UserSettingsMenu path="user_settings/*" {...{ user, logout }} />
-          </Router>
-        ) : (
-          <Router primary={false}>
-            <HomePublic path="/" {...{ formData }} />
-            <SignUp path="sign_up" {...{ login }} />
-            <Login path="login" {...{ login }} />
-          </Router>
-        )}
+          )}
+          <SignUp path="sign_up" {...{ login }} />
+          <Login path="login" {...{ login, handleRedirect }} />
+        </Router>
       </div>
-      <Navbar {...{ user }} />
+      <Navbar {...{ user, buttonClicked, setButtonClicked, handleRedirect }} />
     </div>
   )
 }

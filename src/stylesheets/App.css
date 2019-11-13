@@ -1,28 +1,63 @@
 .app {
   font-family: "Noto Sans", sans-serif;
+  overflow-wrap: break-word;
+  max-width: 1024px;
+  margin: 0 auto;
+  color: #333;
 }
 .main {
-  margin: 5% 5% 10%;
+  margin: 5% 5% 16%;
+}
+
+h2 {
+  font-family: "Alegreya Sans SC", sans-serif;
 }
 
 .top-banner {
-  background-color: black;
-  color: white;
-  font-style: bold;
+  background-color: #17191c;
   height: 3rem;
-  text-align: center;
-  font-family: "Chewy", cursive;
-  font-size: 2rem;
   display: flex;
+  justify-content: center;
 }
 
-.top-banner > span {
-  margin: auto;
+.top-banner > img {
+  height: 2rem;
+  width: auto;
+  margin: 0.5rem 1rem;
+}
+
+.top-banner > h2 {
+  margin: auto 0;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 button,
 a {
   text-decoration: none;
+}
+
+.center-content {
+  text-align: center;
+}
+
+.center-content > p {
+  margin: 2rem 0;
+}
+
+.center-content small {
+  text-align: left;
+}
+
+.signup-link {
+  color: #f5824a;
+  font-weight: bold;
+}
+
+.add-food-truck-button {
+  border: 1px solid #d4d4d5;
+  padding: 1rem 0;
+  margin: 0 0 1rem;
+  border-radius: 5px;
 }
 
 .container-header {
@@ -38,7 +73,7 @@ a {
   vertical-align: middle;
   position: relative;
   margin-right: 5%;
-  border-radius: 50%;
+  border-radius: 10%;
   background-size: cover;
   background-position: center;
 }
@@ -51,6 +86,12 @@ a {
   min-width: 96%;
 }
 
+.ui.card,
+.ui.cards > .food-truck-card {
+  border: none;
+  border-radius: 5px;
+}
+
 .error-message {
   color: #ed0a02;
 }
@@ -58,10 +99,28 @@ a {
 .cuisine-container {
   display: flex;
   flex-wrap: wrap;
-  /* max-height: 8rem; */
-  overflow: scroll;
+  flex-direction: column;
+  /* overflow: scroll; */
+  height: 10rem;
 }
 
 .cuisine-container > div {
-  min-width: 40%;
+  min-width: 12rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.ui.button {
+  background-color: #ffaf06 !important;
+  color: rgba(0, 0, 0, 0.6) !important;
+  margin: 0 auto;
+  display: block;
+}
+
+.header-home-page {
+  width: 100%;
+  border-radius: 10px;
+  margin: 0 0 1rem;
 }

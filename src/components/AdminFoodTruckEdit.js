@@ -1,29 +1,30 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import FoodTruckForm from "./FoodTruckForm"
-import { Link } from "@reach/router"
-import { Icon } from "semantic-ui-react"
 import Helpers from "../Helpers"
+import API from "../adapters/API"
 
 const AdminFoodTruckEdit = ({
   id,
   selectedTruck,
-  editFoodTruck,
+  handleRedirect,
   formData,
-  errors,
-  setErrors,
-  loading,
-  setLoading
+  foodTrucks,
+  setFoodTrucks
 }) => {
-  const foodTruckDetails = selectedTruck(id)
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [profilePicture, setProfilePicture] = useState(
+    "https://toppng.com/public/uploads/preview/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
+  )
+  const [twitterAccount, setTwitterAccount] = useState("")
+  const [cuisines, setCuisines] = useState([])
+  const [errors, setErrors] = useState([])
+  const [localLoading, setLocalLoading] = useState(false)
 
-  const initialStates = (
-    setName,
-    setDescription,
-    setProfilePicture,
-    setTwitterAccount,
-    setCuisines
-  ) => {
-    if (foodTruckDetails && !loading) {
+  const foodTruckDetails = Helpers.selectedTruck(id, foodTrucks)
+
+  useEffect(() => {
+    if (foodTruckDetails) {
       setName(foodTruckDetails.name)
       setDescription(foodTruckDetails.description)
       setProfilePicture(foodTruckDetails.profile_picture)
@@ -33,28 +34,41 @@ const AdminFoodTruckEdit = ({
       )
       setCuisines(cuisineIdArray)
     }
-  }
+  }, [foodTruckDetails])
 
-  const sendAPIRequest = data => {
-    editFoodTruck(id, data)
+  const editFoodTruck = updatedFoodTruck => {
+    API.updateFoodTruck(id, updatedFoodTruck).then(data => {
+      if (data.errors) {
+        setErrors(data.errors)
+      } else if (data.food_truck) {
+        setFoodTrucks(Helpers.findAndReplace(foodTrucks, data.food_truck))
+        handleRedirect("/my_food_trucks")
+      }
+    })
+    setLocalLoading(false)
   }
 
   return (
     <div>
-      <Link to="/my_food_trucks">
-        <Icon name="arrow left" />
-      </Link>
-      {loading && Helpers.showLoader()}
-      {/* <h3>Edit {foodTruckDetails.name}</h3> */}
+      {Helpers.backButton()}
       <FoodTruckForm
         {...{
-          initialStates,
           formData,
-          sendAPIRequest,
-          errors,
-          setErrors,
-          setLoading
+          name,
+          setName,
+          description,
+          setDescription,
+          profilePicture,
+          setProfilePicture,
+          twitterAccount,
+          setTwitterAccount,
+          cuisines,
+          setCuisines,
+          localLoading,
+          setLocalLoading,
+          errors
         }}
+        sendAPIRequest={editFoodTruck}
       />
     </div>
   )

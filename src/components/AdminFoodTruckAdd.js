@@ -1,44 +1,56 @@
-import React from "react"
+import React, { useState } from "react"
 import FoodTruckForm from "./FoodTruckForm"
-import { Link } from "@reach/router"
-import { Icon } from "semantic-ui-react"
+import API from "../adapters/API"
 import Helpers from "../Helpers"
 
 const AdminFoodTruckAdd = ({
-  addFoodTruck,
   formData,
-  errors,
-  setErrors,
-  loading,
-  setLoading
+  foodTrucks,
+  setFoodTrucks,
+  handleRedirect
 }) => {
-  const initialStates = (
-    setName,
-    setDescription,
-    setProfilePicture,
-    setTwitterAccount,
-    setCuisines
-  ) => {
-    if (!loading) {
-      setName("")
-      setDescription("")
-      setProfilePicture(
-        "https://toppng.com/public/uploads/preview/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
-      )
-      setTwitterAccount("")
-      setCuisines([])
-    }
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [profilePicture, setProfilePicture] = useState(
+    "https://toppng.com/public/uploads/preview/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
+  )
+  const [twitterAccount, setTwitterAccount] = useState("")
+  const [cuisines, setCuisines] = useState([])
+  const [errors, setErrors] = useState([])
+  const [localLoading, setLocalLoading] = useState(false)
+
+  const addFoodTruck = newFoodTruck => {
+    API.addFoodTruck(newFoodTruck).then(data => {
+      if (data.errors) {
+        setErrors(data.errors)
+      } else if (data.food_truck) {
+        setFoodTrucks([...foodTrucks, data.food_truck])
+        handleRedirect("/my_food_trucks")
+      }
+    })
+    setLocalLoading(false)
   }
 
   return (
     <>
-      <Link to="/my_food_trucks">
-        <Icon name="arrow left" />
-      </Link>
-      {loading && Helpers.showLoader()}
-
+      {Helpers.backButton()}
       <FoodTruckForm
-        {...{ formData, initialStates, errors, setErrors, loading, setLoading }}
+        {...{
+          formData,
+          name,
+          setName,
+          description,
+          setDescription,
+          profilePicture,
+          setProfilePicture,
+          twitterAccount,
+          setTwitterAccount,
+          cuisines,
+          setCuisines,
+          localLoading,
+          setLocalLoading,
+          errors
+        }}
         sendAPIRequest={addFoodTruck}
       />
     </>

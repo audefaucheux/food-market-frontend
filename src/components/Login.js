@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import API from "../adapters/API"
-import { Form, Button } from "semantic-ui-react"
+import { Form, Button, Input } from "semantic-ui-react"
 import Helpers from "../Helpers"
 
-const Login = ({ login }) => {
+const Login = ({ login, handleRedirect }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [errors, setErrors] = useState([])
@@ -25,28 +25,43 @@ const Login = ({ login }) => {
   }
 
   return (
-    <div>
-      <p>LOGIN PAGE</p>
+    <div className="center-content">
+      <img src={require("../images/logo-bonfire.png")} alt="yum-break-logo" />
       <Form onSubmit={handleSubmit} error>
-        <Form.Input
-          type="email"
-          label="Email:"
-          name="email"
-          value={email}
-          onChange={e => handleInputChange(e, setEmail)}
-        />
         <Form.Field>
-          <label>Password:</label>
-          <input
+          <Input
+            type="email"
+            name="email"
+            icon="mail"
+            iconPosition="left"
+            placeholder="email"
+            value={email}
+            onChange={e => handleInputChange(e, setEmail)}
+          />
+        </Form.Field>
+        <Form.Field>
+          <Input
             type="password"
             name="password"
+            icon="lock"
+            iconPosition="left"
+            placeholder="password"
             value={password}
             onChange={e => handleInputChange(e, setPassword)}
           />
-          {Helpers.handleErrorMessage(errors)}
+          <small>{Helpers.handleErrorMessage(errors)}</small>
         </Form.Field>
-        <Button color="green">Login</Button>
+        <Button>Login</Button>
       </Form>
+      <p>
+        Don't have an account yet?{" "}
+        <span
+          className="signup-link"
+          onClick={() => handleRedirect("/sign_up")}
+        >
+          Sign Up
+        </span>
+      </p>
     </div>
   )
 }

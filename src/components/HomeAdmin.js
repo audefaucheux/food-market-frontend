@@ -13,17 +13,6 @@ const HomeAdmin = ({ user, formData, handleRedirect }) => {
     API.getUser(user.id).then(data => setFoodTrucks(data.food_trucks))
   }, [user.id])
 
-  // find selected truck and replace null values with "" to make the form working
-  const selectedTruck = id => {
-    let truck = foodTrucks.find(foodTruck => foodTruck.id === parseInt(id))
-    if (foodTrucks.length !== 0) {
-      Object.keys(truck).forEach(key => {
-        if (truck[key] === null) return (truck[key] = "")
-      })
-      return truck
-    }
-  }
-
   return (
     <Router primary={false}>
       <AdminFoodTruckContainer
@@ -37,17 +26,13 @@ const HomeAdmin = ({ user, formData, handleRedirect }) => {
       <AdminFoodTruckEdit
         path="edit/:id"
         {...{
-          selectedTruck,
           formData,
           foodTrucks,
           setFoodTrucks,
           handleRedirect
         }}
       />
-      <AdminFoodTruckSchedule
-        path="schedule/:id"
-        {...{ formData, selectedTruck }}
-      />
+      <AdminFoodTruckSchedule path="schedule/:id" {...{ formData }} />
     </Router>
   )
 }

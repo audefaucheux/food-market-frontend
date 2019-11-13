@@ -1,33 +1,26 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import Helpers from "../Helpers"
 import { Form, Button } from "semantic-ui-react"
 
 const ScheduleForm = ({
-  dayField,
   formData,
   APIrequestSchedule,
+  day,
+  setDay,
+  fromTime,
+  setFromTime,
+  toTime,
+  setToTime,
+  market,
+  setMarket,
   id,
   selectedRecurrence,
   errors,
   setErrors
 }) => {
-  const [day, setDay] = useState("")
-  const [fromTime, setFromTime] = useState("")
-  const [toTime, setToTime] = useState("")
-  const [market, setMarket] = useState("")
-
-  useEffect(() => {
-    if (selectedRecurrence) {
-      setDay(selectedRecurrence.day_num)
-      setFromTime(selectedRecurrence.from_time)
-      setToTime(selectedRecurrence.to_time)
-      setMarket(selectedRecurrence.market.id)
-    }
-  }, [selectedRecurrence])
-
   const handleSubmit = e => {
     e.preventDefault()
-    // setErrors([])
+
     let newRecurrence = {
       day_num: parseInt(day, 10),
       from_time: fromTime,
@@ -36,16 +29,13 @@ const ScheduleForm = ({
       food_truck_id: id
     }
     APIrequestSchedule(newRecurrence, selectedRecurrence)
-    setDay("")
-    setFromTime("")
-    setToTime("")
-    setMarket("")
   }
 
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Field>
-        <label>{dayField}:</label>
+        <label>Weekday</label>
+        {/* <label>{dayField}:</label> */}
         <select
           onChange={e => Helpers.handleInputChange(e, setDay)}
           value={day}
@@ -59,7 +49,7 @@ const ScheduleForm = ({
           <option value="6">Saturday</option>
           <option value="7">Sunday</option>
         </select>
-        {/* <small>{Helpers.handleErrorMessage(errors, "day num")}</small> */}
+        <small>{Helpers.handleErrorMessage(errors, "day num")}</small>
       </Form.Field>
       <Form.Field>
         <label>From:</label>
@@ -69,7 +59,7 @@ const ScheduleForm = ({
           name="time_from"
           onChange={e => Helpers.handleInputChange(e, setFromTime)}
         />
-        {/* <small>{Helpers.handleErrorMessage(errors, "from time")}</small> */}
+        <small>{Helpers.handleErrorMessage(errors, "from time")}</small>
       </Form.Field>
       <Form.Field>
         <label>To:</label>
@@ -79,7 +69,7 @@ const ScheduleForm = ({
           name="time_to"
           onChange={e => Helpers.handleInputChange(e, setToTime)}
         />
-        {/* <small>{Helpers.handleErrorMessage(errors, "to time")}</small> */}
+        <small>{Helpers.handleErrorMessage(errors, "to time")}</small>
       </Form.Field>
       <Form.Field>
         <label>Market:</label>
@@ -94,7 +84,7 @@ const ScheduleForm = ({
             </option>
           ))}
         </select>
-        {/* <small>{Helpers.handleErrorMessage(errors, "market")}</small> */}
+        <small>{Helpers.handleErrorMessage(errors, "market")}</small>
       </Form.Field>
       <Button>Submit</Button>
     </Form>

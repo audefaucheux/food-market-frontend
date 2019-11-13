@@ -21,7 +21,7 @@ const AdminFoodTruckEdit = ({
   const [errors, setErrors] = useState([])
   const [localLoading, setLocalLoading] = useState(false)
 
-  const foodTruckDetails = selectedTruck(id)
+  const foodTruckDetails = Helpers.selectedTruck(id, foodTrucks)
 
   useEffect(() => {
     if (foodTruckDetails) {

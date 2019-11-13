@@ -75,6 +75,16 @@ const backButton = () => (
   <Icon name="arrow left" onClick={() => navigate("/my_food_trucks")} />
 )
 
+const selectedTruck = (id, array) => {
+  let truck = array.find(foodTruck => foodTruck.id === parseInt(id))
+  if (array.length !== 0) {
+    Object.keys(truck).forEach(key => {
+      if (truck[key] === null) return (truck[key] = "")
+    })
+    return truck
+  }
+}
+
 export default {
   handleInputChange,
   dayName,
@@ -85,5 +95,6 @@ export default {
   findAndReplace,
   handleErrorMessage,
   showLoader,
-  backButton
+  backButton,
+  selectedTruck
 }

@@ -1,31 +1,78 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import ScheduleRecurrenceShow from "../components/ScheduleRecurrenceShow"
 import ScheduleForm from "../components/ScheduleForm"
 import "../stylesheets/containers/ScheduleRecurrenceContainer.css"
 import { Button, Header } from "semantic-ui-react"
-// import API from "../adapters/API"
+import API from "../adapters/API"
+import Helpers from "../Helpers"
 
 const ScheduleRecurrenceContainer = ({
   formData,
-  addRecurrence,
-  updateRecurrence,
-  deleteRecurrence,
-  id,
   recurrences,
-  errors,
-  setErrors
+  setRecurrences,
+  id
 }) => {
+  const [day, setDay] = useState("")
+  const [fromTime, setFromTime] = useState("")
+  const [toTime, setToTime] = useState("")
+  const [market, setMarket] = useState("")
   const [selectedRecurrence, setSelectedRecurrence] = useState(null)
   const [showForm, setShowForm] = useState(false)
+  const [errors, setErrors] = useState([])
+
+  useEffect(() => {
+    console.log("rerender use effect")
+    if (selectedRecurrence) {
+      setDay(selectedRecurrence.day_num)
+      setFromTime(selectedRecurrence.from_time)
+      setToTime(selectedRecurrence.to_time)
+      setMarket(selectedRecurrence.market.id)
+    }
+  }, [selectedRecurrence])
+
   const sortByDayNum = array => array.sort((a, b) => a.day_num - b.day_num)
 
   const handleNewScheduleClick = () => {
     setShowForm(!showForm)
   }
 
-  const handleEditRecurrence = recurrence => {
+  const addRecurrence = newRecurrence => {
+    API.addScheduleRecurrence(newRecurrence).then(data => {
+      if (data.errors) {
+        setErrors(data.errors)
+      } else if (data.schedule_recurrence) {
+        setRecurrences([...recurrences, data.schedule_recurrence])
+        resetForm()
+        setErrors([])
+      }
+    })
+  }
+
+  const handleEditButtonRecurrence = recurrence => {
+    setErrors([])
     setSelectedRecurrence(recurrence)
     setShowForm(true)
+  }
+
+  const deleteRecurrence = id => {
+    API.deleteScheduleRecurrence(id)
+    let updatedRecurrences = recurrences.filter(
+      recurrence => recurrence.id !== id
+    )
+    setRecurrences(updatedRecurrences)
+  }
+
+  const updateRecurrence = (data, id) => {
+    API.updateScheduleRecurrence(id, data).then(data => {
+      if (data.errors) {
+        setErrors(data.errors)
+      } else if (data.schedule_recurrence) {
+        setRecurrences(
+          Helpers.findAndReplace(recurrences, data.schedule_recurrence)
+        )
+        resetForm()
+      }
+    })
   }
 
   const APIrequestSchedule = (data, recurrenceDetails) => {
@@ -33,6 +80,13 @@ const ScheduleRecurrenceContainer = ({
       ? updateRecurrence(data, recurrenceDetails.id)
       : addRecurrence(data)
     setSelectedRecurrence(null)
+  }
+
+  const resetForm = () => {
+    setDay("")
+    setFromTime("")
+    setToTime("")
+    setMarket("")
   }
 
   return (
@@ -46,10 +100,18 @@ const ScheduleRecurrenceContainer = ({
           {...{
             formData,
             APIrequestSchedule,
-            selectedRecurrence,
+            day,
+            setDay,
+            fromTime,
+            setFromTime,
+            toTime,
+            setToTime,
+            market,
+            setMarket,
             id,
             errors,
-            setErrors
+            setErrors,
+            selectedRecurrence
           }}
           dayField="Weekday"
         />
@@ -69,7 +131,9 @@ const ScheduleRecurrenceContainer = ({
             <ScheduleRecurrenceShow
               key={recurrence.id}
               {...{ ...recurrence, deleteRecurrence }}
-              handleEditRecurrence={() => handleEditRecurrence(recurrence)}
+              handleEditButtonRecurrence={() =>
+                handleEditButtonRecurrence(recurrence)
+              }
             />
           ))}
         </tbody>

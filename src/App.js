@@ -12,7 +12,7 @@ import UserSettingsMenu from "./containers/UserSettingsMenu"
 const App = () => {
   const [user, setUser] = useState(null)
   const [formData, setFormData] = useState({ markets: [], cuisines: [] })
-  const [loading, setLoading] = useState(false)
+  const [globalLoading, setGlobalLoading] = useState(false)
   const [buttonClicked, setButtonClicked] = useState(window.location.pathname)
 
   useEffect(() => {
@@ -54,18 +54,21 @@ const App = () => {
       </div>
       <div className="main">
         <Router primary={false}>
-          <HomePublic path="/" {...{ formData, loading, setLoading }} />
+          <HomePublic
+            path="/"
+            {...{ formData, globalLoading, setGlobalLoading }}
+          />
           {user && (
             <HomeAdmin
               path="my_food_trucks/*"
-              {...{ user, formData, loading, setLoading }}
+              {...{ user, formData, globalLoading, setGlobalLoading }}
             />
           )}
           {user && (
             <UserSettingsMenu path="user_settings/*" {...{ user, logout }} />
           )}
           <SignUp path="sign_up" {...{ login }} />
-          <Login path="login" {...{ login }} />
+          <Login path="login" {...{ login, handleRedirect }} />
         </Router>
       </div>
       <Navbar {...{ user, buttonClicked, setButtonClicked, handleRedirect }} />

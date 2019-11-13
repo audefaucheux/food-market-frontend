@@ -7,9 +7,8 @@ import AdminFoodTruckContainer from "../containers/AdminFoodTrucksContainer"
 import API from "../adapters/API"
 import Helpers from "../Helpers"
 
-const HomeAdmin = ({ user, formData, loading, setLoading }) => {
+const HomeAdmin = ({ user, formData }) => {
   const [foodTrucks, setFoodTrucks] = useState([])
-  const [errors, setErrors] = useState([])
 
   useEffect(() => {
     API.getUser(user.id).then(data => setFoodTrucks(data.food_trucks))
@@ -18,11 +17,11 @@ const HomeAdmin = ({ user, formData, loading, setLoading }) => {
   const addFoodTruck = newFoodTruck => {
     API.addFoodTruck(newFoodTruck).then(data => {
       if (data.errors) {
-        setErrors(data.errors)
+        return data.errors
       } else if (data.food_truck) {
         setFoodTrucks([...foodTrucks, data.food_truck])
-        setLoading(false)
         navigate("/my_food_trucks")
+        return ""
       }
     })
   }
@@ -30,10 +29,9 @@ const HomeAdmin = ({ user, formData, loading, setLoading }) => {
   const editFoodTruck = (id, updatedFoodTruck) => {
     API.updateFoodTruck(id, updatedFoodTruck).then(data => {
       if (data.errors) {
-        setErrors(data.errors)
+        return data.errors
       } else if (data.food_truck) {
         setFoodTrucks(Helpers.findAndReplace(foodTrucks, data.food_truck))
-        setLoading(false)
         navigate("/my_food_trucks")
       }
     })
@@ -53,25 +51,14 @@ const HomeAdmin = ({ user, formData, loading, setLoading }) => {
   return (
     <Router primary={false}>
       <AdminFoodTruckContainer path="/" {...{ foodTrucks, editFoodTruck }} />
-      <AdminFoodTruckAdd
-        path="add"
-        {...{ addFoodTruck, formData, errors, setErrors, loading, setLoading }}
-      />
+      <AdminFoodTruckAdd path="add" {...{ addFoodTruck, formData }} />
       <AdminFoodTruckEdit
         path="edit/:id"
-        {...{
-          selectedTruck,
-          editFoodTruck,
-          formData,
-          errors,
-          setErrors,
-          loading,
-          setLoading
-        }}
+        {...{ selectedTruck, editFoodTruck, formData }}
       />
       <AdminFoodTruckSchedule
         path="schedule/:id"
-        {...{ formData, selectedTruck, errors, setErrors }}
+        {...{ formData, selectedTruck }}
       />
     </Router>
   )

@@ -1,7 +1,7 @@
 import React from "react"
 import PublicFoodTruckFilters from "../components/PublicFoodTruckFilters"
 
-const HomePublic = ({ formData, loading, setLoading }) => {
+const HomePublic = ({ formData, globalLoading, setGlobalLoading }) => {
   return (
     <div>
       <p>
@@ -9,7 +9,9 @@ const HomePublic = ({ formData, loading, setLoading }) => {
         you not sure what you want to eat, checkout which food trucks are
         planning to come.
       </p>
-      <PublicFoodTruckFilters {...{ formData, loading, setLoading }} />
+      <PublicFoodTruckFilters
+        {...{ formData, globalLoading, setGlobalLoading }}
+      />
     </div>
   )
 }

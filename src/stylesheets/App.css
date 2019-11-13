@@ -27,6 +27,23 @@ a {
   text-decoration: none;
 }
 
+.center-content {
+  text-align: center;
+}
+
+.center-content > p {
+  margin: 2rem 0;
+}
+
+.center-content small {
+  text-align: left;
+}
+
+.signup-link {
+  color: #4792fc;
+  font-weight: bold;
+}
+
 .container-header {
   display: flex;
   height: 7rem;

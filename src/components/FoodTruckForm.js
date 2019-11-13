@@ -8,14 +8,15 @@ const FoodTruckForm = ({
   formData,
   initialStates,
   sendAPIRequest,
-  errors,
-  setErrors
+  nameDef
 }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [profilePicture, setProfilePicture] = useState("")
   const [twitterAccount, setTwitterAccount] = useState("")
   const [cuisines, setCuisines] = useState([])
+  const [localLoading, setLocalLoading] = useState(false)
+  // const [errors, setErrors] = useState([])
 
   useEffect(() => {
     initialStates(
@@ -38,24 +39,22 @@ const FoodTruckForm = ({
     },
     (error, result) => {
       if (!error && result && result.event === "success") {
-        console.log("update picture")
         setProfilePicture(result.info.secure_url)
       } else if (result.event === "abort") {
-        console.log("loading stop")
-        //
+        setLocalLoading(false)
       }
     }
   )
 
   const handleUpload = e => {
     e.preventDefault()
-    // setLoading(true)
+    setLocalLoading(true)
     myWidget.open()
   }
 
   const handleSubmit = e => {
     e.preventDefault()
-    // setLoading(true)
+    // setGlobalLoading(true)
     let newFoodTruck = {
       name,
       description,
@@ -63,8 +62,7 @@ const FoodTruckForm = ({
       twitter_account: twitterAccount,
       cuisines
     }
-    sendAPIRequest(newFoodTruck)
-    setErrors([])
+    console.log(sendAPIRequest(newFoodTruck))
   }
 
   const cuisineCheck = cuisine => {
@@ -73,6 +71,7 @@ const FoodTruckForm = ({
 
   return (
     <Form onSubmit={handleSubmit}>
+      {localLoading && Helpers.showLoader()}
       <div className="container-name-pic">
         <div className="container-name">
           <Form.Field required>
@@ -83,7 +82,7 @@ const FoodTruckForm = ({
               value={name}
               onChange={e => Helpers.handleInputChange(e, setName)}
             />
-            <small>{Helpers.handleErrorMessage(errors)}</small>
+            {/* <small>{Helpers.handleErrorMessage(errors)}</small> */}
           </Form.Field>
         </div>
         <div className="profile-pic-form">

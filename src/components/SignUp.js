@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import API from "../adapters/API"
-import { Form, Button } from "semantic-ui-react"
+import { Form, Button, Header, Input } from "semantic-ui-react"
 import Helpers from "../Helpers"
 
 const SignUp = ({ login }) => {
@@ -26,34 +26,40 @@ const SignUp = ({ login }) => {
   }
 
   return (
-    <div>
-      <p>SIGN UP PAGE</p>
+    <div className="center-content">
+      <Header textAlign="center">SIGN UP</Header>{" "}
       <Form onSubmit={handleSubmit}>
         <Form.Field>
-          <label>Email:</label>
-          <input
+          <Input
             type="email"
             name="email"
+            icon="mail"
+            iconPosition="left"
+            placeholder="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
           <small>{Helpers.handleErrorMessage(errors, "email")}</small>
         </Form.Field>
         <Form.Field>
-          <label>Password:</label>
-          <input
+          <Input
             type="password"
             name="password"
+            icon="lock"
+            iconPosition="left"
+            placeholder="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
           <small>{Helpers.handleErrorMessage(errors, "password can't")}</small>
         </Form.Field>
         <Form.Field>
-          <label>Password Confirmation:</label>
-          <input
+          <Input
             type="password"
             name="passwordConfirmation"
+            icon="lock"
+            iconPosition="left"
+            placeholder="password confirmation"
             value={passwordConfirmation}
             onChange={e => setPasswordConfirmation(e.target.value)}
           />

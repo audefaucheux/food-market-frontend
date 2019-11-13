@@ -1,13 +1,13 @@
 import React from "react"
 import PublicShowFoodTruck from "../components/PublicShowFoodTruck"
-import { Card, Header, Message } from "semantic-ui-react"
+import { Card, Message } from "semantic-ui-react"
 import Helpers from "../Helpers"
 import "../stylesheets/containers/PublicFoodTruckContainer.css"
 
 const PublicFoodTruckContainer = ({ recurrences, message, globalLoading }) => {
   return (
     <div className="filter-results">
-      <Header>RESULT ({recurrences.length})</Header>
+      <h2>Results ({recurrences.length})</h2>
 
       {message === "No match found" && <Message error content={message} />}
       {globalLoading && Helpers.showLoader()}

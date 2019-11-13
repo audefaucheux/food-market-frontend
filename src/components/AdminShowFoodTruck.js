@@ -12,7 +12,7 @@ const AdminShowFoodTruck = ({
   // twitter_account,
   cuisines,
   archived,
-  editFoodTruck
+  archiveFoodTruck
 }) => {
   const backgroundPic = {
     backgroundImage: `url(${profile_picture})`
@@ -34,20 +34,20 @@ const AdminShowFoodTruck = ({
       </Card.Content>
       <Card.Content>
         <Button
-          size="small"
+          id="edit"
           onClick={() => navigate(`/my_food_trucks/edit/${id}`)}
         >
           Edit
         </Button>
         <Button
-          size="small"
+          id="schedule"
           onClick={() => navigate(`/my_food_trucks/schedule/${id}`)}
         >
           Schedule
         </Button>
         <Button
-          size="small"
-          onClick={() => editFoodTruck(id, { archived: !archived })}
+          id="archive"
+          onClick={() => archiveFoodTruck(id, { archived: !archived })}
         >
           {archived ? "Reactivate" : "Archive"}
         </Button>

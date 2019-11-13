@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import PublicFoodTrucksContainer from "../containers/PublicFoodTrucksContainer"
 import API from "../adapters/API"
 import Helpers from "../Helpers"
-import { Form, Button, Checkbox, Header } from "semantic-ui-react"
+import { Form, Button, Checkbox } from "semantic-ui-react"
 
 const PublicFoodTruckFilters = ({
   formData,
@@ -77,7 +77,7 @@ const PublicFoodTruckFilters = ({
 
   return (
     <div>
-      <Header>FILTERS:</Header>
+      <h2>Filters:</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Field>
           <label>Day:</label>
@@ -132,9 +132,7 @@ const PublicFoodTruckFilters = ({
             ))}
           </div>
         </Form.Field>
-        <Button color="green" type="submit">
-          Submit
-        </Button>
+        <Button type="submit">Submit</Button>
       </Form>
       <PublicFoodTrucksContainer {...{ recurrences, message, globalLoading }} />
     </div>

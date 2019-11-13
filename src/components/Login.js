@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import API from "../adapters/API"
-import { Form, Button, Input, Header } from "semantic-ui-react"
+import { Form, Button, Input } from "semantic-ui-react"
 import Helpers from "../Helpers"
 
 const Login = ({ login, handleRedirect }) => {
@@ -26,7 +26,7 @@ const Login = ({ login, handleRedirect }) => {
 
   return (
     <div className="center-content">
-      <Header textAlign="center">LOGIN</Header>
+      <img src={require("../images/logo-salmon.png")} alt="yum-break-logo" />
       <Form onSubmit={handleSubmit} error>
         <Form.Field>
           <Input
@@ -51,7 +51,7 @@ const Login = ({ login, handleRedirect }) => {
           />
           <small>{Helpers.handleErrorMessage(errors)}</small>
         </Form.Field>
-        <Button color="green">Login</Button>
+        <Button>Login</Button>
       </Form>
       <p>
         Don't have an account yet?{" "}

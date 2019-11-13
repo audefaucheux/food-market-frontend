@@ -27,7 +27,7 @@ const ScheduleForm = ({
 
   const handleSubmit = e => {
     e.preventDefault()
-    setErrors([])
+    // setErrors([])
     let newRecurrence = {
       day_num: parseInt(day, 10),
       from_time: fromTime,
@@ -59,7 +59,7 @@ const ScheduleForm = ({
           <option value="6">Saturday</option>
           <option value="7">Sunday</option>
         </select>
-        <small>{Helpers.handleErrorMessage(errors, "day num")}</small>
+        {/* <small>{Helpers.handleErrorMessage(errors, "day num")}</small> */}
       </Form.Field>
       <Form.Field>
         <label>From:</label>
@@ -69,7 +69,7 @@ const ScheduleForm = ({
           name="time_from"
           onChange={e => Helpers.handleInputChange(e, setFromTime)}
         />
-        <small>{Helpers.handleErrorMessage(errors, "from time")}</small>
+        {/* <small>{Helpers.handleErrorMessage(errors, "from time")}</small> */}
       </Form.Field>
       <Form.Field>
         <label>To:</label>
@@ -79,7 +79,7 @@ const ScheduleForm = ({
           name="time_to"
           onChange={e => Helpers.handleInputChange(e, setToTime)}
         />
-        <small>{Helpers.handleErrorMessage(errors, "to time")}</small>
+        {/* <small>{Helpers.handleErrorMessage(errors, "to time")}</small> */}
       </Form.Field>
       <Form.Field>
         <label>Market:</label>
@@ -94,9 +94,9 @@ const ScheduleForm = ({
             </option>
           ))}
         </select>
-        <small>{Helpers.handleErrorMessage(errors, "market")}</small>
+        {/* <small>{Helpers.handleErrorMessage(errors, "market")}</small> */}
       </Form.Field>
-      <Button color="green">Submit</Button>
+      <Button>Submit</Button>
     </Form>
   )
 }

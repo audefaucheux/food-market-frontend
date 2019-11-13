@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import Helpers from "../Helpers"
 import { Form, Checkbox, Button } from "semantic-ui-react"
 import keys from "../private/keys"
@@ -6,28 +6,21 @@ import "../stylesheets/components/FoodTruckForm.css"
 
 const FoodTruckForm = ({
   formData,
-  initialStates,
   sendAPIRequest,
-  nameDef
+  name,
+  setName,
+  description,
+  setDescription,
+  profilePicture,
+  setProfilePicture,
+  twitterAccount,
+  setTwitterAccount,
+  cuisines,
+  setCuisines,
+  localLoading,
+  setLocalLoading,
+  errors
 }) => {
-  const [name, setName] = useState("")
-  const [description, setDescription] = useState("")
-  const [profilePicture, setProfilePicture] = useState("")
-  const [twitterAccount, setTwitterAccount] = useState("")
-  const [cuisines, setCuisines] = useState([])
-  const [localLoading, setLocalLoading] = useState(false)
-  // const [errors, setErrors] = useState([])
-
-  useEffect(() => {
-    initialStates(
-      setName,
-      setDescription,
-      setProfilePicture,
-      setTwitterAccount,
-      setCuisines
-    )
-  }, [initialStates])
-
   const backgroundPic = {
     backgroundImage: `url(${profilePicture})`
   }
@@ -54,7 +47,7 @@ const FoodTruckForm = ({
 
   const handleSubmit = e => {
     e.preventDefault()
-    // setGlobalLoading(true)
+    setLocalLoading(true)
     let newFoodTruck = {
       name,
       description,
@@ -62,7 +55,7 @@ const FoodTruckForm = ({
       twitter_account: twitterAccount,
       cuisines
     }
-    console.log(sendAPIRequest(newFoodTruck))
+    sendAPIRequest(newFoodTruck)
   }
 
   const cuisineCheck = cuisine => {
@@ -82,7 +75,7 @@ const FoodTruckForm = ({
               value={name}
               onChange={e => Helpers.handleInputChange(e, setName)}
             />
-            {/* <small>{Helpers.handleErrorMessage(errors)}</small> */}
+            <small>{Helpers.handleErrorMessage(errors)}</small>
           </Form.Field>
         </div>
         <div className="profile-pic-form">
@@ -135,7 +128,7 @@ const FoodTruckForm = ({
         </div>
       </Form.Field>
 
-      <Button color="green">Submit</Button>
+      <Button>Submit</Button>
     </Form>
   )
 }

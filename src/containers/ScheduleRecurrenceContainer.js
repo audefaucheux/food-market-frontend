@@ -38,7 +38,7 @@ const ScheduleRecurrenceContainer = ({
   return (
     <div className="recurrence-page">
       <Header>Schedule Recurrence(s):</Header>
-      <Button onClick={handleNewScheduleClick}>
+      <Button color="grey" onClick={handleNewScheduleClick}>
         {showForm ? "Hide Form" : "Add Schedule"}
       </Button>
       {showForm && (

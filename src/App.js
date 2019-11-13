@@ -50,7 +50,10 @@ const App = () => {
   return (
     <div className="app">
       <div className="top-banner">
-        <span>YUM BREAK</span>
+        <img
+          src={require("./images/logo-salmon-name.png")}
+          alt="yum-break-logo"
+        />
       </div>
       <div className="main">
         <Router primary={false}>
@@ -61,7 +64,13 @@ const App = () => {
           {user && (
             <HomeAdmin
               path="my_food_trucks/*"
-              {...{ user, formData, globalLoading, setGlobalLoading }}
+              {...{
+                user,
+                formData,
+                globalLoading,
+                setGlobalLoading,
+                handleRedirect
+              }}
             />
           )}
           {user && (

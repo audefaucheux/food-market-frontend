@@ -12,7 +12,7 @@ const Navbar = ({ user, buttonClicked, handleRedirect }) => {
       text: "Home"
     },
     {
-      active: buttonClicked === "/my_food_trucks" ? "active" : "",
+      active: buttonClicked.includes("/my_food_trucks") ? "active" : "",
       hidden: !user ? "hidden" : "",
       path: "/my_food_trucks",
       icon: "truck",

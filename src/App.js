@@ -16,7 +16,6 @@ const App = () => {
   const [buttonClicked, setButtonClicked] = useState(window.location.pathname)
 
   useEffect(() => {
-    console.log("re run use effect App")
     API.getFormData().then(formData => {
       API.validateUser().then(data => {
         if (data.errors) {
@@ -51,9 +50,10 @@ const App = () => {
     <div className="app">
       <div className="top-banner">
         <img
-          src={require("./images/logo-salmon-name.png")}
-          alt="yum-break-logo"
+          src={require("./images/logo-bonfire-no-background-no-text.png")}
+          alt="logo-with-background"
         />
+        <h2>Yum Break</h2>
       </div>
       <div className="main">
         <Router primary={false}>

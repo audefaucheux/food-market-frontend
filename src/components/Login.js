@@ -26,7 +26,7 @@ const Login = ({ login, handleRedirect }) => {
 
   return (
     <div className="center-content">
-      <img src={require("../images/logo-salmon.png")} alt="yum-break-logo" />
+      <img src={require("../images/logo-bonfire.png")} alt="yum-break-logo" />
       <Form onSubmit={handleSubmit} error>
         <Form.Field>
           <Input

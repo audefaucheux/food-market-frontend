@@ -2,7 +2,6 @@
   font-family: "Noto Sans", sans-serif;
   /* font-family: "Alegreya Sans SC", sans-serif; */
   overflow-wrap: break-word;
-  /* background-color: #f4f5f8; */
 }
 .main {
   margin: 5% 5% 12%;
@@ -13,19 +12,20 @@ h2 {
 }
 
 .top-banner {
-  background-color: #ffeee6;
-  /* color: white; */
-  /* font-style: bold; */
+  background-color: #a0674c;
   height: 3rem;
-  /* font-family: "Chewy", cursive; */
-  /* font-size: 2rem; */
   display: flex;
   justify-content: center;
+  /* border-bottom: 1px solid #f5824a; */
 }
 
 .top-banner > img {
-  height: 80%;
-  margin: auto;
+  height: 100%;
+}
+
+.top-banner > h2 {
+  margin: auto 0;
+  /* color: white; */
 }
 
 button,
@@ -101,7 +101,13 @@ a {
 }
 
 .ui.button {
-  background-color: #fec282;
+  background-color: #ffeee6;
   margin: 0 auto;
   display: block;
+}
+
+.header-home-page {
+  width: 100%;
+  border-radius: 10px;
+  margin: 0 0 1rem;
 }

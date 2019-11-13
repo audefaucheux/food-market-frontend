@@ -60,7 +60,7 @@ const UserSettingsForm = ({ user }) => {
             onChange={e => setConfirmNewPassword(e.target.value)}
           />
         </Form.Field>
-        <Button color="green">Submit</Button>
+        <Button>Submit</Button>
       </Form>
     </div>
   )

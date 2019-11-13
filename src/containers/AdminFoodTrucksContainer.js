@@ -39,6 +39,11 @@ const AdminFoodTruckContainer = ({
 
   return (
     <>
+      <img
+        className="header-home-page"
+        src="https://cdn.nogarlicnoonions.com/images/thumbs/image.php/image_dd8d4202d984046eb07aaae3e8e9147f.jpg?width=2000&height=2000&image=/images/articles/truck-stop-2013-the-bowler-truck2014-10-27-09-58-25.jpg"
+        alt="test"
+      />
       <Button onClick={() => navigate("/my_food_trucks/add")}>
         <Icon name="add" /> Add
       </Button>

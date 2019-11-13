@@ -99,7 +99,7 @@ const FoodTruckForm = ({
       <small className="extra-info-form">
         Characters left: {100 - description.length}
       </small>
-      <Form.Field>
+      {/* <Form.Field>
         <label>Twitter Account:</label>
         <input
           type="text"
@@ -107,7 +107,7 @@ const FoodTruckForm = ({
           value={twitterAccount}
           onChange={e => Helpers.handleInputChange(e, setTwitterAccount)}
         />
-      </Form.Field>
+      </Form.Field> */}
       <Form.Field>
         <label>Cuisines (3 max):</label>
         <div className="cuisine-container">

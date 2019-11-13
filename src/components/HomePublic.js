@@ -2,7 +2,12 @@ import React from "react"
 import PublicFoodTruckFilters from "../components/PublicFoodTruckFilters"
 import "../stylesheets/components/HomePublic.css"
 
-const HomePublic = ({ formData, globalLoading, setGlobalLoading }) => {
+const HomePublic = ({
+  formData,
+  globalLoading,
+  setGlobalLoading,
+  handleRedirect
+}) => {
   return (
     <div>
       <img
@@ -14,6 +19,16 @@ const HomePublic = ({ formData, globalLoading, setGlobalLoading }) => {
         Find out if your fav food truck will be on the market near you today! If
         you're not sure what you want to eat, check out which food trucks are
         planning to come.
+      </p>
+      <p>
+        Do you own a food truck?{" "}
+        <span
+          className="signup-link"
+          onClick={() => handleRedirect("/sign_up")}
+        >
+          Register now
+        </span>{" "}
+        and add your food truck and its calendar to the list !
       </p>
       <PublicFoodTruckFilters
         {...{ formData, globalLoading, setGlobalLoading }}

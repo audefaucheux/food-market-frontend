@@ -44,9 +44,7 @@ const AdminFoodTruckContainer = ({
         src="https://cdn.nogarlicnoonions.com/images/thumbs/image.php/image_dd8d4202d984046eb07aaae3e8e9147f.jpg?width=2000&height=2000&image=/images/articles/truck-stop-2013-the-bowler-truck2014-10-27-09-58-25.jpg"
         alt="test"
       />
-      <Button onClick={() => navigate("/my_food_trucks/add")}>
-        <Icon name="add" /> Add
-      </Button>
+
       <h2> My Food Trucks: </h2>
       <Menu pointing secondary>
         <Menu.Item
@@ -62,6 +60,13 @@ const AdminFoodTruckContainer = ({
           Archived ({archivedFoodTrucks(foodTrucks).length})
         </Menu.Item>
       </Menu>
+      {!archiveToggle && (
+        <div className="add-food-truck-button">
+          <Button onClick={() => navigate("/my_food_trucks/add")}>
+            <Icon name="add" /> Add a Food Truck
+          </Button>
+        </div>
+      )}
       <Card.Group>
         {Helpers.sortByName(foodTrucksArray(foodTrucks)).map(foodTruck => {
           return (

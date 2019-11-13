@@ -2,9 +2,11 @@
   font-family: "Noto Sans", sans-serif;
   /* font-family: "Alegreya Sans SC", sans-serif; */
   overflow-wrap: break-word;
+  max-width: 1024px;
+  margin: 0 auto;
 }
 .main {
-  margin: 5% 5% 12%;
+  margin: 5% 5% 16%;
 }
 
 h2 {
@@ -50,6 +52,13 @@ a {
   font-weight: bold;
 }
 
+.add-food-truck-button {
+  border: 1px solid #d4d4d5;
+  padding: 1rem 0;
+  margin: 0 0 1rem;
+  border-radius: 5px;
+}
+
 .container-header {
   display: flex;
   height: 7rem;
@@ -90,10 +99,11 @@ a {
   display: flex;
   flex-wrap: wrap;
   overflow: scroll;
+  height: 8rem;
 }
 
 .cuisine-container > div {
-  min-width: 40%;
+  min-width: 12rem;
 }
 
 .hidden {
@@ -101,7 +111,8 @@ a {
 }
 
 .ui.button {
-  background-color: #ffeee6;
+  background-color: #ffeee6 !important;
+  color: rgba(0, 0, 0, 0.6) !important;
   margin: 0 auto;
   display: block;
 }

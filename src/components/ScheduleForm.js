@@ -33,7 +33,7 @@ const ScheduleForm = ({
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Field>
+      <Form.Field required>
         <label>Weekday</label>
         {/* <label>{dayField}:</label> */}
         <select
@@ -51,7 +51,7 @@ const ScheduleForm = ({
         </select>
         <small>{Helpers.handleErrorMessage(errors, "day num")}</small>
       </Form.Field>
-      <Form.Field>
+      <Form.Field required>
         <label>From:</label>
         <input
           value={fromTime}
@@ -61,7 +61,7 @@ const ScheduleForm = ({
         />
         <small>{Helpers.handleErrorMessage(errors, "from time")}</small>
       </Form.Field>
-      <Form.Field>
+      <Form.Field required>
         <label>To:</label>
         <input
           value={toTime}
@@ -71,7 +71,7 @@ const ScheduleForm = ({
         />
         <small>{Helpers.handleErrorMessage(errors, "to time")}</small>
       </Form.Field>
-      <Form.Field>
+      <Form.Field required>
         <label>Market:</label>
         <select
           onChange={e => Helpers.handleInputChange(e, setMarket)}

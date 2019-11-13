@@ -59,7 +59,7 @@ const App = () => {
         <Router primary={false}>
           <HomePublic
             path="/"
-            {...{ formData, globalLoading, setGlobalLoading }}
+            {...{ formData, globalLoading, setGlobalLoading, handleRedirect }}
           />
           {user && (
             <HomeAdmin

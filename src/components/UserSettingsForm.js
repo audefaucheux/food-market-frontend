@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Form, Button, Message } from "semantic-ui-react"
 import API from "../adapters/API"
+import Helpers from "../Helpers"
 
 const UserSettingsForm = ({ user }) => {
   const [currentPassword, setCurrentPassword] = useState("")
@@ -16,10 +17,14 @@ const UserSettingsForm = ({ user }) => {
       password: newPassword,
       password_confirmation: confirmNewPassword
     }
-    API.updateUser(user.id, userDetails).then(setMessages)
-    setCurrentPassword("")
-    setNewPassword("")
-    setConfirmNewPassword("")
+    API.updateUser(user.id, userDetails).then(data => {
+      setMessages(data)
+      if (data.success) {
+        setCurrentPassword("")
+        setNewPassword("")
+        setConfirmNewPassword("")
+      }
+    })
   }
 
   return (
@@ -28,12 +33,8 @@ const UserSettingsForm = ({ user }) => {
         messages.success.map((message, index) => (
           <Message success content={message} key={index} />
         ))}
-      {messages.errors &&
-        messages.errors.map((message, index) => (
-          <Message error content={message} key={index} />
-        ))}
       <Form onSubmit={handleSubmit}>
-        <Form.Field>
+        <Form.Field required>
           <label>Current Password:</label>
           <input
             type="password"
@@ -41,8 +42,12 @@ const UserSettingsForm = ({ user }) => {
             value={currentPassword}
             onChange={e => setCurrentPassword(e.target.value)}
           />
+          <small>
+            {messages.errors &&
+              Helpers.handleErrorMessage(messages.errors, "current password")}
+          </small>
         </Form.Field>
-        <Form.Field>
+        <Form.Field required>
           <label>New Password:</label>
           <input
             type="password"
@@ -50,8 +55,12 @@ const UserSettingsForm = ({ user }) => {
             value={newPassword}
             onChange={e => setNewPassword(e.target.value)}
           />
+          <small>
+            {messages.errors &&
+              Helpers.handleErrorMessage(messages.errors, "new password can't")}
+          </small>
         </Form.Field>
-        <Form.Field>
+        <Form.Field required>
           <label>Confirm New Password:</label>
           <input
             type="password"
@@ -59,6 +68,10 @@ const UserSettingsForm = ({ user }) => {
             value={confirmNewPassword}
             onChange={e => setConfirmNewPassword(e.target.value)}
           />
+          <small>
+            {messages.errors &&
+              Helpers.handleErrorMessage(messages.errors, "confirmation")}
+          </small>
         </Form.Field>
         <Button>Submit</Button>
       </Form>

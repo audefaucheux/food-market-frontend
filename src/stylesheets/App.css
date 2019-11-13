@@ -99,6 +99,9 @@ a {
 .cuisine-container {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
+  /* overflow: scroll; */
+  height: 10rem;
 }
 
 .cuisine-container > div {

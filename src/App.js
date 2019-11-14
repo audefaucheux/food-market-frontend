@@ -18,12 +18,12 @@ const App = () => {
   useEffect(() => {
     API.getFormData().then(formData => {
       API.validateUser().then(data => {
-        if (data.errors) {
+        if (data.errors || data.error) {
           handleRedirect("/login")
-          alert(data.errors)
+          alert(data.error || data.errors)
         } else if (data.user) {
           setUser(data.user)
-          // handleRedirect("/my_food_trucks")
+          handleRedirect("/my_food_trucks")
         }
         setFormData(formData)
       })

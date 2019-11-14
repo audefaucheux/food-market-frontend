@@ -4,7 +4,7 @@ Yum Break is a food truck finder. Enter the date, market and cuisine preferences
 
 # Getting Started
 
-Yum Break uses Ruby on Rails API backend and React frontend.
+Yum Break uses Ruby on Rails API backend and React frontend. The app is primarly used for phones but the styling is responsive for other devices.
 
 First, [Click here](https://github.com/audefaucheux/food-market-backend) to set up the backend
 

@@ -21,7 +21,6 @@ const ScheduleRecurrenceContainer = ({
   const [errors, setErrors] = useState([])
 
   useEffect(() => {
-    console.log("rerender use effect")
     if (selectedRecurrence) {
       setDay(selectedRecurrence.day_num)
       setFromTime(selectedRecurrence.from_time)

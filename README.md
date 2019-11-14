@@ -1,6 +1,6 @@
 # Yum Break
 
-Yum Break is a food truck finder. Enter the date, market and cuisine preferences and you will find a list of all the food trucks available.
+Yum Break is a food truck finder. Enter the date, market and cuisine preferences and you will find a list of all the food trucks available. Food truck owners can login and add their food trucks along with their schedule to allow customers to view them in the food truck finder.
 
 # Getting Started
 

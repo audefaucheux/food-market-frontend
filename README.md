@@ -18,7 +18,7 @@ npm start
 
 # Built with
 
-- **Reach Router** - manage route transitions
+- **Reach Router** manage route transitions
 - **Cloudinary widget** to upload images
 - **Semantic** CSS Styling
 
